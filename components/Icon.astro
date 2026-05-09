@@ -1,0 +1,41 @@
+---
+// src/components/Icon.astro
+// A reusable wrapper for Lucide icons with consistent sizing and styling
+
+export interface Props {
+    name: string;
+    size?: number;
+    class?: string;
+    'stroke-width'?: number;
+}
+
+const { 
+    name, 
+    size = 24, 
+    class: className = '', 
+    'stroke-width': strokeWidth = 2 
+} = Astro.props;
+
+// Dynamic import based on icon name
+const iconModules = await import('lucide-astro');
+const IconComponent = iconModules[name];
+
+if (!IconComponent) {
+    console.warn(`Icon "${name}" not found in lucide-astro`);
+}
+---
+
+{IconComponent && (
+    <IconComponent 
+        size={size} 
+        stroke-width={strokeWidth}
+        class={className}
+        {...Astro.props}
+    />
+)}
+
+{!IconComponent && (
+    <div class={`inline-flex items-center justify-center ${className}`} style={`width: ${size}px; height: ${size}px;`}>
+        <span class="text-xs text-gray-400">?</span>
+    </div>
+)} 

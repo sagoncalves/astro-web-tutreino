@@ -1,0 +1,1 @@
+- [Skip dev-server smoke tests after edits](feedback_no_smoke_tests.md) — do not boot npm run dev + curl after every edit; user runs the server themselves

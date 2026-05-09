@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+/**
+ * MasSocios — minimal Tailwind v4 setup.
+ * Add design tokens here as the product grows (`@theme { ... }`).
+ */
+@theme {
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

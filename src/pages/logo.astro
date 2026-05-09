@@ -1,0 +1,1553 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { createPageMeta, PAGE_META } from '../utils/meta';
+
+const metaData = createPageMeta('/logo', PAGE_META.home);
+---
+
+<Layout {...metaData} showHeader={false}>
+  <link slot="head" rel="preconnect" href="https://fonts.googleapis.com" />
+  <link slot="head" rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    slot="head"
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap"
+  />
+
+  <div class="logo-page">
+    <header class="lp-head">
+      <a href="/" class="lp-back">← volver al sitio</a>
+      <h1>logo · exploración</h1>
+      <p>Tres direcciones para evaluar. Mismo wordmark, distintas decisiones cromáticas.</p>
+    </header>
+
+    <!-- direction 01 -->
+    <section class="lp-direction">
+      <div class="lp-meta">
+        <span class="lp-num">01</span>
+        <h2><span class="dim">mas</span><span class="hl">socios</span></h2>
+        <p class="lp-tag">muted + magenta</p>
+        <p class="lp-rationale">
+          <strong>Recomendado.</strong> "mas" recede como modificador, "socios" pop&shy;ea como el sustantivo
+          que importa — más socios = más plata. Magenta = color de acción del sitio,
+          el ojo lo encuentra naturalmente.
+        </p>
+      </div>
+
+      <div class="lp-mocks">
+        <!-- standalone large -->
+        <div class="mock-card">
+          <span class="mock-label">standalone · 64px</span>
+          <div class="mock-stage">
+            <div class="logo-d1">
+              <span class="mark">M</span>
+              <span class="word">
+                <span class="dim">mas</span><span class="hl">socios</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- navbar context -->
+        <div class="mock-card">
+          <span class="mock-label">navbar · contexto real</span>
+          <nav class="mock-nav">
+            <a href="#" class="logo-d1 nav">
+              <span class="mark">M</span>
+              <span class="word">
+                <span class="dim">mas</span><span class="hl">socios</span>
+              </span>
+            </a>
+            <div class="mock-nav-links">
+              <span>Problema</span><span>Solución</span><span>Precios</span>
+              <span class="mock-cta">Probar gratis ↗</span>
+            </div>
+          </nav>
+        </div>
+
+        <!-- inverse / dark -->
+        <div class="mock-card dark">
+          <span class="mock-label">sobre fondo oscuro</span>
+          <div class="mock-stage dark">
+            <div class="logo-d1 inverse">
+              <span class="mark">M</span>
+              <span class="word">
+                <span class="dim">mas</span><span class="hl">socios</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- on yellow -->
+        <div class="mock-card yellow">
+          <span class="mock-label">sobre amarillo de marca</span>
+          <div class="mock-stage yellow">
+            <div class="logo-d1">
+              <span class="mark dark">M</span>
+              <span class="word">
+                <span class="dim">mas</span><span class="hl">socios</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- favicon -->
+        <div class="mock-card">
+          <span class="mock-label">favicon · 32px</span>
+          <div class="mock-stage tight">
+            <div class="favi favi-d1">
+              <span>M</span>
+            </div>
+            <div class="favi favi-d1 small">
+              <span>M</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- direction 02 -->
+    <section class="lp-direction">
+      <div class="lp-meta">
+        <span class="lp-num">02</span>
+        <h2>mas<span class="dot">·</span>socios</h2>
+        <p class="lp-tag">monocromo + acento puntual</p>
+        <p class="lp-rationale">
+          Más sobrio. Un único color para el wordmark, el magenta vive solo en
+          un signo de puntuación entre las palabras. Envejece mejor, se imprime mejor,
+          se lee como una sola palabra cuando el contexto lo pide.
+        </p>
+      </div>
+
+      <div class="lp-mocks">
+        <div class="mock-card">
+          <span class="mock-label">standalone · 64px</span>
+          <div class="mock-stage">
+            <div class="logo-d2">
+              <span class="mark">M</span>
+              <span class="word">mas<span class="dot">·</span>socios</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mock-card">
+          <span class="mock-label">navbar · contexto real</span>
+          <nav class="mock-nav">
+            <a href="#" class="logo-d2 nav">
+              <span class="mark">M</span>
+              <span class="word">mas<span class="dot">·</span>socios</span>
+            </a>
+            <div class="mock-nav-links">
+              <span>Problema</span><span>Solución</span><span>Precios</span>
+              <span class="mock-cta">Probar gratis ↗</span>
+            </div>
+          </nav>
+        </div>
+
+        <div class="mock-card dark">
+          <span class="mock-label">sobre fondo oscuro</span>
+          <div class="mock-stage dark">
+            <div class="logo-d2 inverse">
+              <span class="mark">M</span>
+              <span class="word">mas<span class="dot">·</span>socios</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mock-card yellow">
+          <span class="mock-label">sobre amarillo de marca</span>
+          <div class="mock-stage yellow">
+            <div class="logo-d2">
+              <span class="mark dark">M</span>
+              <span class="word">mas<span class="dot dark">·</span>socios</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mock-card">
+          <span class="mock-label">variante · plus signo</span>
+          <div class="mock-stage">
+            <div class="logo-d2 plus">
+              <span class="mark">M</span>
+              <span class="word">mas<span class="plus">+</span>socios</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- direction 03 -->
+    <section class="lp-direction">
+      <div class="lp-meta">
+        <span class="lp-num">03</span>
+        <h2><span class="hl">mas</span><span class="ink">socios</span></h2>
+        <p class="lp-tag">magenta + ink (invertido)</p>
+        <p class="lp-rationale">
+          El acento va en la <em>acción</em>: "MÁS". La idea grita "más, más, más socios".
+          Más agresivo, más latino, más vendedor. Funciona muy bien en gráfica
+          de Instagram pero puede chocar con el texto del sitio.
+        </p>
+      </div>
+
+      <div class="lp-mocks">
+        <div class="mock-card">
+          <span class="mock-label">standalone · 64px</span>
+          <div class="mock-stage">
+            <div class="logo-d3">
+              <span class="mark">M</span>
+              <span class="word">
+                <span class="hl">mas</span><span class="ink">socios</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mock-card">
+          <span class="mock-label">navbar · contexto real</span>
+          <nav class="mock-nav">
+            <a href="#" class="logo-d3 nav">
+              <span class="mark">M</span>
+              <span class="word">
+                <span class="hl">mas</span><span class="ink">socios</span>
+              </span>
+            </a>
+            <div class="mock-nav-links">
+              <span>Problema</span><span>Solución</span><span>Precios</span>
+              <span class="mock-cta">Probar gratis ↗</span>
+            </div>
+          </nav>
+        </div>
+
+        <div class="mock-card dark">
+          <span class="mock-label">sobre fondo oscuro</span>
+          <div class="mock-stage dark">
+            <div class="logo-d3 inverse">
+              <span class="mark">M</span>
+              <span class="word">
+                <span class="hl">mas</span><span class="ink">socios</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mock-card yellow">
+          <span class="mock-label">sobre amarillo de marca</span>
+          <div class="mock-stage yellow">
+            <div class="logo-d3">
+              <span class="mark dark">M</span>
+              <span class="word">
+                <span class="hl">mas</span><span class="ink">socios</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mock-card">
+          <span class="mock-label">tagline lockup</span>
+          <div class="mock-stage stack">
+            <div class="logo-d3">
+              <span class="mark">M</span>
+              <span class="word">
+                <span class="hl">mas</span><span class="ink">socios</span>
+              </span>
+            </div>
+            <span class="logo-tag">whatsapp que vende, por vos</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- final comparison: with mark vs wordmark-only -->
+    <section class="lp-compare">
+      <div class="cmp-head">
+        <span class="lp-num">04</span>
+        <h2><span class="ink">con</span> <span class="hl">vs</span> <span class="ink">sin</span> bloque M</h2>
+        <p class="lp-tag">decisión final · ¿el mark suma o resta?</p>
+        <p class="lp-rationale" style="max-width:680px">
+          Tomamos la dirección 01 (la recomendada: <span class="dim">mas</span><span class="hl">socios</span>) y la mostramos en cuatro contextos reales — navbar, hero, footer, favicon — con y sin el bloque <strong>M</strong> al lado del wordmark. La idea es ver dónde el bloque ayuda y dónde se siente redundante.
+        </p>
+      </div>
+
+      <!-- navbar -->
+      <div class="cmp-row">
+        <span class="cmp-label">navbar</span>
+        <div class="cmp-pair">
+          <div class="cmp-card">
+            <span class="cmp-tag">CON bloque M</span>
+            <nav class="mock-nav">
+              <a href="#" class="logo-d1 nav">
+                <span class="mark">M</span>
+                <span class="word"><span class="dim">mas</span><span class="hl">socios</span></span>
+              </a>
+              <div class="mock-nav-links">
+                <span>Problema</span><span>Solución</span><span>Precios</span>
+                <span class="mock-cta">Probar gratis ↗</span>
+              </div>
+            </nav>
+          </div>
+          <div class="cmp-card pick">
+            <span class="cmp-tag pick">SIN bloque · wordmark only</span>
+            <nav class="mock-nav">
+              <a href="#" class="logo-d1 nav nomark">
+                <span class="word"><span class="dim">mas</span><span class="hl">socios</span></span>
+              </a>
+              <div class="mock-nav-links">
+                <span>Problema</span><span>Solución</span><span>Precios</span>
+                <span class="mock-cta">Probar gratis ↗</span>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <!-- hero -->
+      <div class="cmp-row">
+        <span class="cmp-label">hero · pantalla grande</span>
+        <div class="cmp-pair">
+          <div class="cmp-card">
+            <span class="cmp-tag">CON bloque M</span>
+            <div class="hero-stage">
+              <div class="logo-d1 hero-size">
+                <span class="mark">M</span>
+                <span class="word"><span class="dim">mas</span><span class="hl">socios</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="cmp-card pick">
+            <span class="cmp-tag pick">SIN bloque</span>
+            <div class="hero-stage">
+              <div class="logo-d1 nomark hero-size">
+                <span class="word"><span class="dim">mas</span><span class="hl">socios</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- footer -->
+      <div class="cmp-row">
+        <span class="cmp-label">footer · sobre dark</span>
+        <div class="cmp-pair">
+          <div class="cmp-card dark">
+            <span class="cmp-tag dark">CON bloque M</span>
+            <div class="footer-stage">
+              <a href="#" class="logo-d1 inverse foot-size">
+                <span class="mark">M</span>
+                <span class="word"><span class="dim">mas</span><span class="hl">socios</span></span>
+              </a>
+              <div class="foot-mock-links">
+                <span>Producto</span><span>Precios</span><span>Contacto</span>
+                <span>Términos</span><span>Privacidad</span>
+              </div>
+            </div>
+          </div>
+          <div class="cmp-card dark pick">
+            <span class="cmp-tag dark pick">SIN bloque</span>
+            <div class="footer-stage">
+              <a href="#" class="logo-d1 inverse nomark foot-size">
+                <span class="word"><span class="dim">mas</span><span class="hl">socios</span></span>
+              </a>
+              <div class="foot-mock-links">
+                <span>Producto</span><span>Precios</span><span>Contacto</span>
+                <span>Términos</span><span>Privacidad</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- favicon strategy -->
+      <div class="cmp-row">
+        <span class="cmp-label">favicon · pestaña del navegador</span>
+        <div class="cmp-pair single">
+          <div class="cmp-card pick">
+            <span class="cmp-tag pick">FAVICON = solo el bloque M</span>
+            <div class="favi-strategy">
+              <div class="favi-stack">
+                <div class="favi favi-d1"><span>M</span></div>
+                <span class="favi-size">192px</span>
+              </div>
+              <div class="favi-stack">
+                <div class="favi favi-d1 medium"><span>M</span></div>
+                <span class="favi-size">64px</span>
+              </div>
+              <div class="favi-stack">
+                <div class="favi favi-d1 small"><span>M</span></div>
+                <span class="favi-size">32px</span>
+              </div>
+              <div class="favi-stack">
+                <div class="favi favi-d1 tiny"><span>M</span></div>
+                <span class="favi-size">16px</span>
+              </div>
+              <div class="favi-explain">
+                <p><strong>El bloque vive solo acá.</strong> A 16/32px el wordmark sería ilegible — la M rotada con shadow se lee instantáneamente.</p>
+                <p class="favi-tab"><span class="tab-favi"><span>M</span></span><span class="tab-title">massocios — whatsapp que vende</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- favicon options -->
+      <div class="cmp-row" style="margin-top: 48px">
+        <span class="cmp-label">favicon · cuatro direcciones a evaluar</span>
+        <div class="favopt-grid">
+
+          <!-- option A: lowercase m -->
+          <div class="favopt">
+            <div class="favopt-tag">A · `m` minúscula</div>
+            <div class="favopt-stage">
+              <div class="favopt-stack">
+                <div class="favm size-192"><span>m</span></div>
+                <span class="favopt-size">192</span>
+              </div>
+              <div class="favopt-stack">
+                <div class="favm size-64"><span>m</span></div>
+                <span class="favopt-size">64</span>
+              </div>
+              <div class="favopt-stack">
+                <div class="favm size-32"><span>m</span></div>
+                <span class="favopt-size">32</span>
+              </div>
+              <div class="favopt-stack">
+                <div class="favm size-16"><span>m</span></div>
+                <span class="favopt-size">16</span>
+              </div>
+            </div>
+            <div class="favopt-tab">
+              <span class="tab-favi-real favm-tab"><span>m</span></span>
+              <span class="tab-title">massocios — whatsapp que vende</span>
+            </div>
+            <p class="favopt-note">Consistente con el lowercase del wordmark. Pero sigue siendo solo una letra.</p>
+          </div>
+
+          <!-- option B: plus sign -->
+          <div class="favopt pick">
+            <div class="favopt-tag pick">B · `+` signo más <span class="rec">recomendado</span></div>
+            <div class="favopt-stage">
+              <div class="favopt-stack">
+                <div class="favplus size-192"><span>+</span></div>
+                <span class="favopt-size">192</span>
+              </div>
+              <div class="favopt-stack">
+                <div class="favplus size-64"><span>+</span></div>
+                <span class="favopt-size">64</span>
+              </div>
+              <div class="favopt-stack">
+                <div class="favplus size-32"><span>+</span></div>
+                <span class="favopt-size">32</span>
+              </div>
+              <div class="favopt-stack">
+                <div class="favplus size-16"><span>+</span></div>
+                <span class="favopt-size">16</span>
+              </div>
+            </div>
+            <div class="favopt-tab">
+              <span class="tab-favi-real favplus-tab"><span>+</span></span>
+              <span class="tab-title">massocios — whatsapp que vende</span>
+            </div>
+            <p class="favopt-note">Símbolo, no letra. Es la promesa: <strong>más</strong> socios. Ownable, escalable, funciona en gráfica como multiplicador (+120 gyms).</p>
+          </div>
+
+          <!-- option C: bubble -->
+          <div class="favopt">
+            <div class="favopt-tag">C · burbuja de chat</div>
+            <div class="favopt-stage">
+              <div class="favopt-stack">
+                <div class="favbub size-192">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M5 3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-7l-5 4v-4H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z"/>
+                  </svg>
+                </div>
+                <span class="favopt-size">192</span>
+              </div>
+              <div class="favopt-stack">
+                <div class="favbub size-64">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M5 3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-7l-5 4v-4H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z"/>
+                  </svg>
+                </div>
+                <span class="favopt-size">64</span>
+              </div>
+              <div class="favopt-stack">
+                <div class="favbub size-32">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M5 3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-7l-5 4v-4H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z"/>
+                  </svg>
+                </div>
+                <span class="favopt-size">32</span>
+              </div>
+              <div class="favopt-stack">
+                <div class="favbub size-16">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M5 3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-7l-5 4v-4H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z"/>
+                  </svg>
+                </div>
+                <span class="favopt-size">16</span>
+              </div>
+            </div>
+            <div class="favopt-tab">
+              <span class="tab-favi-real favbub-tab">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M5 3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-7l-5 4v-4H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z"/>
+                </svg>
+              </span>
+              <span class="tab-title">massocios — whatsapp que vende</span>
+            </div>
+            <p class="favopt-note">Categoría: chat. Riesgo: se confunde con WhatsApp/iMessage en una grilla de pestañas. Genérico.</p>
+          </div>
+
+          <!-- option D: bubble + plus -->
+          <div class="favopt">
+            <div class="favopt-tag">D · burbuja con `+` adentro</div>
+            <div class="favopt-stage">
+              <div class="favopt-stack">
+                <div class="favbubplus size-192">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-7l-5 4v-4H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z" fill="currentColor"/>
+                    <path d="M12 7v8M8 11h8" stroke="var(--yellow)" stroke-width="2.4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="favopt-size">192</span>
+              </div>
+              <div class="favopt-stack">
+                <div class="favbubplus size-64">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-7l-5 4v-4H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z" fill="currentColor"/>
+                    <path d="M12 7v8M8 11h8" stroke="var(--yellow)" stroke-width="2.6" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="favopt-size">64</span>
+              </div>
+              <div class="favopt-stack">
+                <div class="favbubplus size-32">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-7l-5 4v-4H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z" fill="currentColor"/>
+                    <path d="M12 7v8M8 11h8" stroke="var(--yellow)" stroke-width="3" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="favopt-size">32</span>
+              </div>
+              <div class="favopt-stack">
+                <div class="favbubplus size-16">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-7l-5 4v-4H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z" fill="currentColor"/>
+                    <path d="M12 7v8M8 11h8" stroke="var(--yellow)" stroke-width="4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <span class="favopt-size">16</span>
+              </div>
+            </div>
+            <div class="favopt-tab">
+              <span class="tab-favi-real favbubplus-tab">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 3h14a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-7l-5 4v-4H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z" fill="currentColor"/>
+                  <path d="M12 7v8M8 11h8" stroke="var(--yellow)" stroke-width="4" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span class="tab-title">massocios — whatsapp que vende</span>
+            </div>
+            <p class="favopt-note">"Más conversaciones, más socios" en un símbolo. Específico al producto. Riesgo: a 16px el `+` adentro casi desaparece — hay que confiar en la silueta.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- verdict -->
+      <div class="cmp-verdict">
+        <h3>Recomendación</h3>
+        <ul>
+          <li><strong>Wordmark only</strong> en navbar, footer, hero, gráficas, redes sociales horizontales — donde el wordmark es legible.</li>
+          <li>Para el favicon, mi pick es <strong>opción B (`+`)</strong>: símbolo, no letra. Captura la promesa de marca (<em>más</em> socios) sin redundancia con el wordmark, y escala perfecto a 16px.</li>
+          <li>Resultado: <strong>menos redundancia, más confianza.</strong> Como hace WhatsApp, Stripe, Linear, Notion.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- direction 05: +socios rebrand -->
+    <section class="lp-rebrand">
+      <div class="rb-head">
+        <span class="lp-num">05</span>
+        <h2 class="rb-title">¿Y si el wordmark fuera <span class="rb-pop">+socios</span>?</h2>
+        <p class="lp-tag">rebrand · el `+` carga toda la marca</p>
+        <p class="lp-rationale" style="max-width:680px">
+          El <strong>+</strong> hace doble función: es el glyph del favicon Y la promesa de marca (<em>más socios</em>).
+          Más corto, más ownable, más bilingüe. <strong>massocios.com</strong> sigue siendo el dominio y el nombre legal —
+          la marca visible cambia. Cuatro ejecuciones a evaluar antes de comprometernos.
+        </p>
+      </div>
+
+      <!-- variant A: clean -->
+      <div class="rb-row">
+        <span class="cmp-label">A · `+socios` clean — magenta `+` + ink `socios`</span>
+        <div class="rb-grid">
+          <div class="cmp-card">
+            <span class="cmp-tag">navbar</span>
+            <nav class="mock-nav">
+              <a href="#" class="logo-rb a nav">
+                <span class="rb-plus">+</span><span class="rb-word">socios</span>
+              </a>
+              <div class="mock-nav-links">
+                <span>Problema</span><span>Solución</span><span>Precios</span>
+                <span class="mock-cta">Probar gratis ↗</span>
+              </div>
+            </nav>
+          </div>
+          <div class="cmp-card">
+            <span class="cmp-tag">hero · grande</span>
+            <div class="hero-stage">
+              <div class="logo-rb a hero-size">
+                <span class="rb-plus">+</span><span class="rb-word">socios</span>
+              </div>
+            </div>
+          </div>
+          <div class="cmp-card dark">
+            <span class="cmp-tag dark">sobre dark</span>
+            <div class="footer-stage" style="justify-content:center; align-items:center">
+              <div class="logo-rb a inverse foot-size">
+                <span class="rb-plus">+</span><span class="rb-word">socios</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- variant B: plus in yellow tag -->
+      <div class="rb-row">
+        <span class="cmp-label">B · `+` en bloque amarillo + `socios` ink (el `+` repite el favicon)</span>
+        <div class="rb-grid">
+          <div class="cmp-card">
+            <span class="cmp-tag">navbar</span>
+            <nav class="mock-nav">
+              <a href="#" class="logo-rb b nav">
+                <span class="rb-plus-block">+</span><span class="rb-word">socios</span>
+              </a>
+              <div class="mock-nav-links">
+                <span>Problema</span><span>Solución</span><span>Precios</span>
+                <span class="mock-cta">Probar gratis ↗</span>
+              </div>
+            </nav>
+          </div>
+          <div class="cmp-card">
+            <span class="cmp-tag">hero · grande</span>
+            <div class="hero-stage">
+              <div class="logo-rb b hero-size">
+                <span class="rb-plus-block">+</span><span class="rb-word">socios</span>
+              </div>
+            </div>
+          </div>
+          <div class="cmp-card dark">
+            <span class="cmp-tag dark">sobre dark</span>
+            <div class="footer-stage" style="justify-content:center; align-items:center">
+              <div class="logo-rb b inverse foot-size">
+                <span class="rb-plus-block">+</span><span class="rb-word">socios</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- variant C: with space -->
+      <div class="rb-row">
+        <span class="cmp-label">C · `+ socios` con espacio — más matemático, más respiro</span>
+        <div class="rb-grid">
+          <div class="cmp-card">
+            <span class="cmp-tag">navbar</span>
+            <nav class="mock-nav">
+              <a href="#" class="logo-rb c nav">
+                <span class="rb-plus">+</span><span class="rb-gap"></span><span class="rb-word">socios</span>
+              </a>
+              <div class="mock-nav-links">
+                <span>Problema</span><span>Solución</span><span>Precios</span>
+                <span class="mock-cta">Probar gratis ↗</span>
+              </div>
+            </nav>
+          </div>
+          <div class="cmp-card">
+            <span class="cmp-tag">hero · grande</span>
+            <div class="hero-stage">
+              <div class="logo-rb c hero-size">
+                <span class="rb-plus">+</span><span class="rb-gap"></span><span class="rb-word">socios</span>
+              </div>
+            </div>
+          </div>
+          <div class="cmp-card dark">
+            <span class="cmp-tag dark">sobre dark</span>
+            <div class="footer-stage" style="justify-content:center; align-items:center">
+              <div class="logo-rb c inverse foot-size">
+                <span class="rb-plus">+</span><span class="rb-gap"></span><span class="rb-word">socios</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- variant D: uppercase -->
+      <div class="rb-row">
+        <span class="cmp-label">D · `+SOCIOS` uppercase — más confianza con una sola palabra corta</span>
+        <div class="rb-grid">
+          <div class="cmp-card">
+            <span class="cmp-tag">navbar</span>
+            <nav class="mock-nav">
+              <a href="#" class="logo-rb d nav">
+                <span class="rb-plus">+</span><span class="rb-word upper">SOCIOS</span>
+              </a>
+              <div class="mock-nav-links">
+                <span>Problema</span><span>Solución</span><span>Precios</span>
+                <span class="mock-cta">Probar gratis ↗</span>
+              </div>
+            </nav>
+          </div>
+          <div class="cmp-card">
+            <span class="cmp-tag">hero · grande</span>
+            <div class="hero-stage">
+              <div class="logo-rb d hero-size">
+                <span class="rb-plus">+</span><span class="rb-word upper">SOCIOS</span>
+              </div>
+            </div>
+          </div>
+          <div class="cmp-card dark">
+            <span class="cmp-tag dark">sobre dark</span>
+            <div class="footer-stage" style="justify-content:center; align-items:center">
+              <div class="logo-rb d inverse foot-size">
+                <span class="rb-plus">+</span><span class="rb-word upper">SOCIOS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- favicon connection -->
+      <div class="rb-tie">
+        <h3>El `+` une wordmark y favicon.</h3>
+        <div class="rb-tie-row">
+          <div class="rb-tie-favi">
+            <div class="favi favi-d1"><span>+</span></div>
+            <span class="favi-size">favicon</span>
+          </div>
+          <span class="rb-tie-arrow">→</span>
+          <div class="rb-tie-mark">
+            <div class="logo-rb b hero-size">
+              <span class="rb-plus-block">+</span><span class="rb-word">socios</span>
+            </div>
+            <span class="favi-size">wordmark</span>
+          </div>
+        </div>
+        <p>El mismo símbolo (con o sin bloque amarillo) aparece en el favicon, en la app, en el sitio, en redes. Branding 1-a-1.</p>
+      </div>
+
+      <!-- caveats -->
+      <div class="rb-caveats">
+        <h3>Consideraciones antes de cambiar el nombre</h3>
+        <ul>
+          <li><strong>Dominio y handle no cambian:</strong> sigue siendo <code>massocios.com</code> y <code>@massocios</code>. La marca visible es <code>+socios</code>, el plano legal/técnico sigue como está.</li>
+          <li><strong>Plain-text:</strong> donde el <code>+</code> no se renderiza bien (subjects de email, SMS, búsquedas), fallback a <code>massocios</code>. No es problema — es exactamente como X usa "Twitter" en contextos legacy.</li>
+          <li><strong>Cómo se dice:</strong> "más socios". El <code>+</code> visualiza la palabra que ya estás diciendo — bilingüe sin esfuerzo.</li>
+          <li><strong>Riesgo SEO:</strong> "<code>+socios</code>" no es un keyword buscable. Mantené <code>massocios.com</code>/H1/meta con la versión completa para que Google entienda.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="lp-foot">
+      <p>Las tres direcciones usan <strong>Bricolage Grotesque 800</strong> + el bloque marca <strong>M</strong> rotado del index.</p>
+    </footer>
+  </div>
+</Layout>
+
+<style is:global>
+  .logo-page {
+    --bg: #fffbf2;
+    --paper: #ffffff;
+    --ink: #0e3b43;
+    --ink-2: #1f5660;
+    --mute: #6b7e84;
+    --line: #e6dfc8;
+    --yellow: #ffd23f;
+    --magenta: #e8336b;
+    --magenta-deep: #c41e54;
+
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Manrope', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 48px clamp(20px, 5vw, 64px) 80px;
+  }
+
+  .lp-head {
+    max-width: 880px;
+    margin-bottom: 56px;
+  }
+  .lp-back {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--magenta);
+    text-decoration: none;
+    margin-bottom: 28px;
+    letter-spacing: 0.06em;
+  }
+  .lp-back:hover { text-decoration: underline; }
+  .lp-head h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 5vw, 60px);
+    letter-spacing: -0.035em;
+    margin: 0 0 14px;
+  }
+  .lp-head p { color: var(--ink-2); font-size: 17px; margin: 0; max-width: 600px; }
+
+  .lp-direction {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 40px;
+    padding: 56px 0;
+    border-top: 2px dashed var(--line);
+  }
+  @media (max-width: 880px) {
+    .lp-direction { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  .lp-meta { position: sticky; top: 32px; align-self: start; }
+  @media (max-width: 880px) { .lp-meta { position: static; } }
+  .lp-num {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+  }
+  .lp-meta h2 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 36px;
+    letter-spacing: -0.04em;
+    margin: 0 0 6px;
+    line-height: 1;
+  }
+  .lp-meta h2 .dim { color: var(--ink-2); opacity: 0.55; }
+  .lp-meta h2 .hl { color: var(--magenta); }
+  .lp-meta h2 .ink { color: var(--ink); }
+  .lp-meta h2 .dot { color: var(--magenta); margin: 0 1px; }
+  .lp-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--magenta);
+    margin: 0 0 18px;
+    letter-spacing: 0.04em;
+  }
+  .lp-rationale {
+    color: var(--ink-2);
+    font-size: 14.5px;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .lp-rationale strong { color: var(--ink); }
+  .lp-rationale em { font-style: italic; color: var(--magenta); }
+
+  .lp-mocks {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 600px) { .lp-mocks { grid-template-columns: 1fr; } }
+  .mock-card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 4px 4px 0 var(--ink);
+    overflow: hidden;
+  }
+  .mock-card.dark { background: var(--ink); border-color: var(--ink); }
+  .mock-card.yellow { background: var(--yellow); border-color: var(--ink); }
+  .mock-label {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--mute);
+    margin-bottom: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .mock-card.dark .mock-label { color: color-mix(in srgb, var(--paper) 55%, transparent); }
+  .mock-card.yellow .mock-label { color: var(--ink-2); }
+
+  .mock-stage {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 32px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+  }
+  .mock-stage.dark { background: transparent; }
+  .mock-stage.yellow { background: transparent; }
+  .mock-stage.tight { padding: 20px; gap: 24px; }
+  .mock-stage.stack { flex-direction: column; gap: 14px; padding: 36px 20px; }
+
+  /* shared logo geometry */
+  .logo-d1, .logo-d2, .logo-d3 {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-size: 36px;
+    line-height: 1;
+  }
+  .logo-d1.nav, .logo-d2.nav, .logo-d3.nav { font-size: 22px; gap: 8px; }
+  .logo-d1 .mark, .logo-d2 .mark, .logo-d3 .mark {
+    width: 1.05em; height: 1.05em;
+    background: var(--magenta);
+    color: var(--paper);
+    display: grid; place-items: center;
+    border-radius: 0.28em;
+    transform: rotate(-4deg);
+    box-shadow: 0.16em 0.16em 0 var(--ink);
+    font-size: 0.7em;
+    flex-shrink: 0;
+  }
+  .logo-d1 .mark.dark, .logo-d2 .mark.dark, .logo-d3 .mark.dark {
+    background: var(--ink);
+    color: var(--yellow);
+    box-shadow: 0.16em 0.16em 0 var(--magenta);
+  }
+  .logo-d1.nav .mark, .logo-d2.nav .mark, .logo-d3.nav .mark {
+    box-shadow: 4px 4px 0 var(--ink);
+    border-radius: 8px;
+  }
+
+  /* direction 01 */
+  .logo-d1 .word .dim { color: var(--ink-2); opacity: 0.5; }
+  .logo-d1 .word .hl { color: var(--magenta); }
+  .logo-d1.inverse .word .dim { color: color-mix(in srgb, var(--paper) 50%, transparent); opacity: 1; }
+  .logo-d1.inverse .word .hl { color: var(--yellow); }
+  .logo-d1.inverse .mark { background: var(--yellow); color: var(--ink); box-shadow: 0.16em 0.16em 0 var(--magenta); }
+
+  /* direction 02 */
+  .logo-d2 .word { color: var(--ink); }
+  .logo-d2 .word .dot { color: var(--magenta); margin: 0 1px; font-weight: 700; }
+  .logo-d2 .word .dot.dark { color: var(--magenta); }
+  .logo-d2 .word .plus { color: var(--magenta); margin: 0 2px; font-size: 0.82em; vertical-align: 1px; }
+  .logo-d2.inverse .word { color: var(--paper); }
+  .logo-d2.inverse .word .dot { color: var(--yellow); }
+  .logo-d2.inverse .mark { background: var(--yellow); color: var(--ink); box-shadow: 0.16em 0.16em 0 var(--magenta); }
+
+  /* direction 03 */
+  .logo-d3 .word .hl { color: var(--magenta); }
+  .logo-d3 .word .ink { color: var(--ink); }
+  .logo-d3.inverse .word .hl { color: var(--yellow); }
+  .logo-d3.inverse .word .ink { color: var(--paper); }
+  .logo-d3.inverse .mark { background: var(--yellow); color: var(--ink); box-shadow: 0.16em 0.16em 0 var(--magenta); }
+
+  /* favicons */
+  .favi {
+    width: 56px; height: 56px;
+    background: var(--magenta);
+    color: var(--paper);
+    border-radius: 14px;
+    display: grid; place-items: center;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    transform: rotate(-4deg);
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+  .favi.small {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    font-size: 18px;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  /* mock navbar */
+  .mock-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: var(--bg);
+    border-radius: 10px;
+    gap: 16px;
+  }
+  .mock-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    color: var(--ink-2);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .mock-cta {
+    background: var(--ink);
+    color: var(--yellow);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+  }
+  @media (max-width: 540px) {
+    .mock-nav-links span:not(.mock-cta) { display: none; }
+  }
+
+  .logo-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ─── final comparison ─── */
+  .lp-compare {
+    margin-top: 56px;
+    padding: 56px 0;
+    border-top: 2px dashed var(--line);
+  }
+  .cmp-head { max-width: 880px; margin-bottom: 48px; }
+  .cmp-head h2 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 4.5vw, 52px);
+    letter-spacing: -0.035em;
+    margin: 0 0 8px;
+    line-height: 1;
+  }
+  .cmp-head h2 .ink { color: var(--ink); }
+  .cmp-head h2 .hl { color: var(--magenta); }
+  .cmp-head .lp-rationale .dim { color: var(--ink-2); opacity: 0.55; }
+  .cmp-head .lp-rationale .hl { color: var(--magenta); font-weight: 700; }
+
+  .cmp-row { margin-bottom: 36px; }
+  .cmp-label {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--mute);
+    margin-bottom: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .cmp-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .cmp-pair.single { grid-template-columns: 1fr; }
+  @media (max-width: 720px) { .cmp-pair { grid-template-columns: 1fr; } }
+  .cmp-card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .cmp-card.dark { background: var(--ink); border-color: var(--ink); }
+  .cmp-card.pick {
+    background: color-mix(in srgb, var(--yellow) 35%, var(--paper));
+    box-shadow: 4px 4px 0 var(--magenta);
+  }
+  .cmp-card.dark.pick {
+    background: var(--ink);
+    box-shadow: 4px 4px 0 var(--yellow);
+  }
+  .cmp-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--mute);
+    margin-bottom: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .cmp-tag.pick {
+    background: var(--magenta);
+    color: var(--paper);
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  .cmp-tag.dark { color: color-mix(in srgb, var(--paper) 55%, transparent); }
+  .cmp-tag.dark.pick { background: var(--yellow); color: var(--ink); }
+
+  /* wordmark-only modifier */
+  .logo-d1.nomark .mark, .logo-d2.nomark .mark, .logo-d3.nomark .mark { display: none; }
+
+  /* hero stage */
+  .hero-stage {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 48px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 160px;
+  }
+  .logo-d1.hero-size { font-size: clamp(48px, 7vw, 84px); }
+
+  /* footer stage */
+  .footer-stage {
+    padding: 24px 8px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .logo-d1.foot-size { font-size: 22px; }
+  .foot-mock-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    color: color-mix(in srgb, #fffbf2 60%, transparent);
+    font-size: 12px;
+    font-weight: 500;
+    padding-top: 14px;
+    border-top: 1px solid color-mix(in srgb, #fffbf2 18%, transparent);
+  }
+
+  /* favicon strategy */
+  .favi-strategy {
+    display: grid;
+    grid-template-columns: repeat(4, auto) 1fr;
+    gap: 24px;
+    align-items: center;
+    padding: 20px 8px;
+  }
+  @media (max-width: 720px) {
+    .favi-strategy { grid-template-columns: repeat(2, auto); }
+    .favi-explain { grid-column: 1 / -1; }
+  }
+  .favi-stack { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .favi-size {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--mute);
+    letter-spacing: 0.06em;
+  }
+  .favi.medium {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    font-size: 24px;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .favi.tiny {
+    width: 18px; height: 18px;
+    border-radius: 4px;
+    font-size: 12px;
+    box-shadow: 2px 2px 0 var(--ink);
+  }
+  .favi-explain {
+    border-left: 2px dashed var(--line);
+    padding-left: 24px;
+  }
+  .favi-explain p {
+    color: var(--ink-2);
+    font-size: 13.5px;
+    line-height: 1.5;
+    margin: 0 0 14px;
+  }
+  .favi-explain strong { color: var(--ink); }
+  .favi-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    padding: 6px 12px 6px 6px;
+    border-radius: 8px 8px 0 0;
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    color: var(--ink-2);
+    margin: 0;
+    max-width: 100%;
+  }
+  .tab-favi {
+    width: 16px; height: 16px;
+    background: var(--magenta);
+    color: var(--paper);
+    border-radius: 3px;
+    display: grid; place-items: center;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    transform: rotate(-4deg);
+    flex-shrink: 0;
+  }
+  .tab-title {
+    font-size: 11.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 220px;
+  }
+
+  /* favicon options grid */
+  .favopt-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 760px) { .favopt-grid { grid-template-columns: 1fr; } }
+  .favopt {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .favopt.pick {
+    background: color-mix(in srgb, var(--yellow) 35%, var(--paper));
+    box-shadow: 4px 4px 0 var(--magenta);
+  }
+  .favopt-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink);
+    margin-bottom: 18px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .favopt-tag.pick { color: var(--ink); }
+  .favopt-tag .rec {
+    background: var(--magenta);
+    color: var(--paper);
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    margin-left: 4px;
+  }
+  .favopt-stage {
+    display: flex;
+    align-items: flex-end;
+    gap: 18px;
+    padding: 24px 12px;
+    background: var(--bg);
+    border-radius: 10px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .favopt-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .favopt-size {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--mute);
+    letter-spacing: 0.04em;
+  }
+
+  /* shared icon base */
+  .favm, .favplus, .favbub, .favbubplus {
+    background: var(--magenta);
+    color: var(--paper);
+    display: grid; place-items: center;
+    border-radius: 22%;
+    transform: rotate(-4deg);
+    box-shadow: 0.18em 0.18em 0 var(--ink);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .favm span, .favplus span { display: inline-block; line-height: 1; }
+  .favbub svg, .favbubplus svg { width: 56%; height: 56%; }
+
+  /* sizes */
+  .size-192 { width: 96px; height: 96px; font-size: 64px; border-radius: 22px; }
+  .size-192.favm span { font-size: 72px; }
+  .size-192.favplus span { font-size: 80px; font-weight: 800; }
+  .size-64 { width: 56px; height: 56px; font-size: 38px; border-radius: 13px; box-shadow: 4px 4px 0 var(--ink); }
+  .size-64.favplus span { font-size: 46px; font-weight: 800; }
+  .size-32 { width: 32px; height: 32px; font-size: 22px; border-radius: 7px; box-shadow: 3px 3px 0 var(--ink); }
+  .size-32.favplus span { font-size: 28px; font-weight: 800; }
+  .size-16 { width: 16px; height: 16px; font-size: 12px; border-radius: 4px; box-shadow: 2px 2px 0 var(--ink); }
+  .size-16.favplus span { font-size: 16px; font-weight: 800; line-height: 1; }
+  .size-16.favbubplus svg path:last-child { stroke-width: 5; }
+
+  .favopt-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    padding: 6px 12px 6px 6px;
+    border-radius: 8px 8px 0 0;
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    color: var(--ink-2);
+    margin: 0 0 14px;
+    max-width: 100%;
+  }
+  .tab-favi-real {
+    width: 16px; height: 16px;
+    background: var(--magenta);
+    color: var(--paper);
+    border-radius: 4px;
+    display: grid; place-items: center;
+    transform: rotate(-4deg);
+    flex-shrink: 0;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+  }
+  .tab-favi-real svg { width: 11px; height: 11px; }
+  .favm-tab span { font-size: 10px; }
+  .favplus-tab span { font-size: 14px; line-height: 1; }
+
+  .favopt-note {
+    color: var(--ink-2);
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .favopt-note strong { color: var(--magenta); }
+  .favopt-note em { font-style: italic; color: var(--ink); }
+
+  /* verdict */
+  .cmp-verdict {
+    margin-top: 48px;
+    padding: 28px 32px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 16px;
+    box-shadow: 6px 6px 0 var(--magenta);
+  }
+  .cmp-verdict h3 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    margin: 0 0 14px;
+    letter-spacing: -0.02em;
+    color: var(--yellow);
+  }
+  .cmp-verdict ul {
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cmp-verdict li {
+    font-size: 14.5px;
+    line-height: 1.55;
+    padding-left: 22px;
+    position: relative;
+    color: color-mix(in srgb, var(--paper) 88%, transparent);
+  }
+  .cmp-verdict li::before {
+    content: '→';
+    position: absolute;
+    left: 0; top: 0;
+    color: var(--magenta);
+    font-weight: 700;
+  }
+  .cmp-verdict strong { color: var(--yellow); font-weight: 700; }
+
+  /* ─── direction 05 · +socios rebrand ─── */
+  .lp-rebrand {
+    margin-top: 56px;
+    padding: 56px 0;
+    border-top: 2px dashed var(--line);
+  }
+  .rb-head { max-width: 880px; margin-bottom: 48px; }
+  .rb-title {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 4.5vw, 52px);
+    letter-spacing: -0.035em;
+    margin: 0 0 8px;
+    line-height: 1.05;
+    color: var(--ink);
+  }
+  .rb-pop {
+    color: var(--magenta);
+    background: var(--yellow);
+    padding: 0 10px;
+    display: inline-block;
+    transform: rotate(-1.5deg);
+    box-shadow: 4px 4px 0 var(--ink);
+    margin: 0 4px;
+  }
+  .rb-head .lp-rationale strong { color: var(--ink); }
+  .rb-head .lp-rationale em { color: var(--magenta); font-style: italic; }
+
+  .rb-row { margin-bottom: 36px; }
+  .rb-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.7fr;
+    gap: 16px;
+  }
+  @media (max-width: 880px) { .rb-grid { grid-template-columns: 1fr; } }
+
+  /* shared rebrand wordmark base */
+  .logo-rb {
+    display: inline-flex;
+    align-items: baseline;
+    text-decoration: none;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-size: 36px;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .logo-rb.nav { font-size: 22px; }
+  .logo-rb.hero-size { font-size: clamp(48px, 7vw, 84px); }
+  .logo-rb.foot-size { font-size: 26px; }
+
+  .rb-plus {
+    color: var(--magenta);
+    font-weight: 800;
+    margin-right: 0;
+  }
+  .rb-word { color: var(--ink); }
+  .rb-word.upper { letter-spacing: -0.01em; }
+
+  .logo-rb.inverse .rb-word { color: var(--paper); }
+  .logo-rb.inverse .rb-plus { color: var(--yellow); }
+
+  /* variant B · plus block */
+  .rb-plus-block {
+    display: inline-grid;
+    place-items: center;
+    background: var(--yellow);
+    color: var(--magenta);
+    width: 1em;
+    height: 1em;
+    border-radius: 0.2em;
+    transform: rotate(-4deg);
+    box-shadow: 0.12em 0.12em 0 var(--ink);
+    font-size: 0.78em;
+    margin-right: 0.18em;
+    font-weight: 800;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .logo-rb.b .rb-word { color: var(--ink); }
+  .logo-rb.b.inverse .rb-plus-block {
+    background: var(--yellow);
+    color: var(--magenta);
+    box-shadow: 0.12em 0.12em 0 var(--magenta);
+  }
+  .logo-rb.b.inverse .rb-word { color: var(--paper); }
+
+  /* variant C · with gap */
+  .rb-gap { display: inline-block; width: 0.22em; }
+
+  /* variant D · uppercase */
+  .logo-rb.d .rb-word { font-size: 0.92em; }
+
+  /* tie-in section */
+  .rb-tie {
+    margin-top: 48px;
+    padding: 36px 32px;
+    background: color-mix(in srgb, var(--yellow) 35%, var(--paper));
+    border: 2px solid var(--ink);
+    border-radius: 18px;
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .rb-tie h3 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    margin: 0 0 22px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .rb-tie-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  .rb-tie-favi, .rb-tie-mark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .rb-tie-arrow {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 36px;
+    color: var(--magenta);
+    font-weight: 800;
+  }
+  .rb-tie p {
+    color: var(--ink-2);
+    font-size: 14px;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* caveats */
+  .rb-caveats {
+    margin-top: 32px;
+    padding: 28px 32px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 16px;
+    box-shadow: 6px 6px 0 var(--magenta);
+  }
+  .rb-caveats h3 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
+    color: var(--yellow);
+  }
+  .rb-caveats ul {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .rb-caveats li {
+    font-size: 14px;
+    line-height: 1.6;
+    padding-left: 22px;
+    position: relative;
+    color: color-mix(in srgb, var(--paper) 88%, transparent);
+  }
+  .rb-caveats li::before {
+    content: '→';
+    position: absolute;
+    left: 0; top: 0;
+    color: var(--magenta);
+    font-weight: 700;
+  }
+  .rb-caveats strong { color: var(--yellow); font-weight: 700; }
+  .rb-caveats code {
+    font-family: 'DM Mono', monospace;
+    font-size: 12.5px;
+    background: color-mix(in srgb, var(--paper) 12%, transparent);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--paper);
+  }
+
+  .lp-foot {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 2px dashed var(--line);
+    color: var(--mute);
+    font-size: 13px;
+  }
+  .lp-foot strong { color: var(--ink); font-weight: 600; }
+</style>
+</Layout>

@@ -1,0 +1,29 @@
+{
+  "name": "massocios-web",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "copy-og-images": "node scripts/copy-og-images.js",
+    "generate-favicons": "node scripts/generate-favicons.js",
+    "generate-logo-colors": "node scripts/generate-logo-colors.js",
+    "generate-og-images": "node scripts/generate-og-images.js",
+    "build": "npm run generate-favicons && npm run generate-og-images && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
+    "@tailwindcss/vite": "^4.2.3",
+    "@vercel/analytics": "^1.5.0",
+    "@vercel/speed-insights": "^1.2.0",
+    "astro": "^6.1.8",
+    "tailwindcss": "^4.2.3"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.5"
+  }
+}

@@ -1,0 +1,22 @@
+---
+import { SITE_CONFIG } from '../utils/meta';
+---
+
+<header class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
+  <div class="mx-auto flex h-14 max-w-3xl items-center justify-between px-4">
+    <a href="/" class="text-sm font-semibold tracking-tight text-slate-900">
+      <span class="text-sky-600">{SITE_CONFIG.name}</span>
+    </a>
+    <nav class="flex items-center gap-4 text-sm text-slate-600" aria-label="Principal">
+      <a href="/" class="hover:text-slate-900">Inicio</a>
+      <a
+        href={SITE_CONFIG.appRegistrationUrl}
+        class="rounded-full bg-sky-600 px-3 py-1.5 font-medium text-white hover:bg-sky-700"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Registro
+      </a>
+    </nav>
+  </div>
+</header>
