@@ -1,0 +1,80 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { createPageMeta, SITE_CONFIG } from '../utils/meta';
+const metaData = createPageMeta('/privacidad', {
+  title: `Política de Privacidad — ${SITE_CONFIG.name}`,
+  description: 'Conocé cómo tutreino protege y gestiona tu información personal.',
+  noindex: false,
+});
+---
+<SiteLayout {...metaData}>
+  <main class="h-legal-wrap">
+    <div class="h-legal-inner">
+      <a href="/" class="h-legal-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Volver al inicio
+      </a>
+
+      <header class="h-legal-header">
+        <span class="h-legal-eyebrow">Legal</span>
+        <h1 class="h-legal-h1">Política de <span class="h-grad">Privacidad</span></h1>
+        <p class="h-legal-lead">En tutreino, tu privacidad es nuestra prioridad. Conocé cómo protegemos y gestionamos tu información personal.</p>
+        <p class="h-legal-date">Última actualización: abril de 2026</p>
+      </header>
+
+      <div class="h-legal-body">
+
+        <section class="h-legal-section">
+          <h2>Compromiso con tu privacidad</h2>
+          <p>tutreino se compromete a proteger tu privacidad y la confidencialidad de tu información personal. Esta política explica cómo recopilamos, usamos, almacenamos y protegemos la información que nos proporcionás al usar nuestros servicios de gestión de gimnasios y entrenamiento.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>Información que recopilamos</h2>
+          <p>Recopilamos datos personales durante el registro, incluyendo nombre, correo electrónico, número de teléfono y detalles de uso de la plataforma. También recopilamos los datos de socios que se ingresan para la gestión de membresías, reservas, pagos y seguimiento de progreso.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>Uso de la información</h2>
+          <p>Utilizamos tu información para brindar y mejorar el servicio, procesar transacciones, comunicarnos con vos y cumplir con obligaciones legales. Los datos de los socios se utilizan exclusivamente para funciones de gestión del gimnasio o entrenador.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>Protección de datos</h2>
+          <p>Implementamos medidas de seguridad técnicas y organizativas que protegen la información contra accesos no autorizados, alteración, divulgación o destrucción. Utilizamos encriptación SSL/TLS y almacenamiento seguro en la nube.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>Compartir información</h2>
+          <p>No vendemos, intercambiamos ni transferimos información personal a terceros sin consentimiento, salvo cuando sea necesario para la prestación del servicio o el cumplimiento de obligaciones legales.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>Retención de datos</h2>
+          <p>Conservamos la información personal el tiempo necesario para los fines indicados. Para cuentas inactivas, eliminamos automáticamente todos los datos personales a los 90 días sin interacción con la plataforma, salvo que la ley exija un período mayor.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>Tus derechos</h2>
+          <p>Tenés derecho a acceder, corregir, eliminar o limitar el procesamiento de tus datos personales. También podés solicitar la portabilidad de tus datos y oponerte al procesamiento en determinadas circunstancias.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>Seguridad de datos</h2>
+          <p>Aplicamos las mejores prácticas del sector para proteger tu información, incluyendo cifrado de datos, acceso restringido y monitoreo continuo.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>Cumplimiento legal</h2>
+          <p>Cumplimos con las normativas de protección de datos aplicables, incluyendo el RGPD y las leyes de privacidad latinoamericanas vigentes.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>¿Preguntas sobre privacidad?</h2>
+          <p>Para preguntas sobre esta política de privacidad o para ejercer tus derechos de protección de datos, contactanos en <a href="mailto:info@tutreino.com">info@tutreino.com</a>.</p>
+        </section>
+
+      </div>
+    </div>
+  </main>
+</SiteLayout>

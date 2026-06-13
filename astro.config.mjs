@@ -6,11 +6,11 @@ import sitemap from "@astrojs/sitemap";
 // https://astro.build/config
 export default defineConfig({
   // Your site URL - update this to your actual domain
-  site: 'https://www.massocios.com',
+  site: 'https://www.tutreino.com',
   integrations: [sitemap({
     filter: (page) =>
-      page !== 'https://www.massocios.com/validate/' &&
-      page !== 'https://www.massocios.com/404/',
+      page !== 'https://www.tutreino.com/validate/' &&
+      page !== 'https://www.tutreino.com/404/',
   })],
   vite: {
     plugins: [tailwindcss()],

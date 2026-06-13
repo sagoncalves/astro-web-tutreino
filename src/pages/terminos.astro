@@ -1,0 +1,122 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { createPageMeta, SITE_CONFIG } from '../utils/meta';
+const metaData = createPageMeta('/terminos', {
+  title: `Términos y Condiciones — ${SITE_CONFIG.name}`,
+  description: 'Conocé los términos que rigen el uso de tutreino y nuestros servicios de gestión de gimnasios.',
+  noindex: false,
+});
+---
+<SiteLayout {...metaData}>
+  <main class="h-legal-wrap">
+    <div class="h-legal-inner">
+      <a href="/" class="h-legal-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Volver al inicio
+      </a>
+
+      <header class="h-legal-header">
+        <span class="h-legal-eyebrow">Legal</span>
+        <h1 class="h-legal-h1">Términos y <span class="h-grad">Condiciones</span></h1>
+        <p class="h-legal-lead">Conocé los términos que rigen el uso de tutreino y nuestros servicios de gestión de gimnasios y entrenadores personales.</p>
+        <p class="h-legal-date">Última actualización: junio de 2026</p>
+      </header>
+
+      <div class="h-legal-body">
+
+        <section class="h-legal-section">
+          <h2>1. Naturaleza del Servicio</h2>
+          <p>tutreino es una plataforma de software como servicio (SaaS) de titularidad exclusiva de tutreino. El cliente contrata el acceso a la plataforma bajo modalidad de licencia de uso temporal, mensual y renovable. En ningún caso la contratación del servicio implica transferencia de propiedad, cesión de derechos, ni titularidad alguna sobre la plataforma, su tecnología, marca, código fuente, diseño, funcionalidades o infraestructura.</p>
+          <p>tutreino opera bajo un modelo de marca blanca (<em>white label</em>): la plataforma puede ser presentada bajo la identidad visual del cliente, pero su propiedad intelectual, tecnológica y comercial pertenece en su totalidad a tutreino. El cliente no adquiere ningún derecho sobre la plataforma más allá del acceso funcional durante el período abonado.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>2. Aceptación de Términos</h2>
+          <p>Al acceder y utilizar tutreino, el cliente acepta en su totalidad estos términos y condiciones. Si no estás de acuerdo con alguna parte, no debés utilizar el servicio.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>3. Licencia de Uso</h2>
+          <p>tutreino otorga al cliente una licencia de uso no exclusiva, intransferible e inembargable para acceder a la plataforma durante el período de suscripción vigente. Esta licencia:</p>
+          <ul class="h-legal-list">
+            <li>Es estrictamente personal e intransferible — no puede cederse, sublicenciarse ni transferirse a terceros.</li>
+            <li>Está condicionada al pago puntual de la suscripción mensual correspondiente.</li>
+            <li>Se extingue automáticamente al momento de la cancelación o mora en el pago, sin necesidad de notificación previa.</li>
+            <li>No genera derecho alguno sobre la propiedad intelectual de tutreino.</li>
+          </ul>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>4. Modalidad de Pago y Suscripción</h2>
+          <p>El servicio se factura de forma mensual y anticipada. El acceso a la plataforma se mantiene activo mientras la suscripción esté vigente y los pagos al día. tutreino se reserva el derecho de:</p>
+          <ul class="h-legal-list">
+            <li>Suspender el acceso a la plataforma de forma inmediata ante cualquier factura vencida o impaga.</li>
+            <li>No prestar el servicio durante períodos no abonados, sin que ello constituya incumplimiento contractual de parte de tutreino.</li>
+            <li>Modificar los planes y precios con un preaviso de 30 días corridos.</li>
+          </ul>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>5. Cancelación y Eliminación de Datos</h2>
+          <p>El cliente puede cancelar su suscripción en cualquier momento. La cancelación tiene efecto al cierre del ciclo de facturación en curso. Al producirse la cancelación:</p>
+          <ul class="h-legal-list">
+            <li>El acceso a la plataforma queda inhabilitado de forma definitiva al vencimiento del período pago.</li>
+            <li>Todos los datos almacenados — incluyendo fichas de socios, historial de pagos, rutinas, asistencias, comunicaciones y cualquier otra información asociada a la cuenta — serán eliminados de forma permanente e irreversible en un plazo no mayor a 30 días calendario desde la fecha de cancelación.</li>
+            <li>Una vez eliminados los datos, tutreino no tiene obligación ni posibilidad de recuperarlos bajo ninguna circunstancia.</li>
+            <li>La cancelación no da derecho a reembolso por el período en curso ni por períodos anteriores.</li>
+          </ul>
+          <div class="h-legal-warning">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <p><strong>IMPORTANTE:</strong> Al cancelar el servicio, todos los datos se eliminan de forma permanente. El cliente es responsable de exportar y resguardar su información antes de cancelar.</p>
+          </div>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>6. Uso del Servicio</h2>
+          <p>tutreino es una plataforma diseñada para la gestión de gimnasios y entrenadores personales, incluyendo reservas de clases, cobros recurrentes, rutinas con inteligencia artificial, predicción de bajas y app para socios. El cliente se compromete a utilizar el servicio de manera responsable, lícita y conforme a estos términos.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>7. Responsabilidades del Cliente</h2>
+          <p>El cliente es responsable de mantener la confidencialidad de sus credenciales de acceso, proporcionar información veraz y actualizada, y no compartir el acceso con personas no autorizadas. Asimismo, es responsable de obtener el consentimiento expreso de sus socios para el tratamiento de datos personales y de cumplir con las normativas locales aplicables en materia de protección de datos.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>8. Protección de Datos Personales</h2>
+          <p>tutreino cumple con las normativas vigentes en materia de protección de datos personales en los países donde opera. Los datos son procesados exclusivamente para la prestación del servicio contratado y no se comercializan ni ceden a terceros sin consentimiento expreso.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>9. Propiedad Intelectual</h2>
+          <p>La totalidad de los derechos de propiedad intelectual sobre la plataforma tutreino — incluyendo pero no limitado a su código fuente, diseño, arquitectura, algoritmos, marca, nombre comercial, logotipos y documentación — son propiedad exclusiva de tutreino. El cliente no obtiene ningún derecho sobre estos elementos más allá del acceso funcional previsto en estos términos. Queda expresamente prohibida la reproducción, copia, distribución, ingeniería inversa o cualquier uso no autorizado de la plataforma o sus componentes.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>10. Nivel de Servicio</h2>
+          <p>Nos esforzamos por mantener una disponibilidad del 99.5% mensual, excluyendo mantenimientos programados. Ofrecemos soporte técnico en horarios comerciales con respuesta en un plazo máximo de 24 horas hábiles. Las actualizaciones y mejoras de la plataforma se incluyen sin costo adicional durante la suscripción vigente.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>11. Prohibiciones</h2>
+          <p>Está prohibido utilizar el servicio para actividades ilegales, intentar acceder sin autorización a sistemas o datos ajenos, distribuir código malicioso, realizar ingeniería inversa sobre la plataforma, o interferir con su funcionamiento normal.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>12. Limitación de Responsabilidad</h2>
+          <p>tutreino no será responsable por daños indirectos, incidentales o consecuentes derivados del uso o la imposibilidad de uso del servicio, excepto donde la ley aplicable no permita tal limitación. tutreino tampoco será responsable por el uso indebido de datos personales realizado por el cliente en incumplimiento de sus propias obligaciones legales.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>13. Modificaciones</h2>
+          <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios serán notificados con al menos 15 días de anticipación mediante el correo registrado o aviso en la plataforma. El uso continuado del servicio tras la entrada en vigencia de los cambios constituye aceptación de los nuevos términos.</p>
+        </section>
+
+        <section class="h-legal-section">
+          <h2>¿Preguntas sobre los Términos?</h2>
+          <p>Si tenés preguntas sobre estos términos o necesitás aclaraciones, contactanos en <a href="mailto:info@tutreino.com">info@tutreino.com</a>.</p>
+        </section>
+
+      </div>
+    </div>
+  </main>
+</SiteLayout>

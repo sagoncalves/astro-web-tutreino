@@ -1,15 +1,15 @@
 // src/utils/meta.ts
 
 export const SITE_CONFIG = {
-  name: "MasSocios",
-  url: "https://www.massocios.com",
-  appRegistrationUrl: "https://app.massocios.com/registro",
+  name: "tutreino",
+  url: "https://www.tutreino.com",
+  appRegistrationUrl: "https://app.tutreino.com/registro",
   social: {
-    instagramUrl: "https://www.instagram.com/massocios/",
-    twitterSite: "@massocios",
+    instagramUrl: "https://www.instagram.com/tutreino/",
+    twitterSite: "@tutreino",
   },
   defaultDescription:
-    "Automatización WhatsApp para gimnasios: consultas, pagos y reservas sin contratar más staff.",
+    "Sistema de gestión para gimnasios y entrenadores personales: reservas, pagos recurrentes, rutinas con IA y app propia para tus socios.",
   defaultImage: "/og-images/index-og-image.jpg",
   locale: "es_ES",
 } as const;
@@ -58,7 +58,7 @@ export function createPageMeta(path: string, meta: PageMeta, staticOgImagePath?:
 
 export const PAGE_META = {
   home: {
-    title: `${SITE_CONFIG.name} — WhatsApp para gimnasios`,
+    title: `${SITE_CONFIG.name} — Software para gimnasios y entrenadores`,
     description: SITE_CONFIG.defaultDescription,
     ogImage: "/og-images/index-og-image.jpg",
     canonical: SITE_CONFIG.url,

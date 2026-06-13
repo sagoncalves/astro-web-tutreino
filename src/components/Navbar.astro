@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets';
+import logoSrc from '../assets/logo.png';
+import { SITE_CONFIG } from '../utils/meta';
+
+/**
+ * home — when true, nav links use plain anchors (#section)
+ *        instead of absolute paths (/#section).
+ *        Set this only on the index page.
+ */
+export interface Props {
+  home?: boolean;
+}
+
+const { home = false } = Astro.props;
+const p = (anchor: string) => (home ? anchor : `/${anchor}`);
+
+const registroUrl = SITE_CONFIG.appRegistrationUrl;
+const waNumber = '59891961610';
+const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero agendar una demo de tutreino para mi gimnasio.')}`;
+---
+
+<nav class="h-nav" aria-label="Principal">
+  <a href={home ? '#inicio' : '/'} class="h-logo">
+    <Image src={logoSrc} alt="" aria-hidden="true" width={24} height={24} densities={[1, 2, 3]} format="png" class="h-logo-img" />
+    <span>tutreino</span>
+  </a>
+  <div class="h-nav-pill">
+    <a href={p('#producto')}>Producto</a>
+    <a href={p('#socios')}>Socios</a>
+    <a href={p('#pagos')}>Pagos</a>
+    <a href={p('#precios')}>Precios</a>
+    <a href={p('#faq')}>FAQ</a>
+  </div>
+  <div class="h-nav-right">
+    <a href={registroUrl} class="h-cta-mini" target="_blank" rel="noopener noreferrer">
+      <span class="h-dot-on"></span>
+      Empezar
+    </a>
+    <button type="button" class="h-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="h-mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="h-mm-backdrop" id="h-mm-backdrop" hidden></div>
+<div class="h-mobile-menu" id="h-mobile-menu" hidden>
+  <a href={p('#producto')}>Producto</a>
+  <a href={p('#socios')}>Socios</a>
+  <a href={p('#pagos')}>Pagos</a>
+  <a href={p('#precios')}>Precios</a>
+  <a href={p('#faq')}>FAQ</a>
+  <a href={registroUrl} class="h-mm-cta" target="_blank" rel="noopener noreferrer">Empezar prueba · 30 días</a>
+  <a href={waUrl} class="h-mm-wa" target="_blank" rel="noopener noreferrer">Hablar por WhatsApp</a>
+</div>
+
+<script>
+  const burger = document.querySelector('.h-burger');
+  const menu = document.getElementById('h-mobile-menu');
+  const backdrop = document.getElementById('h-mm-backdrop');
+  if (burger && menu && backdrop) {
+    let isOpen = false;
+    let closeTimer: ReturnType<typeof setTimeout>;
+    const open = () => {
+      clearTimeout(closeTimer);
+      isOpen = true;
+      menu.hidden = false;
+      backdrop.hidden = false;
+      requestAnimationFrame(() => { requestAnimationFrame(() => { menu.classList.add('open'); backdrop.classList.add('open'); }); });
+      burger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const close = () => {
+      isOpen = false;
+      menu.classList.remove('open');
+      backdrop.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      closeTimer = setTimeout(() => { if (!isOpen) { menu.hidden = true; backdrop.hidden = true; } }, 300);
+    };
+    burger.addEventListener('click', () => (isOpen ? close() : open()));
+    backdrop.addEventListener('click', close);
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen) close(); });
+    window.matchMedia('(min-width: 761px)').addEventListener('change', (e) => { if (e.matches && isOpen) close(); });
+  }
+</script>
