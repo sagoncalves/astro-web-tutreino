@@ -3,7 +3,7 @@
 export const SITE_CONFIG = {
   name: "tutreino",
   url: "https://www.tutreino.com",
-  appRegistrationUrl: "https://app.tutreino.com/registro",
+  appRegistrationUrl: `https://wa.me/59891961610?text=${encodeURIComponent('Hola, quiero agendar una demo de tutreino para mi gimnasio.')}`,
   social: {
     instagramUrl: "https://www.instagram.com/tutreino/",
     twitterSite: "@tutreino",
