@@ -79,4 +79,54 @@ async function generateOptimizedOGImages() {
   }
 }
 
-generateOptimizedOGImages().catch(console.error); 
+async function generateBrandedOGImage() {
+  const LOGO_PATH = 'src/assets/logo-transparent.png';
+  const OUTPUT_PATH = path.join(PUBLIC_DIR, 'index-og-image.jpg');
+  const PRIMARY_COLOR = { r: 29, g: 78, b: 216 }; // #1d4ed8
+
+  // Logo occupies 55% of the canvas width, centered
+  const logoWidth = Math.round(TARGET_WIDTH * 0.55);
+
+  try {
+    console.log(`Generating branded OG image...`);
+
+    const background = await sharp({
+      create: {
+        width: TARGET_WIDTH,
+        height: TARGET_HEIGHT,
+        channels: 3,
+        background: PRIMARY_COLOR,
+      },
+    })
+      .png()
+      .toBuffer();
+
+    const logoHeight = Math.round(TARGET_HEIGHT * 0.70);
+    const logoResized = await sharp(LOGO_PATH)
+      .resize(logoWidth, logoHeight, { fit: 'inside' })
+      .png()
+      .toBuffer();
+
+    const logoMeta = await sharp(logoResized).metadata();
+    const left = Math.round((TARGET_WIDTH - logoMeta.width) / 2);
+    const top = Math.round((TARGET_HEIGHT - logoMeta.height) / 2);
+
+    const outputBuffer = await sharp(background)
+      .composite([{ input: logoResized, left, top }])
+      .jpeg({ quality: 90, progressive: true, mozjpeg: true })
+      .toBuffer();
+
+    fs.writeFileSync(OUTPUT_PATH, outputBuffer);
+    const fileSizeKB = Math.round(outputBuffer.length / 1024);
+    console.log(`✅ Generated ${OUTPUT_PATH} (${TARGET_WIDTH}x${TARGET_HEIGHT}, ${fileSizeKB}KB)`);
+  } catch (error) {
+    console.error(`❌ Error generating branded OG image:`, error.message);
+  }
+}
+
+async function main() {
+  await generateOptimizedOGImages();
+  await generateBrandedOGImage();
+}
+
+main().catch(console.error);
