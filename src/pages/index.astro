@@ -875,14 +875,11 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
 
 @media(max-width:900px) {
   .h-test-grid {
-    display: flex;
+    display: grid;
     overflow: hidden;
-    position: relative;
-    min-height: 220px;
   }
   .h-test {
-    position: absolute;
-    inset: 0;
+    grid-area: 1 / 1;
     opacity: 0;
     transform: translateX(40px);
     transition: none;
