@@ -1,0 +1,195 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { createPageMeta, SITE_CONFIG } from '../utils/meta';
+const metaData = createPageMeta('/contacto', {
+  title: `Contacto — ${SITE_CONFIG.name}`,
+  description: 'Contactanos para agendar una demo o resolver cualquier duda sobre tutreino.',
+  noindex: false,
+});
+---
+<SiteLayout {...metaData}>
+  <main class="h-legal-wrap">
+    <div class="h-legal-inner">
+      <a href="/" class="h-legal-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Volver al inicio
+      </a>
+
+      <header class="h-legal-header">
+        <span class="h-legal-eyebrow">Contacto</span>
+        <h1 class="h-legal-h1">Hablemos de <span class="h-grad">tu negocio</span></h1>
+        <p class="h-legal-lead">¿Querés una demo, tenés una pregunta o necesitás ayuda? Estamos a un mensaje de distancia.</p>
+      </header>
+
+      <div class="h-contact-grid">
+
+        <div class="h-contact-channels">
+          <a href={SITE_CONFIG.appRegistrationUrl} target="_blank" rel="noopener noreferrer" class="h-contact-card h-contact-card--primary">
+            <div class="h-contact-card-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.554 4.118 1.523 5.847L0 24l6.305-1.506A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.368l-.36-.213-3.732.892.924-3.644-.234-.374A9.818 9.818 0 112 12 9.818 9.818 0 0112 21.818z"/></svg>
+            </div>
+            <div class="h-contact-card-body">
+              <span class="h-contact-card-label">Agendar una demo</span>
+              <span class="h-contact-card-desc">Hablamos por WhatsApp y te mostramos la plataforma en vivo.</span>
+            </div>
+            <svg class="h-contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+
+          <a href="mailto:info@tutreino.com" class="h-contact-card">
+            <div class="h-contact-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22,6 12,13 2,6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="h-contact-card-body">
+              <span class="h-contact-card-label">Email</span>
+              <span class="h-contact-card-desc">info@tutreino.com — respondemos en menos de 24 horas.</span>
+            </div>
+            <svg class="h-contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+
+          <a href={SITE_CONFIG.social.instagramUrl} target="_blank" rel="noopener noreferrer" class="h-contact-card">
+            <div class="h-contact-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke-linecap="round" stroke-linejoin="round"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="h-contact-card-body">
+              <span class="h-contact-card-label">Instagram</span>
+              <span class="h-contact-card-desc">@tutreino — seguinos para novedades y casos de éxito.</span>
+            </div>
+            <svg class="h-contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <div class="h-contact-info">
+          <div class="h-contact-info-block">
+            <span class="h-legal-eyebrow">Horario</span>
+            <p>Lunes a viernes, 9:00 – 18:00 (UTC-3)</p>
+          </div>
+          <div class="h-contact-info-block">
+            <span class="h-legal-eyebrow">Soporte técnico</span>
+            <p>Si sos cliente y necesitás ayuda con la plataforma, escribinos directo por WhatsApp para atención prioritaria.</p>
+          </div>
+          <div class="h-contact-info-block">
+            <span class="h-legal-eyebrow">Prensa y alianzas</span>
+            <p>Para consultas de medios o propuestas comerciales, escribinos a <a href="mailto:info@tutreino.com">info@tutreino.com</a>.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</SiteLayout>
+
+<style>
+.h-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 48px;
+  align-items: start;
+}
+
+.h-contact-channels {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.h-contact-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 22px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.h-contact-card:hover {
+  border-color: var(--line-2);
+  box-shadow: 0 4px 20px rgba(15,22,35,0.07);
+  transform: translateY(-1px);
+}
+.h-contact-card--primary {
+  border-color: var(--green);
+  background: color-mix(in srgb, var(--green) 4%, var(--panel));
+}
+.h-contact-card--primary:hover {
+  border-color: var(--lime);
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--green) 20%, transparent);
+}
+
+.h-contact-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  color: var(--green);
+}
+.h-contact-card-icon svg { width: 20px; height: 20px; }
+.h-contact-card--primary .h-contact-card-icon {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+}
+
+.h-contact-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.h-contact-card-label {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+}
+.h-contact-card-desc {
+  font-size: 13.5px;
+  color: var(--mute);
+  line-height: 1.5;
+}
+
+.h-contact-arrow {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--mute);
+  transition: color .18s ease, transform .18s ease;
+}
+.h-contact-card:hover .h-contact-arrow {
+  color: var(--green);
+  transform: translateX(3px);
+}
+
+.h-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 28px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+.h-contact-info-block { display: flex; flex-direction: column; gap: 8px; }
+.h-contact-info-block p {
+  margin: 0;
+  font-size: 14.5px;
+  color: var(--ink-2);
+  line-height: 1.65;
+}
+.h-contact-info-block a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
+.h-contact-info-block a:hover { color: var(--lime); }
+
+@media(max-width:760px) {
+  .h-contact-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .h-contact-info { order: -1; }
+}
+</style>
