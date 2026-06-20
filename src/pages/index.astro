@@ -1,21 +1,21 @@
 ---
 // Brand H: brand-a content × v2 aesthetic
 // Dark green palette, grid bg, glows, Bricolage+Geist+JetBrains, floating pill nav
-// Content: tutreino — gym/personal-trainer SaaS with admin panel + member-facing app,
+// Content: Tutreino — gym/personal-trainer SaaS with admin panel + member-facing app,
 // multi-branch, white label (Pro), AI routines, churn prediction, role permissions
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { createPageMeta, PAGE_META, SITE_CONFIG } from '../utils/meta';
 const metaData = createPageMeta('/', PAGE_META.home);
 const registroUrl = SITE_CONFIG.appRegistrationUrl;
 const waNumber = '59891961610';
-const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero agendar una demo de tutreino para mi gimnasio.')}`;
+const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero agendar una demo de Tutreino para mi gimnasio.')}`;
 ---
 <SiteLayout {...metaData} home>
 
   <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "tutreino",
+    "name": "Tutreino",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web",
     "description": "Sistema de gestión para gimnasios de una o varias sucursales y entrenadores personales: reservas, pagos recurrentes, rutinas con inteligencia artificial, predicción de bajas y app propia (con white label) para que los socios entrenen, paguen y sigan su progreso.",
@@ -48,7 +48,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "¿Qué es tutreino exactamente?",
+        "name": "¿Qué es Tutreino exactamente?",
         "acceptedAnswer": { "@type": "Answer", "text": "Es un sistema de gestión para gimnasios y entrenadores personales, disponible como SaaS en app.tutreino.com. Incluye un panel administrativo para tu equipo y una app propia donde tus socios reservan clases, pagan, siguen su rutina y registran su progreso." }
       },
       {
@@ -59,7 +59,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
       {
         "@type": "Question",
         "name": "¿Qué es el white label del plan Pro?",
-        "acceptedAnswer": { "@type": "Answer", "text": "En el plan Pro, la app que usan tus socios se personaliza completamente con tu marca: tu logo, tus colores y tu nombre, sin ninguna referencia a tutreino. Ideal para gimnasios grandes que quieren su propia identidad." }
+        "acceptedAnswer": { "@type": "Answer", "text": "En el plan Pro, la app que usan tus socios se personaliza completamente con tu marca: tu logo, tus colores y tu nombre, sin ninguna referencia a Tutreino. Ideal para gimnasios grandes que quieren su propia identidad." }
       },
       {
         "@type": "Question",
@@ -78,7 +78,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
       },
       {
         "@type": "Question",
-        "name": "¿Cómo ayuda tutreino a reducir las bajas de socios?",
+        "name": "¿Cómo ayuda Tutreino a reducir las bajas de socios?",
         "acceptedAnswer": { "@type": "Answer", "text": "El sistema analiza asistencia, pagos y respuestas de satisfacción para identificar socios en riesgo de darse de baja, y te avisa antes de que pase para que puedas actuar a tiempo." }
       },
       {
@@ -316,7 +316,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
     <section class="h-section" id="testimonios">
       <div class="h-head">
         <h2 class="h-h2">Gimnasios que ya<br/><span class="h-grad">dejaron el Excel.</span></h2>
-        <p class="h-sub">Más de 120 gimnasios y entrenadores en Uruguay gestionan su negocio con tutreino todos los días.</p>
+        <p class="h-sub">Más de 120 gimnasios y entrenadores en Uruguay gestionan su negocio con Tutreino todos los días.</p>
       </div>
       <div class="h-test-grid">
         <article class="h-test">
@@ -334,7 +334,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
           </footer>
         </article>
         <article class="h-test">
-          <p>"Desde Fray Bentos manejamos todo sin complicaciones. Los socios reservan y pagan desde la app y nosotros no tocamos planillas desde que arrancamos con tutreino."</p>
+          <p>"Desde Fray Bentos manejamos todo sin complicaciones. Los socios reservan y pagan desde la app y nosotros no tocamos planillas desde que arrancamos con Tutreino."</p>
           <footer>
             <span class="h-test-av" style="background:rgba(124,58,237,.12);color:#7c3aed">X</span>
             <div><div class="h-test-name">Xavier Civitate</div><div class="h-test-role">1570 House Training · Fray Bentos, Río Negro</div></div>
@@ -368,13 +368,13 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
     <section class="h-section" id="comparativa">
       <div class="h-head">
         <h2 class="h-h2">Planillas y grupos<br/><span class="h-grad">tienen un techo.</span></h2>
-        <p class="h-sub">Excel, WhatsApp y libretas no escalan ni te dan una app para tus socios. Así se compara tu día a día actual con tutreino.</p>
+        <p class="h-sub">Excel, WhatsApp y libretas no escalan ni te dan una app para tus socios. Así se compara tu día a día actual con Tutreino.</p>
       </div>
-      <div class="h-cmp-table" role="table" aria-label="Comparación entre gestión manual y tutreino">
+      <div class="h-cmp-table" role="table" aria-label="Comparación entre gestión manual y Tutreino">
         <div class="h-cmp-row h-cmp-head" role="row">
           <span role="columnheader"><span class="sr-only">Característica</span></span>
           <span role="columnheader">Planillas + WhatsApp</span>
-          <span role="columnheader" class="h-cmp-hl">tutreino</span>
+          <span role="columnheader" class="h-cmp-hl">Tutreino</span>
         </div>
         <div class="h-cmp-row" role="row">
           <span role="cell">Experiencia para tus socios</span>
@@ -475,7 +475,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
             <li>Una sucursal</li>
             <li>Reservas de clases y agenda</li>
             <li>Pagos recurrentes y por transferencia</li>
-            <li>App para socios (marca tutreino)</li>
+            <li>App para socios (marca Tutreino)</li>
           </ul>
           <a href={registroUrl} class="h-vprice-cta" target="_blank" rel="noopener noreferrer">Empezar →</a>
         </article>
@@ -535,7 +535,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
       <div class="h-faq">
         <div class="h-faq-col">
           <details>
-            <summary><span class="h-qid">P.01</span> ¿Qué es tutreino exactamente?<span class="h-caret">+</span></summary>
+            <summary><span class="h-qid">P.01</span> ¿Qué es Tutreino exactamente?<span class="h-caret">+</span></summary>
             <p>Es un sistema de gestión para gimnasios y entrenadores personales, disponible como SaaS en app.tutreino.com. Incluye un panel administrativo para tu equipo y una app propia donde tus socios reservan clases, pagan, siguen su rutina y registran su progreso.</p>
           </details>
           <details>
@@ -544,7 +544,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
           </details>
           <details>
             <summary><span class="h-qid">P.03</span> ¿Qué es el white label del plan Pro?<span class="h-caret">+</span></summary>
-            <p>En el plan Pro, la app que usan tus socios se personaliza completamente con tu marca: tu logo, tus colores y tu nombre, sin ninguna referencia a tutreino. Ideal para gimnasios grandes que quieren su propia identidad.</p>
+            <p>En el plan Pro, la app que usan tus socios se personaliza completamente con tu marca: tu logo, tus colores y tu nombre, sin ninguna referencia a Tutreino. Ideal para gimnasios grandes que quieren su propia identidad.</p>
           </details>
           <details>
             <summary><span class="h-qid">P.04</span> ¿Cómo funcionan las rutinas con inteligencia artificial?<span class="h-caret">+</span></summary>
@@ -561,7 +561,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
             <p>Sí. Podés crear cuentas para entrenadores, recepcionistas u otros administradores, y asignarles permisos según su rol: qué pueden ver, editar o gestionar dentro del sistema.</p>
           </details>
           <details>
-            <summary><span class="h-qid">P.07</span> ¿Cómo ayuda tutreino a reducir las bajas de socios?<span class="h-caret">+</span></summary>
+            <summary><span class="h-qid">P.07</span> ¿Cómo ayuda Tutreino a reducir las bajas de socios?<span class="h-caret">+</span></summary>
             <p>El sistema analiza asistencia, pagos y respuestas de satisfacción para identificar socios en riesgo de darse de baja, y te avisa antes de que pase para que puedas actuar a tiempo.</p>
           </details>
           <details>

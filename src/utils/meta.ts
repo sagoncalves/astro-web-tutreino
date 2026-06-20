@@ -1,9 +1,9 @@
 // src/utils/meta.ts
 
 export const SITE_CONFIG = {
-  name: "tutreino",
+  name: "Tutreino",
   url: "https://www.tutreino.com",
-  appRegistrationUrl: `https://wa.me/59891961610?text=${encodeURIComponent('Hola, quiero agendar una demo de tutreino para mi gimnasio.')}`,
+  appRegistrationUrl: `https://wa.me/59891961610?text=${encodeURIComponent('Hola, quiero agendar una demo de Tutreino para mi gimnasio.')}`,
   social: {
     instagramUrl: "https://www.instagram.com/tutreino/",
     twitterSite: "@tutreino",

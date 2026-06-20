@@ -17,13 +17,13 @@ const p = (anchor: string) => (home ? anchor : `/${anchor}`);
 
 const registroUrl = SITE_CONFIG.appRegistrationUrl;
 const waNumber = '59891961610';
-const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero agendar una demo de tutreino para mi gimnasio.')}`;
+const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero agendar una demo de Tutreino para mi gimnasio.')}`;
 ---
 
 <nav class="h-nav" aria-label="Principal">
   <a href={home ? '#inicio' : '/'} class="h-logo">
     <Image src={logoSrc} alt="" aria-hidden="true" width={24} height={24} densities={[1, 2, 3]} format="png" class="h-logo-img" />
-    <span>tutreino</span>
+    <span>Tutreino</span>
   </a>
   <div class="h-nav-pill">
     <a href={p('#producto')}>Producto</a>
