@@ -341,7 +341,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
           </footer>
         </article>
         <article class="h-test">
-          <p>"Los cobros recurrentes cambiaron todo. Ya no persigo a nadie; la plataforma lo hace sola y yo me enfoco en dar buenas clases y hacer crecer el club."</p>
+          <p>"Hace poco comenzamos con el servicio y ya estamos super contentos por el trato y la experiencia recibida."</p>
           <footer>
             <span class="h-test-av" style="background:rgba(5,150,105,.12);color:#059669">A</span>
             <div><div class="h-test-name">Agustín Yauza</div><div class="h-test-role">Eco Training Club · Montevideo</div></div>
@@ -368,46 +368,45 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
     <section class="h-section" id="comparativa">
       <div class="h-head">
         <h2 class="h-h2">Planillas y grupos<br/><span class="h-grad">tienen un techo.</span></h2>
-        <p class="h-sub">Excel, WhatsApp y libretas no escalan ni te dan una app para tus socios. Así se compara tu día a día actual con Tutreino.</p>
+        <p class="h-sub">Excel, WhatsApp y libretas no escalan ni te dan una app para tus socios.</p>
       </div>
-      <div class="h-cmp-table" role="table" aria-label="Comparación entre gestión manual y Tutreino">
-        <div class="h-cmp-row h-cmp-head" role="row">
-          <span role="columnheader"><span class="sr-only">Característica</span></span>
-          <span role="columnheader">Planillas + WhatsApp</span>
-          <span role="columnheader" class="h-cmp-hl">Tutreino</span>
+      <div class="cmp-a-split">
+        <div class="cmp-a-panel cmp-a-before">
+          <div class="cmp-a-panel-head">
+            <span class="cmp-a-label-bad">Antes</span>
+            <span class="cmp-a-sublabel">Planillas + WhatsApp</span>
+          </div>
+          <ul class="cmp-a-list">
+            <li><span class="cmp-a-x">✕</span> Mensajes sueltos, sin un lugar propio</li>
+            <li><span class="cmp-a-x">✕</span> Cobro manual, mes a mes</li>
+            <li><span class="cmp-a-x">✕</span> Reservas por grupos de WhatsApp</li>
+            <li><span class="cmp-a-x">✕</span> Hojas sueltas, sin seguimiento de rutinas</li>
+            <li><span class="cmp-a-x">✕</span> Información dispersa por sucursal</li>
+            <li><span class="cmp-a-x">✕</span> Te enterás de las bajas cuando ya pasaron</li>
+          </ul>
         </div>
-        <div class="h-cmp-row" role="row">
-          <span role="cell">Experiencia para tus socios</span>
-          <span role="cell" class="h-cmp-no">Mensajes sueltos, sin un lugar propio</span>
-          <span role="cell" class="h-cmp-yes">App propia, con tu marca en el plan Pro</span>
+        <div class="cmp-a-divider" aria-hidden="true">
+          <div class="cmp-a-div-line"></div>
+          <div class="cmp-a-div-badge">VS</div>
+          <div class="cmp-a-div-line"></div>
         </div>
-        <div class="h-cmp-row" role="row">
-          <span role="cell">Cobro de membresías</span>
-          <span role="cell" class="h-cmp-no">Manual, mes a mes</span>
-          <span role="cell" class="h-cmp-yes">Recurrente, por tarjeta o transferencia</span>
-        </div>
-        <div class="h-cmp-row" role="row">
-          <span role="cell">Reserva de clases y turnos</span>
-          <span role="cell" class="h-cmp-no">Grupos de WhatsApp, planillas</span>
-          <span role="cell" class="h-cmp-yes">Agenda online desde la app del socio</span>
-        </div>
-        <div class="h-cmp-row" role="row">
-          <span role="cell">Rutinas de entrenamiento</span>
-          <span role="cell" class="h-cmp-no">Hojas sueltas, sin seguimiento</span>
-          <span role="cell" class="h-cmp-yes">Generadas con IA, periodizadas y con progreso</span>
-        </div>
-        <div class="h-cmp-row" role="row">
-          <span role="cell">Gimnasios con varias sucursales</span>
-          <span role="cell" class="h-cmp-no">Información dispersa por sede</span>
-          <span role="cell" class="h-cmp-yes">Vista consolidada y por sucursal</span>
-        </div>
-        <div class="h-cmp-row" role="row">
-          <span role="cell">Anticipación a las bajas</span>
-          <span role="cell" class="h-cmp-no">Te enterás cuando ya se fueron</span>
-          <span role="cell" class="h-cmp-yes">Alertas de riesgo antes de que pase</span>
+        <div class="cmp-a-panel cmp-a-after">
+          <div class="cmp-a-panel-head">
+            <span class="cmp-a-label-good">Tutreino</span>
+            <span class="cmp-a-sublabel">Todo en un lugar</span>
+          </div>
+          <ul class="cmp-a-list">
+            <li><span class="cmp-a-check">✓</span> App propia con tu marca (plan Pro)</li>
+            <li><span class="cmp-a-check">✓</span> Cobro recurrente por tarjeta o transferencia</li>
+            <li><span class="cmp-a-check">✓</span> Agenda online desde la app del socio</li>
+            <li><span class="cmp-a-check">✓</span> Rutinas con IA, periodizadas y con progreso</li>
+            <li><span class="cmp-a-check">✓</span> Vista consolidada y por sucursal</li>
+            <li><span class="cmp-a-check">✓</span> Alertas de riesgo antes de que se vayan</li>
+          </ul>
         </div>
       </div>
     </section>
+
 
     <!-- medios de pago -->
     <section class="h-section" id="pagos">
@@ -865,6 +864,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
 
 /* testimonios */
 .h-test-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+@media(max-width:1100px) and (min-width:901px) { .h-test-grid { grid-template-columns: repeat(2,1fr); } }
 .h-test { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 26px; display: flex; flex-direction: column; gap: 20px; transition: border-color .2s ease, background .2s ease; }
 .h-test:hover { border-color: var(--green); background: var(--panel-2); }
 .h-test p { margin: 0; color: var(--ink-2); font-size: 14.5px; line-height: 1.6; }
@@ -876,6 +876,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
 @media(max-width:900px) {
   .h-test-grid {
     display: grid;
+    grid-template-columns: 1fr;
     overflow: hidden;
   }
   .h-test {
@@ -900,31 +901,32 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
   }
 }
 
-/* comparativa */
-.h-cmp-table { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--panel); }
-.h-cmp-row { display: grid; grid-template-columns: 1.2fr 1fr 1fr; }
-.h-cmp-row + .h-cmp-row { border-top: 1px solid var(--line); }
-.h-cmp-row span { padding: 16px 20px; font-size: 14px; display: flex; align-items: center; }
-.h-cmp-head span { font-family: 'Space Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--mute); }
-.h-cmp-head .h-cmp-hl { color: var(--green); background: color-mix(in srgb, var(--green) 8%, transparent); }
-.h-cmp-row span:first-child { font-weight: 500; color: var(--ink); }
-.h-cmp-no { color: var(--mute); }
-.h-cmp-yes { color: var(--green); font-weight: 500; }
-.h-cmp-yes::before { content: ''; flex-shrink: 0; width: 14px; height: 8px; margin-right: 10px; border-left: 2px solid var(--green); border-bottom: 2px solid var(--green); transform: rotate(-45deg) translateY(-2px); }
-@media(max-width:720px) {
-  .h-cmp-table { border: none; background: none; border-radius: 0; overflow: visible; display: flex; flex-direction: column; gap: 10px; }
-  .h-cmp-head { display: none; }
-  .h-cmp-row { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; padding: 0; }
-  .h-cmp-row + .h-cmp-row { border-top: 1px solid var(--line); }
-  .h-cmp-row span { padding: 0; }
-  .h-cmp-row span:first-child { font-size: 11px; font-family: 'Space Mono', monospace; text-transform: uppercase; letter-spacing: .05em; color: var(--mute); font-weight: 500; padding: 12px 16px 8px; border-bottom: 1px solid var(--line); }
-  .h-cmp-row .h-cmp-no,
-  .h-cmp-row .h-cmp-yes { font-size: 13px; padding: 10px 16px; display: flex; align-items: flex-start; gap: 8px; }
-  .h-cmp-row .h-cmp-no { color: var(--mute); border-bottom: 1px solid var(--line); }
-  .h-cmp-row .h-cmp-no::before { content: '✕'; flex-shrink: 0; font-size: 11px; margin-top: 1px; opacity: .5; }
-  .h-cmp-row .h-cmp-yes { color: var(--green); background: color-mix(in srgb, var(--green) 5%, transparent); }
-  .h-cmp-yes::before { content: ''; flex-shrink: 0; width: 12px; height: 7px; margin-top: 4px; border-left: 2px solid var(--green); border-bottom: 2px solid var(--green); transform: rotate(-45deg) translateY(-2px); }
+/* ── OPTION A: split-panel before/after ─────────────── */
+.cmp-a-split { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; border-radius: 22px; overflow: hidden; border: 1px solid var(--line); }
+.cmp-a-panel { padding: 32px; display: flex; flex-direction: column; gap: 24px; }
+.cmp-a-before { background: color-mix(in srgb, var(--bg-2) 60%, var(--panel)); }
+.cmp-a-after { background: color-mix(in srgb, var(--green) 6%, var(--panel)); border-left: 1px solid color-mix(in srgb, var(--green) 30%, transparent); }
+.cmp-a-panel-head { display: flex; flex-direction: column; gap: 6px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.cmp-a-label-bad { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px; color: var(--mute); letter-spacing: -.02em; }
+.cmp-a-label-good { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px; color: var(--green); letter-spacing: -.02em; }
+.cmp-a-sublabel { font-family: 'Space Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--mute); }
+.cmp-a-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+.cmp-a-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14.5px; line-height: 1.5; }
+.cmp-a-before .cmp-a-list li { color: var(--mute); }
+.cmp-a-after .cmp-a-list li { color: var(--ink-2); }
+.cmp-a-x { font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; color: color-mix(in srgb, var(--mute) 60%, transparent); flex-shrink: 0; margin-top: 2px; }
+.cmp-a-check { font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; color: var(--green); flex-shrink: 0; margin-top: 2px; }
+.cmp-a-divider { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; width: 56px; background: var(--panel); border-left: 1px solid var(--line); border-right: 1px solid var(--line); position: relative; }
+.cmp-a-div-line { flex: 1; width: 1px; background: var(--line); }
+.cmp-a-div-badge { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--mute); padding: 8px 0; writing-mode: vertical-rl; text-orientation: mixed; }
+@media(max-width:760px) {
+  .cmp-a-split { grid-template-columns: 1fr; }
+  .cmp-a-divider { flex-direction: row; width: 100%; height: 40px; border-left: none; border-right: none; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .cmp-a-div-line { flex: 1; width: auto; height: 1px; }
+  .cmp-a-div-badge { writing-mode: initial; padding: 0 12px; }
+  .cmp-a-after { border-left: none; border-top: 1px solid color-mix(in srgb, var(--green) 30%, transparent); }
 }
+
 
 /* integraciones */
 .h-pagos-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
