@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logoSrc from '../assets/logo.png';
+import wordmarkSrc from '../assets/logo-wordmark-tutreino.png';
 import { SITE_CONFIG } from '../utils/meta';
 
 /**
@@ -23,7 +24,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
 <nav class="h-nav" aria-label="Principal">
   <a href={home ? '#inicio' : '/'} class="h-logo">
     <Image src={logoSrc} alt="" aria-hidden="true" width={24} height={24} densities={[1, 2, 3]} format="png" class="h-logo-img" />
-    <span>Tutreino</span>
+    <Image src={wordmarkSrc} alt="Tutreino" width={92} height={22} densities={[1, 2, 3]} format="png" class="h-logo-wordmark" />
   </a>
   <div class="h-nav-pill">
     <a href={p('#producto')}>Producto</a>

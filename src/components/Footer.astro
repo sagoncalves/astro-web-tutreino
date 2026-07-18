@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logoSrc from '../assets/logo.png';
+import wordmarkSrc from '../assets/logo-wordmark-tutreino.png';
 import { SITE_CONFIG } from '../utils/meta';
 
 const waNumber = '59891961610';
@@ -12,7 +13,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
     <div class="h-foot-brand">
       <a href="/" class="h-logo">
         <Image src={logoSrc} alt="" aria-hidden="true" width={32} height={32} densities={[1, 2, 3]} format="png" class="h-logo-img" />
-        <span>Tutreino</span>
+        <Image src={wordmarkSrc} alt="Tutreino" width={125} height={30} densities={[1, 2, 3]} format="png" class="h-logo-wordmark h-logo-wordmark-lg" />
       </a>
       <p class="h-foot-tagline">Creando experiencias digitales para el mundo del fitness.</p>
       <div class="h-foot-socials">
