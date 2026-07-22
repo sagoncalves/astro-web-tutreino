@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /docs
 
 Sitemap: https://www.tutreino.com/sitemap-index.xml

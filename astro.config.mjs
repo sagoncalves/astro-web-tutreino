@@ -10,7 +10,8 @@ export default defineConfig({
   integrations: [sitemap({
     filter: (page) =>
       page !== 'https://www.tutreino.com/validate/' &&
-      page !== 'https://www.tutreino.com/404/',
+      page !== 'https://www.tutreino.com/404/' &&
+      !page.startsWith('https://www.tutreino.com/docs'),
   })],
   vite: {
     plugins: [tailwindcss()],

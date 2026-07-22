@@ -1,0 +1,615 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { createPageMeta, SITE_CONFIG } from '../../utils/meta';
+
+const metaData = createPageMeta('/docs', {
+  title: `Acceso QR para la puerta física — ${SITE_CONFIG.name}`,
+  description: 'Referencia de API para conectar el hardware de la puerta (molinete, torniquete o cerradura) a la función gymValidateAccessQR.',
+  noindex: true,
+});
+
+const fields = [
+  {
+    key: 'token',
+    name: 'Token de un solo uso',
+    desc: 'Código temporal generado cuando el socio abrió su QR en la app (dura 70 segundos). Identifica ese intento de acceso puntual; se invalida al usarse.',
+    sample: '"3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481"',
+  },
+  {
+    key: 'tid',
+    name: 'Id del gimnasio (tenant)',
+    desc: 'A qué establecimiento pertenece el socio, para buscar el token en el gimnasio correcto.',
+    sample: '"gym-abc123"',
+  },
+  {
+    key: 'deviceId',
+    name: 'Id del dispositivo',
+    desc: 'Identifica qué puerta física hizo el pedido. Se manda en el cuerpo, no como header.',
+    sample: '"door-01"',
+  },
+];
+
+const responseFields = [
+  { field: 'allowed', desc: '<strong>true / false.</strong> true → la puerta abre. false → se queda cerrada.' },
+  { field: 'event', desc: 'Solo si <code>allowed</code> es true. <code>check_in</code> o <code>check_out</code>, decidido según si esa persona ya estaba adentro.' },
+  { field: 'userId / userName', desc: 'Solo si <code>allowed</code> es true. Para mostrar quién pasó, si la puerta tiene pantalla.' },
+  { field: 'reason', desc: 'Solo si <code>allowed</code> es false. Motivo del rechazo — ver tabla.' },
+];
+
+const denials = [
+  { status: '405', tone: 'warn', reason: 'method_not_allowed', cause: 'Se llamó con un método que no es POST.' },
+  { status: '500', tone: 'err', reason: 'server_misconfigured', cause: 'Falta configurar la clave secreta en el servidor.' },
+  { status: '401', tone: 'err', reason: 'unauthorized', cause: 'Falta el header Authorization o la clave no coincide.' },
+  { status: '400', tone: 'warn', reason: 'invalid_payload', cause: 'Faltan o están mal formados token / tid.' },
+  { status: '200', tone: 'neutral', reason: 'invalid', cause: 'El token no existe (QR viejo, roto o de prueba).' },
+  { status: '200', tone: 'neutral', reason: 'expired', cause: 'El token existía pero pasaron los 70s de validez.' },
+  { status: '200', tone: 'neutral', reason: 'replayed', cause: 'Mismo token que ya generó el último movimiento de esa persona.' },
+];
+
+const codeSnippets = [
+  {
+    key: 'node',
+    label: 'Node.js',
+    code: `// Node.js vanilla — https nativo, sin dependencias
+const https = require('https');
+
+const secret = process.env.GYM_ACCESS_API_SECRET;
+
+const body = JSON.stringify({
+  token: '3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481',
+  tid: 'gym-abc123',
+  deviceId: 'door-01',
+});
+
+const options = {
+  hostname: '{región}-{proyecto}.cloudfunctions.net',
+  path: '/gymValidateAccessQR',
+  method: 'POST',
+  headers: {
+    'Authorization': \`Bearer \${secret}\`,
+    'Content-Type': 'application/json',
+    'Content-Length': Buffer.byteLength(body),
+  },
+};
+
+const req = https.request(options, (res) => {
+  let data = '';
+  res.on('data', (chunk) => { data += chunk; });
+  res.on('end', () => {
+    const result = JSON.parse(data);
+    if (result.allowed) {
+      console.log('Abrir puerta:', result.event, result.userName);
+    } else {
+      console.log('No abrir. Motivo:', result.reason);
+    }
+  });
+});
+
+req.on('error', (err) => console.error('Error de red:', err));
+req.write(body);
+req.end();`,
+  },
+  {
+    key: 'python',
+    label: 'Python',
+    code: `# Python vanilla — urllib de la librería estándar
+import json
+import os
+import urllib.request
+import urllib.error
+
+secret = os.environ["GYM_ACCESS_API_SECRET"]
+
+body = json.dumps({
+    "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
+    "tid": "gym-abc123",
+    "deviceId": "door-01",
+}).encode("utf-8")
+
+req = urllib.request.Request(
+    url="https://{región}-{proyecto}.cloudfunctions.net/gymValidateAccessQR",
+    data=body,
+    method="POST",
+    headers={
+        "Authorization": f"Bearer {secret}",
+        "Content-Type": "application/json",
+    },
+)
+
+try:
+    with urllib.request.urlopen(req) as resp:
+        result = json.loads(resp.read())
+except urllib.error.HTTPError as e:
+    result = json.loads(e.read())
+
+if result.get("allowed"):
+    print("Abrir puerta:", result["event"], result["userName"])
+else:
+    print("No abrir. Motivo:", result["reason"])`,
+  },
+  {
+    key: 'java',
+    label: 'Java',
+    code: `// Java vanilla — java.net.http (Java 11+), sin dependencias
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class GymAccessQrClient {
+    public static void main(String[] args) throws Exception {
+        String secret = System.getenv("GYM_ACCESS_API_SECRET");
+
+        String body = """
+            {
+              "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
+              "tid": "gym-abc123",
+              "deviceId": "door-01"
+            }
+            """;
+
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("https://{región}-{proyecto}.cloudfunctions.net/gymValidateAccessQR"))
+            .header("Authorization", "Bearer " + secret)
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(body))
+            .build();
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        // response.body() → { allowed, event?, userId?, userName?, reason? }
+        System.out.println(response.body());
+    }
+}`,
+  },
+];
+
+const examples = [
+  {
+    title: 'Acceso permitido (entrada o salida)',
+    status: '200',
+    tone: 'ok',
+    explanation: 'Token válido, no usado antes, dentro de los 70s. La función decide sola si fue entrada o salida.',
+    request: `{
+  "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
+  "tid": "gym-abc123",
+  "deviceId": "door-01"
+}`,
+    response: `{
+  "allowed": true,
+  "event": "check_in",
+  "userId": "abc123",
+  "userName": "Juan Pérez"
+}`,
+  },
+  {
+    title: 'Falta o está mal la clave secreta',
+    status: '401',
+    tone: 'err',
+    explanation: 'El header Authorization no vino, o la clave no coincide con la configurada en el servidor.',
+    request: `// Sin header Authorization
+{
+  "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
+  "tid": "gym-abc123",
+  "deviceId": "door-01"
+}`,
+    response: `{
+  "allowed": false,
+  "reason": "unauthorized"
+}`,
+  },
+  {
+    title: 'El pedido está mal armado',
+    status: '400',
+    tone: 'warn',
+    explanation: 'Faltan campos obligatorios (en este ejemplo, tid).',
+    request: `{
+  "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481"
+}`,
+    response: `{
+  "allowed": false,
+  "reason": "invalid_payload"
+}`,
+  },
+  {
+    title: 'El token no existe',
+    status: '200',
+    tone: 'neutral',
+    explanation: 'El token nunca se generó, o ya se generó uno nuevo y este es viejo/inventado.',
+    request: `{
+  "token": "00000000-0000-0000-0000-000000000000",
+  "tid": "gym-abc123"
+}`,
+    response: `{
+  "allowed": false,
+  "reason": "invalid"
+}`,
+  },
+  {
+    title: 'El token ya venció',
+    status: '200',
+    tone: 'neutral',
+    explanation: 'El QR se generó bien, pero pasaron los 70 segundos antes de escanearlo en la puerta.',
+    request: `{
+  "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
+  "tid": "gym-abc123",
+  "deviceId": "door-01"
+}`,
+    response: `{
+  "allowed": false,
+  "reason": "expired"
+}`,
+  },
+  {
+    title: 'El token ya se usó (reintento)',
+    status: '200',
+    tone: 'neutral',
+    explanation: 'Es el mismo token que ya generó el último movimiento (entrada o salida) de esa persona.',
+    request: `{
+  "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
+  "tid": "gym-abc123",
+  "deviceId": "door-01"
+}`,
+    response: `{
+  "allowed": false,
+  "reason": "replayed"
+}`,
+  },
+];
+---
+
+<SiteLayout {...metaData}>
+  <main class="h-legal-wrap docs-wrap">
+    <div class="h-legal-inner">
+      <a href="/" class="h-legal-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Volver al inicio
+      </a>
+
+      <header class="h-legal-header">
+        <span class="h-legal-eyebrow">Referencia de API</span>
+        <h1 class="h-legal-h1">Acceso QR para la <span class="h-grad">puerta física</span></h1>
+        <p class="h-legal-lead">
+          Cómo conectar el hardware de la puerta — molinete, torniquete o cerradura — a la función
+          <code>gymValidateAccessQR</code>. Esta es la función que usa el dispositivo físico, distinta
+          de la que usa la tablet del mostrador.
+        </p>
+      </header>
+
+      <div class="h-legal-body">
+        <!-- Endpoint -->
+        <section class="h-legal-section">
+          <h2>Endpoint</h2>
+          <div class="docs-endpoint">
+            <span class="docs-method">POST</span>
+            <span class="docs-endpoint-url">https://<em>{'{región}'}</em>-<em>{'{proyecto}'}</em>.cloudfunctions.net/gymValidateAccessQR</span>
+          </div>
+          <p>
+            {'{región}'} y {'{proyecto}'} dependen del proyecto de Firebase donde esté desplegado ese gimnasio —
+            se consiguen en la consola de Firebase → Functions.
+          </p>
+        </section>
+
+        <!-- Auth -->
+        <section class="h-legal-section">
+          <h2>Autenticación</h2>
+          <p>
+            La puerta y la función comparten una clave secreta. Se envía en el header <code>Authorization</code>,
+            con el formato estándar "Bearer".
+          </p>
+          <div class="docs-codecard">
+            <div class="docs-codecard__label">Header</div>
+            <pre class="docs-codecard__pre">Authorization: Bearer &lt;GYM_ACCESS_API_SECRET&gt;</pre>
+          </div>
+          <p>
+            Si falta el header, o la clave no coincide, la función responde <span class="docs-chip docs-chip--err">401 unauthorized</span>.
+            La clave se llama <code>GYM_ACCESS_API_SECRET</code> en la configuración del despliegue.
+          </p>
+        </section>
+
+        <!-- Field breakdown -->
+        <section class="h-legal-section">
+          <h2>Qué manda la puerta</h2>
+          <p>
+            El QR físico contiene el texto <code>ACQ:&lt;token&gt;:&lt;tenantId&gt;</code>. La puerta separa esas
+            partes antes de llamar a la función, y las manda junto con su propio id como estos campos:
+          </p>
+
+          <div class="docs-fields">
+            {fields.map((field) => (
+              <div class="docs-field-row">
+                <div class="docs-field-row__key">
+                  <code>{field.key}</code>
+                </div>
+                <div class="docs-field-row__body">
+                  <div class="docs-field-row__name">{field.name}</div>
+                  <p class="docs-field-row__desc">{field.desc}</p>
+                  <div class="docs-field-row__sample">{field.sample}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Code samples -->
+        <section class="h-legal-section">
+          <h2>Código de referencia</h2>
+          <p>
+            Un pedido de ejemplo (caso "acceso permitido") en cada lenguaje, usando solo la librería estándar —
+            nada que instalar.
+          </p>
+
+          <div class="docs-codecard docs-codecard--tabs" id="code-sample">
+            <div class="docs-codecard__tabbar">
+              {codeSnippets.map((snippet, i) => (
+                <button
+                  class="docs-codecard__tab"
+                  class:list={{ 'docs-codecard__tab--active': i === 0 }}
+                  type="button"
+                  data-tab-key={snippet.key}
+                >
+                  {snippet.label}
+                </button>
+              ))}
+              <button class="docs-codecard__copy" type="button" id="copy-code-btn">
+                Copiar
+              </button>
+            </div>
+            {codeSnippets.map((snippet, i) => (
+              <pre
+                class="docs-codecard__pre docs-codecard__pre--scroll"
+                data-tab-panel={snippet.key}
+                style={i === 0 ? undefined : 'display: none;'}
+              >{snippet.code}</pre>
+            ))}
+          </div>
+        </section>
+
+        <!-- Response fields -->
+        <section class="h-legal-section">
+          <h2>Respuesta</h2>
+          <div class="docs-specs">
+            {responseFields.map((r) => (
+              <div class="docs-specs__row">
+                <code class="docs-specs__field">{r.field}</code>
+                <span class="docs-specs__desc" set:html={r.desc} />
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Denial table -->
+        <section class="h-legal-section">
+          <h2>Motivos de rechazo</h2>
+          <div class="docs-table">
+            <div class="docs-table__row docs-table__row--head">
+              <span>HTTP</span>
+              <span>reason</span>
+              <span>Causa</span>
+            </div>
+            {denials.map((d) => (
+              <div class="docs-table__row">
+                <span class={`docs-chip docs-chip--${d.tone}`}>{d.status}</span>
+                <code>{d.reason}</code>
+                <span>{d.cause}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="h-legal-warning">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <p><strong>Importante:</strong> varios rechazos devuelven <strong>HTTP 200</strong> con
+            <code>allowed: false</code>. La puerta siempre debe leer el campo <code>allowed</code> del cuerpo,
+            nunca confiar solo en el código HTTP.</p>
+          </div>
+        </section>
+
+        <!-- Worked examples -->
+        <section class="h-legal-section">
+          <h2>Ejemplos completos</h2>
+          <div class="docs-traces">
+            {examples.map((example) => (
+              <details class="docs-trace">
+                <summary class="docs-trace__summary">
+                  <span class={`docs-chip docs-chip--${example.tone}`}>{example.status}</span>
+                  <span class="docs-trace__title">{example.title}</span>
+                  <span class="docs-trace__chevron">⌄</span>
+                </summary>
+                <div class="docs-trace__body">
+                  <p class="docs-trace__explanation">{example.explanation}</p>
+                  <div class="docs-trace__cols">
+                    <div>
+                      <div class="docs-trace__label">Pedido</div>
+                      <pre class="docs-trace__code">{example.request}</pre>
+                    </div>
+                    <div>
+                      <div class="docs-trace__label">Respuesta</div>
+                      <pre class="docs-trace__code">{example.response}</pre>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <!-- Side effects -->
+        <section class="h-legal-section">
+          <h2>Qué queda guardado</h2>
+          <ul class="h-legal-list">
+            <li>El token se borra apenas se lee — con o sin acceso concedido. Nunca se puede reusar.</li>
+            <li>Si el acceso se concede, se actualiza el estado adentro/afuera de esa persona.</li>
+            <li>Si el acceso se concede, queda un registro en el historial de accesos del gimnasio.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const codeSample = document.getElementById('code-sample');
+    const tabs = codeSample?.querySelectorAll<HTMLButtonElement>('[data-tab-key]');
+    const panels = codeSample?.querySelectorAll<HTMLPreElement>('[data-tab-panel]');
+    const copyBtn = document.getElementById('copy-code-btn');
+
+    tabs?.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const key = tab.dataset.tabKey;
+
+        tabs.forEach((t) => t.classList.toggle('docs-codecard__tab--active', t === tab));
+        panels?.forEach((panel) => {
+          panel.style.display = panel.dataset.tabPanel === key ? '' : 'none';
+        });
+      });
+    });
+
+    copyBtn?.addEventListener('click', async () => {
+      const activePanel = codeSample?.querySelector<HTMLPreElement>('[data-tab-panel]:not([style*="display: none"])');
+      if (!activePanel) return;
+
+      try {
+        await navigator.clipboard.writeText(activePanel.textContent ?? '');
+        copyBtn.textContent = 'Copiado';
+        setTimeout(() => { copyBtn.textContent = 'Copiar'; }, 1500);
+      } catch {
+        copyBtn.textContent = 'Error al copiar';
+        setTimeout(() => { copyBtn.textContent = 'Copiar'; }, 1500);
+      }
+    });
+  </script>
+</SiteLayout>
+
+<style is:global>
+  /* ── docs page — built on the shared .h-legal-* skeleton ──────────── */
+  .docs-wrap .h-legal-section h2 { display: flex; align-items: center; }
+
+  .docs-endpoint {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    font-family: 'Space Mono', monospace; font-size: 14.5px; color: var(--ink);
+    word-break: break-all;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 16px 18px; margin: 14px 0 18px;
+  }
+  .docs-method {
+    background: var(--green); color: var(--bg);
+    font-weight: 700; font-size: 12px;
+    padding: 4px 10px; border-radius: 20px; flex-shrink: 0;
+  }
+  .docs-endpoint-url em { color: var(--lime); font-style: normal; font-weight: 700; }
+
+  /* code cards */
+  .docs-codecard {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+    overflow: hidden; margin: 14px 0 18px;
+  }
+  .docs-codecard__label {
+    font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em; color: var(--mute);
+    padding: 12px 18px 0;
+  }
+  .docs-codecard__pre {
+    margin: 0; padding: 12px 18px 18px;
+    font-family: 'Space Mono', monospace; font-size: 13.5px; line-height: 1.65;
+    color: var(--ink-2); white-space: pre-wrap; word-break: break-word; overflow-x: auto;
+  }
+  .docs-codecard--tabs .docs-codecard__pre--scroll { padding-top: 18px; max-height: 480px; overflow-y: auto; }
+  .docs-codecard__tabbar {
+    display: flex; align-items: center; gap: 4px; padding: 10px 12px;
+    border-bottom: 1px solid var(--line); background: var(--bg-2);
+  }
+  .docs-codecard__tab {
+    font-family: inherit; font-size: 13.5px; font-weight: 600;
+    background: transparent; border: none; color: var(--ink-2);
+    padding: 7px 16px; border-radius: 20px; cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .docs-codecard__tab:hover { color: var(--ink); background: var(--panel-2); }
+  .docs-codecard__tab--active { color: var(--bg); background: var(--green); }
+  .docs-codecard__copy {
+    margin-left: auto; font-family: inherit; font-size: 12.5px; font-weight: 600;
+    background: transparent; border: 1px solid var(--line-2); color: var(--ink-2);
+    padding: 6px 14px; border-radius: 20px; cursor: pointer; transition: all .15s ease;
+  }
+  .docs-codecard__copy:hover { color: var(--green); border-color: var(--green); }
+
+  /* field rows */
+  .docs-fields { display: flex; flex-direction: column; gap: 4px; margin-top: 14px; }
+  .docs-field-row {
+    display: grid; grid-template-columns: 110px 1fr; gap: 20px;
+    padding: 20px 0; border-top: 1px solid var(--line);
+  }
+  .docs-field-row:last-child { border-bottom: 1px solid var(--line); }
+  .docs-field-row__name { font-weight: 600; color: var(--ink); font-size: 16px; margin-bottom: 6px; }
+  .docs-field-row__desc { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); max-width: 58ch; margin: 0 0 8px; }
+  .docs-field-row__sample { font-family: 'Space Mono', monospace; font-size: 12.5px; color: var(--lime); }
+  @media(max-width:560px) { .docs-field-row { grid-template-columns: 1fr; gap: 8px; } }
+
+  /* response specs */
+  .docs-specs__row {
+    display: grid; grid-template-columns: 170px 1fr; gap: 18px;
+    padding: 14px 0; border-top: 1px solid var(--line);
+    font-size: 14.5px; line-height: 1.6;
+  }
+  .docs-specs__row:last-child { border-bottom: 1px solid var(--line); }
+  .docs-specs__field { align-self: start; }
+  .docs-specs__desc { color: var(--ink-2); }
+  @media(max-width:560px) { .docs-specs__row { grid-template-columns: 1fr; gap: 6px; } }
+
+  /* denial table */
+  .docs-table {
+    border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+    margin: 14px 0 20px; background: var(--panel);
+  }
+  .docs-table__row {
+    display: grid; grid-template-columns: 72px 190px 1fr; gap: 14px; align-items: center;
+    padding: 13px 18px; font-size: 14px; border-top: 1px solid var(--line); color: var(--ink-2);
+  }
+  .docs-table__row:first-child { border-top: none; }
+  .docs-table__row--head {
+    background: var(--bg-2); font-weight: 700; font-size: 11px;
+    letter-spacing: .06em; text-transform: uppercase; font-family: 'Space Mono', monospace;
+  }
+  @media(max-width:620px) {
+    .docs-table__row { grid-template-columns: 60px 1fr; grid-template-areas: "status reason" "status cause"; }
+    .docs-table__row--head { display: none; }
+    .docs-table__row > :nth-child(1) { grid-area: status; }
+    .docs-table__row > :nth-child(2) { grid-area: reason; }
+    .docs-table__row > :nth-child(3) { grid-area: cause; }
+  }
+
+  .docs-chip {
+    font-family: 'Space Mono', monospace; font-size: 11.5px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px; width: fit-content; white-space: nowrap;
+  }
+  .docs-chip--ok { background: var(--lime-soft); color: var(--green-deep); }
+  .docs-chip--err { background: color-mix(in srgb, var(--red) 14%, transparent); color: var(--red); }
+  .docs-chip--warn { background: color-mix(in srgb, var(--warn) 16%, transparent); color: var(--warn); }
+  .docs-chip--neutral { background: var(--panel-2); color: var(--mute); }
+
+  /* worked examples (details) */
+  .docs-traces { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+  .docs-trace { border: 1px solid var(--line); border-radius: 14px; background: var(--panel); overflow: hidden; }
+  .docs-trace[open] { border-color: var(--line-2); }
+  .docs-trace__summary {
+    display: flex; align-items: center; gap: 12px; padding: 15px 18px;
+    cursor: pointer; list-style: none; font-size: 15px; user-select: none;
+  }
+  .docs-trace__summary::-webkit-details-marker { display: none; }
+  .docs-trace__title { color: var(--ink); flex: 1; font-weight: 500; }
+  .docs-trace__chevron { color: var(--mute); transition: transform .2s ease; font-size: 16px; }
+  .docs-trace[open] .docs-trace__chevron { transform: rotate(180deg); color: var(--green); }
+  .docs-trace__body { padding: 0 18px 20px; border-top: 1px solid var(--line); }
+  .docs-trace__explanation { font-size: 14px; color: var(--ink-2); line-height: 1.6; margin: 16px 0; }
+  .docs-trace__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media(max-width:640px) { .docs-trace__cols { grid-template-columns: 1fr; } }
+  .docs-trace__label {
+    font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--mute); margin-bottom: 8px;
+  }
+  .docs-trace__code {
+    margin: 0; background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px 14px; font-family: 'Space Mono', monospace; font-size: 12.5px; line-height: 1.6;
+    color: var(--ink); white-space: pre-wrap; word-break: break-word;
+  }
+</style>
