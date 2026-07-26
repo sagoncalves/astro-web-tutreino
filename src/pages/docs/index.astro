@@ -16,7 +16,7 @@ const fields = [
     sample: '"3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481"',
   },
   {
-    key: 'tid',
+    key: 'tenantId',
     name: 'Id del gimnasio (tenant)',
     desc: 'A qué establecimiento pertenece el socio, para buscar el token en el gimnasio correcto.',
     sample: '"gym-abc123"',
@@ -40,7 +40,7 @@ const denials = [
   { status: '405', tone: 'warn', reason: 'method_not_allowed', cause: 'Se llamó con un método que no es POST.' },
   { status: '500', tone: 'err', reason: 'server_misconfigured', cause: 'Falta configurar la clave secreta en el servidor.' },
   { status: '401', tone: 'err', reason: 'unauthorized', cause: 'Falta el header Authorization o la clave no coincide.' },
-  { status: '400', tone: 'warn', reason: 'invalid_payload', cause: 'Faltan o están mal formados token / tid.' },
+  { status: '400', tone: 'warn', reason: 'invalid_payload', cause: 'Faltan o están mal formados token / tenantId.' },
   { status: '200', tone: 'neutral', reason: 'invalid', cause: 'El token no existe (QR viejo, roto o de prueba).' },
   { status: '200', tone: 'neutral', reason: 'expired', cause: 'El token existía pero pasaron los 70s de validez.' },
   { status: '200', tone: 'neutral', reason: 'replayed', cause: 'Mismo token que ya generó el último movimiento de esa persona.' },
@@ -57,7 +57,7 @@ const secret = process.env.GYM_ACCESS_API_SECRET;
 
 const body = JSON.stringify({
   token: '3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481',
-  tid: 'gym-abc123',
+  tenantId: 'gym-abc123',
   deviceId: 'door-01',
 });
 
@@ -102,7 +102,7 @@ secret = os.environ["GYM_ACCESS_API_SECRET"]
 
 body = json.dumps({
     "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
-    "tid": "gym-abc123",
+    "tenantId": "gym-abc123",
     "deviceId": "door-01",
 }).encode("utf-8")
 
@@ -143,7 +143,7 @@ public class GymAccessQrClient {
         String body = """
             {
               "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
-              "tid": "gym-abc123",
+              "tenantId": "gym-abc123",
               "deviceId": "door-01"
             }
             """;
@@ -173,7 +173,7 @@ const examples = [
     explanation: 'Token válido, no usado antes, dentro de los 70s. La función decide sola si fue entrada o salida.',
     request: `{
   "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
-  "tid": "gym-abc123",
+  "tenantId": "gym-abc123",
   "deviceId": "door-01"
 }`,
     response: `{
@@ -191,7 +191,7 @@ const examples = [
     request: `// Sin header Authorization
 {
   "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
-  "tid": "gym-abc123",
+  "tenantId": "gym-abc123",
   "deviceId": "door-01"
 }`,
     response: `{
@@ -203,7 +203,7 @@ const examples = [
     title: 'El pedido está mal armado',
     status: '400',
     tone: 'warn',
-    explanation: 'Faltan campos obligatorios (en este ejemplo, tid).',
+    explanation: 'Faltan campos obligatorios (en este ejemplo, tenantId).',
     request: `{
   "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481"
 }`,
@@ -219,7 +219,7 @@ const examples = [
     explanation: 'El token nunca se generó, o ya se generó uno nuevo y este es viejo/inventado.',
     request: `{
   "token": "00000000-0000-0000-0000-000000000000",
-  "tid": "gym-abc123"
+  "tenantId": "gym-abc123"
 }`,
     response: `{
   "allowed": false,
@@ -233,7 +233,7 @@ const examples = [
     explanation: 'El QR se generó bien, pero pasaron los 70 segundos antes de escanearlo en la puerta.',
     request: `{
   "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
-  "tid": "gym-abc123",
+  "tenantId": "gym-abc123",
   "deviceId": "door-01"
 }`,
     response: `{
@@ -248,7 +248,7 @@ const examples = [
     explanation: 'Es el mismo token que ya generó el último movimiento (entrada o salida) de esa persona.',
     request: `{
   "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
-  "tid": "gym-abc123",
+  "tenantId": "gym-abc123",
   "deviceId": "door-01"
 }`,
     response: `{
