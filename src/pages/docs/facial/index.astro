@@ -1,38 +1,38 @@
 ---
-import SiteLayout from '../../layouts/SiteLayout.astro';
-import { createPageMeta, SITE_CONFIG } from '../../utils/meta';
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import { createPageMeta, SITE_CONFIG } from '../../../utils/meta';
 
-const metaData = createPageMeta('/docs', {
-  title: `Acceso QR para la puerta física — ${SITE_CONFIG.name}`,
-  description: 'Referencia de API para conectar el hardware de la puerta (molinete, torniquete o cerradura) a la función gymValidateAccessQR.',
+const metaData = createPageMeta('/docs/facial', {
+  title: `Acceso por reconocimiento facial — ${SITE_CONFIG.name}`,
+  description: 'Referencia de API para conectar el dispositivo de reconocimiento facial a la función gymValidateAccessFace.',
   noindex: true,
 });
 
 const fields = [
   {
-    key: 'token',
-    name: 'Token de un solo uso',
-    desc: 'Código temporal generado cuando el socio abrió su QR en la app (dura 70 segundos). Identifica ese intento de acceso puntual; se invalida al usarse.',
-    sample: '"3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481"',
+    key: 'documentId',
+    name: 'Documento del socio',
+    desc: 'El número de documento que el dispositivo asoció a la cara reconocida — el mismo valor que figura como "Documento" en la ficha del socio, no el id interno del usuario.',
+    sample: '"48123456"',
   },
   {
     key: 'tenantId',
     name: 'Id del gimnasio (tenant)',
-    desc: 'A qué establecimiento pertenece el socio, para buscar el token en el gimnasio correcto.',
+    desc: 'A qué establecimiento pertenece el socio, para buscar el documento en el gimnasio correcto.',
     sample: '"gym-abc123"',
   },
   {
     key: 'deviceId',
     name: 'Id del dispositivo',
-    desc: 'Identifica qué puerta física hizo el pedido. Se manda en el cuerpo, no como header.',
-    sample: '"door-01"',
+    desc: 'Identifica qué equipo facial hizo el pedido. Se manda en el cuerpo, no como header.',
+    sample: '"face-01"',
   },
 ];
 
 const responseFields = [
   { field: 'allowed', desc: '<strong>true / false.</strong> true → la puerta abre. false → se queda cerrada.' },
-  { field: 'event', desc: 'Solo si <code>allowed</code> es true. <code>check_in</code> o <code>check_out</code>, decidido según si esa persona ya estaba adentro.' },
-  { field: 'userId / userName', desc: 'Solo si <code>allowed</code> es true. Para mostrar quién pasó, si la puerta tiene pantalla.' },
+  { field: 'event', desc: 'Solo si <code>allowed</code> es true. Siempre <code>check_in</code> — este dispositivo no distingue entrada de salida.' },
+  { field: 'userId / userName', desc: 'Solo si <code>allowed</code> es true. Para mostrar quién pasó, si el equipo tiene pantalla.' },
   { field: 'reason', desc: 'Solo si <code>allowed</code> es false. Motivo del rechazo — ver tabla.' },
 ];
 
@@ -40,10 +40,12 @@ const denials = [
   { status: '405', tone: 'warn', reason: 'method_not_allowed', cause: 'Se llamó con un método que no es POST.' },
   { status: '500', tone: 'err', reason: 'server_misconfigured', cause: 'Falta configurar la clave secreta en el servidor.' },
   { status: '401', tone: 'err', reason: 'unauthorized', cause: 'Falta el header Authorization o la clave no coincide.' },
-  { status: '400', tone: 'warn', reason: 'invalid_payload', cause: 'Faltan o están mal formados token / tenantId.' },
-  { status: '200', tone: 'neutral', reason: 'invalid', cause: 'El token no existe (QR viejo, roto o de prueba).' },
-  { status: '200', tone: 'neutral', reason: 'expired', cause: 'El token existía pero pasaron los 70s de validez.' },
-  { status: '200', tone: 'neutral', reason: 'replayed', cause: 'Mismo token que ya generó el último movimiento de esa persona.' },
+  { status: '400', tone: 'warn', reason: 'missing_tenant_id', cause: 'No se mandó tenantId en el cuerpo del pedido.' },
+  { status: '400', tone: 'warn', reason: 'invalid_payload', cause: 'Falta o está vacío documentId.' },
+  { status: '200', tone: 'neutral', reason: 'invalid', cause: 'Ningún socio de ese gimnasio tiene ese documento.' },
+  { status: '200', tone: 'err', reason: 'ambiguous', cause: 'Más de un socio comparte ese documento — no se puede saber quién es. Se rechaza por seguridad.' },
+  { status: '200', tone: 'neutral', reason: 'replayed', cause: 'Mismo socio reconocido hace menos de 30 segundos — el equipo insistió sobre la misma cara.' },
+  { status: '200', tone: 'neutral', reason: 'subscription_expired', cause: 'El socio existe pero su suscripción está vencida.' },
 ];
 
 const codeSnippets = [
@@ -56,14 +58,14 @@ const https = require('https');
 const secret = process.env.GYM_ACCESS_API_SECRET;
 
 const body = JSON.stringify({
-  token: '3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481',
+  documentId: '48123456',
   tenantId: 'gym-abc123',
-  deviceId: 'door-01',
+  deviceId: 'face-01',
 });
 
 const options = {
   hostname: '{región}-{proyecto}.cloudfunctions.net',
-  path: '/gymValidateAccessQR',
+  path: '/gymValidateAccessFace',
   method: 'POST',
   headers: {
     'Authorization': \`Bearer \${secret}\`,
@@ -101,13 +103,13 @@ import urllib.error
 secret = os.environ["GYM_ACCESS_API_SECRET"]
 
 body = json.dumps({
-    "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
+    "documentId": "48123456",
     "tenantId": "gym-abc123",
-    "deviceId": "door-01",
+    "deviceId": "face-01",
 }).encode("utf-8")
 
 req = urllib.request.Request(
-    url="https://{región}-{proyecto}.cloudfunctions.net/gymValidateAccessQR",
+    url="https://{región}-{proyecto}.cloudfunctions.net/gymValidateAccessFace",
     data=body,
     method="POST",
     headers={
@@ -136,20 +138,20 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class GymAccessQrClient {
+public class GymAccessFaceClient {
     public static void main(String[] args) throws Exception {
         String secret = System.getenv("GYM_ACCESS_API_SECRET");
 
         String body = """
             {
-              "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
+              "documentId": "48123456",
               "tenantId": "gym-abc123",
-              "deviceId": "door-01"
+              "deviceId": "face-01"
             }
             """;
 
         HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create("https://{región}-{proyecto}.cloudfunctions.net/gymValidateAccessQR"))
+            .uri(URI.create("https://{región}-{proyecto}.cloudfunctions.net/gymValidateAccessFace"))
             .header("Authorization", "Bearer " + secret)
             .header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(body))
@@ -167,14 +169,14 @@ public class GymAccessQrClient {
 
 const examples = [
   {
-    title: 'Acceso permitido (entrada o salida)',
+    title: 'Acceso permitido',
     status: '200',
     tone: 'ok',
-    explanation: 'Token válido, no usado antes, dentro de los 70s. La función decide sola si fue entrada o salida.',
+    explanation: 'El documento corresponde a un solo socio del gimnasio, con la suscripción al día, y no fue reconocido en los últimos 30 segundos.',
     request: `{
-  "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
+  "documentId": "48123456",
   "tenantId": "gym-abc123",
-  "deviceId": "door-01"
+  "deviceId": "face-01"
 }`,
     response: `{
   "allowed": true,
@@ -190,9 +192,9 @@ const examples = [
     explanation: 'El header Authorization no vino, o la clave no coincide con la configurada en el servidor.',
     request: `// Sin header Authorization
 {
-  "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
+  "documentId": "48123456",
   "tenantId": "gym-abc123",
-  "deviceId": "door-01"
+  "deviceId": "face-01"
 }`,
     response: `{
   "allowed": false,
@@ -205,21 +207,22 @@ const examples = [
     tone: 'warn',
     explanation: 'Faltan campos obligatorios (en este ejemplo, tenantId).',
     request: `{
-  "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481"
+  "documentId": "48123456"
 }`,
     response: `{
   "allowed": false,
-  "reason": "invalid_payload"
+  "reason": "missing_tenant_id"
 }`,
   },
   {
-    title: 'El token no existe',
+    title: 'Ningún socio tiene ese documento',
     status: '200',
     tone: 'neutral',
-    explanation: 'El token nunca se generó, o ya se generó uno nuevo y este es viejo/inventado.',
+    explanation: 'El equipo reconoció una cara y devolvió un documento, pero ningún socio de ese gimnasio está registrado con ese número.',
     request: `{
-  "token": "00000000-0000-0000-0000-000000000000",
-  "tenantId": "gym-abc123"
+  "documentId": "00000000",
+  "tenantId": "gym-abc123",
+  "deviceId": "face-01"
 }`,
     response: `{
   "allowed": false,
@@ -227,33 +230,48 @@ const examples = [
 }`,
   },
   {
-    title: 'El token ya venció',
+    title: 'Documento repetido entre socios',
     status: '200',
-    tone: 'neutral',
-    explanation: 'El QR se generó bien, pero pasaron los 70 segundos antes de escanearlo en la puerta.',
+    tone: 'err',
+    explanation: 'Dos socios del mismo gimnasio quedaron cargados con el mismo documento. La función no puede saber a cuál corresponde la cara reconocida, así que rechaza en vez de adivinar.',
     request: `{
-  "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
+  "documentId": "48123456",
   "tenantId": "gym-abc123",
-  "deviceId": "door-01"
+  "deviceId": "face-01"
 }`,
     response: `{
   "allowed": false,
-  "reason": "expired"
+  "reason": "ambiguous"
 }`,
   },
   {
-    title: 'El token ya se usó (reintento)',
+    title: 'Misma cara reconocida de nuevo, muy seguido',
     status: '200',
     tone: 'neutral',
-    explanation: 'Es el mismo token que ya generó el último movimiento (entrada o salida) de esa persona.',
+    explanation: 'El equipo volvió a mandar el mismo documento antes de que pasen 30 segundos desde el último acceso concedido a esa persona por este método.',
     request: `{
-  "token": "3f6c1a9e-8b2d-4e70-9c11-b5a2f0d3c481",
+  "documentId": "48123456",
   "tenantId": "gym-abc123",
-  "deviceId": "door-01"
+  "deviceId": "face-01"
 }`,
     response: `{
   "allowed": false,
   "reason": "replayed"
+}`,
+  },
+  {
+    title: 'Suscripción vencida',
+    status: '200',
+    tone: 'neutral',
+    explanation: 'El documento identifica bien a un socio, pero su tipo de membresía requiere suscripción activa y ya venció.',
+    request: `{
+  "documentId": "48123456",
+  "tenantId": "gym-abc123",
+  "deviceId": "face-01"
+}`,
+    response: `{
+  "allowed": false,
+  "reason": "subscription_expired"
 }`,
   },
 ];
@@ -262,18 +280,18 @@ const examples = [
 <SiteLayout {...metaData}>
   <main class="h-legal-wrap docs-wrap">
     <div class="h-legal-inner">
-      <a href="/" class="h-legal-back">
+      <a href="/docs" class="h-legal-back">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Volver al inicio
+        Ver acceso por QR
       </a>
 
       <header class="h-legal-header">
         <span class="h-legal-eyebrow">Referencia de API</span>
-        <h1 class="h-legal-h1">Acceso QR para la <span class="h-grad">puerta física</span></h1>
+        <h1 class="h-legal-h1">Acceso por <span class="h-grad">reconocimiento facial</span></h1>
         <p class="h-legal-lead">
-          Cómo conectar el hardware de la puerta — molinete, torniquete o cerradura — a la función
-          <code>gymValidateAccessQR</code>. Esta es la función que usa el dispositivo físico, distinta
-          de la que usa la tablet del mostrador. ¿Buscás el dispositivo de <a href="/docs/facial">reconocimiento facial</a>?
+          Cómo conectar un dispositivo de reconocimiento facial — molinete, torniquete o cerradura con cámara — a la función
+          <code>gymValidateAccessFace</code>. Este reconocimiento facial es enteramente del dispositivo físico: no tiene
+          relación con ninguna función de reconocimiento facial dentro de la app de Tutreino.
         </p>
       </header>
 
@@ -283,7 +301,7 @@ const examples = [
           <h2>Endpoint</h2>
           <div class="docs-endpoint">
             <span class="docs-method">POST</span>
-            <span class="docs-endpoint-url">https://<em>{'{región}'}</em>-<em>{'{proyecto}'}</em>.cloudfunctions.net/gymValidateAccessQR</span>
+            <span class="docs-endpoint-url">https://<em>{'{región}'}</em>-<em>{'{proyecto}'}</em>.cloudfunctions.net/gymValidateAccessFace</span>
           </div>
           <p>
             {'{región}'} y {'{proyecto}'} dependen del proyecto de Firebase donde esté desplegado ese gimnasio —
@@ -295,8 +313,8 @@ const examples = [
         <section class="h-legal-section">
           <h2>Autenticación</h2>
           <p>
-            La puerta y la función comparten una clave secreta. Se envía en el header <code>Authorization</code>,
-            con el formato estándar "Bearer".
+            El dispositivo y la función comparten una clave secreta. Se envía en el header <code>Authorization</code>,
+            con el formato estándar "Bearer". Es la misma clave que usa la puerta QR.
           </p>
           <div class="docs-codecard">
             <div class="docs-codecard__label">Header</div>
@@ -310,10 +328,10 @@ const examples = [
 
         <!-- Field breakdown -->
         <section class="h-legal-section">
-          <h2>Qué manda la puerta</h2>
+          <h2>Qué manda el dispositivo</h2>
           <p>
-            El QR físico contiene el texto <code>ACQ:&lt;token&gt;:&lt;tenantId&gt;</code>. La puerta separa esas
-            partes antes de llamar a la función, y las manda junto con su propio id como estos campos:
+            El dispositivo reconoce la cara y la asocia a un documento previamente cargado en su propia base.
+            Manda ese documento junto con su propio id como estos campos:
           </p>
 
           <div class="docs-fields">
@@ -329,6 +347,12 @@ const examples = [
                 </div>
               </div>
             ))}
+          </div>
+
+          <div class="h-legal-warning">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <p><strong>Importante:</strong> <code>documentId</code> es el número de documento del socio, no el id interno
+            del usuario en Tutreino. Es el mismo valor que se ve en la columna "Documento" de la ficha del socio.</p>
           </div>
         </section>
 
@@ -400,7 +424,7 @@ const examples = [
           <div class="h-legal-warning">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             <p><strong>Importante:</strong> varios rechazos devuelven <strong>HTTP 200</strong> con
-            <code>allowed: false</code>. La puerta siempre debe leer el campo <code>allowed</code> del cuerpo,
+            <code>allowed: false</code>. El dispositivo siempre debe leer el campo <code>allowed</code> del cuerpo,
             nunca confiar solo en el código HTTP.</p>
           </div>
         </section>
@@ -438,9 +462,10 @@ const examples = [
         <section class="h-legal-section">
           <h2>Qué queda guardado</h2>
           <ul class="h-legal-list">
-            <li>El token se borra apenas se lee — con o sin acceso concedido. Nunca se puede reusar.</li>
-            <li>Si el acceso se concede, se actualiza el estado adentro/afuera de esa persona.</li>
-            <li>Si el acceso se concede, queda un registro en el historial de accesos del gimnasio.</li>
+            <li>No hay ningún token que consumir — la identidad depende enteramente de lo que reconoció el dispositivo.</li>
+            <li>Si el acceso se concede, queda guardado el momento y el método (<code>face_device</code>) para el chequeo de reintento de los próximos 30 segundos.</li>
+            <li>Si el acceso se concede, queda un registro en el historial de accesos del gimnasio, separado del de la puerta QR.</li>
+            <li>Este método siempre registra entrada (<code>check_in</code>); no anda alternando con salida como la puerta QR, aunque los dos estén activos en el mismo gimnasio.</li>
           </ul>
         </section>
       </div>
