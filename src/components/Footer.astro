@@ -6,6 +6,7 @@ import { SITE_CONFIG } from '../utils/meta';
 
 const waNumber = '59891961610';
 const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero agendar una demo de Tutreino para mi gimnasio.')}`;
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Av. Gral. San Martín 3597, Montevideo, 11300, Uruguay')}`;
 ---
 
 <footer class="h-foot">
@@ -40,6 +41,9 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
         <a href={waUrl} target="_blank" rel="noopener noreferrer">WhatsApp · +598 91 961 610</a>
         <a href="mailto:info@tutreino.com">info@tutreino.com</a>
         <a href="/#precios">Agendá una demo</a>
+        <address class="h-foot-address">
+          <a href={mapsUrl} target="_blank" rel="noopener noreferrer">Av. Gral. San Martín 3597<br />Montevideo, 11300 · Uruguay</a>
+        </address>
       </div>
       <div>
         <h4>legal</h4>
