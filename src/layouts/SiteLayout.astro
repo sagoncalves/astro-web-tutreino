@@ -90,14 +90,15 @@ const waUrl = 'https://wa.me/59891961610?text=Hola%2C%20quiero%20agendar%20una%2
 <script>
   const wa = document.querySelector<HTMLElement>('[data-wa]');
   if (wa) {
-    const KEY = 'tt-wa-bubble-seen';
+    const KEY = 'tt-wa-bubble-shown-at';
+    const COOLDOWN_MS = 24 * 60 * 60 * 1000;
     let seen = false;
-    try { seen = sessionStorage.getItem(KEY) === '1'; } catch {}
+    try { seen = Date.now() - Number(localStorage.getItem(KEY) || 0) < COOLDOWN_MS; } catch {}
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const show = () => {
       window.removeEventListener('scroll', onScroll);
-      try { sessionStorage.setItem(KEY, '1'); } catch {}
+      try { localStorage.setItem(KEY, String(Date.now())); } catch {}
       wa.classList.add('is-open');
       if (!reduceMotion) {
         wa.classList.add('is-typing');
@@ -198,19 +199,28 @@ const waUrl = 'https://wa.me/59891961610?text=Hola%2C%20quiero%20agendar%20una%2
 }
 .h-nav-pill a:hover { background: var(--panel-2); color: var(--ink); }
 .h-cta-mini {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 9px 16px; background: var(--green); color: var(--bg);
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 38px; padding: 0 14px 0 18px;
+  background: var(--green); color: #fff;
   text-decoration: none; border-radius: 999px;
-  font-size: 13.5px; font-weight: 600; cursor: pointer;
-  transition: background .18s ease;
+  font-size: 13.5px; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.2),
+    0 1px 2px rgba(15,22,35,0.12),
+    0 6px 16px -6px color-mix(in srgb, var(--green) 70%, transparent);
+  transition: background .18s ease, box-shadow .18s ease, transform .18s ease;
 }
-.h-cta-mini:hover { background: var(--lime); }
-.h-dot-on {
-  width: 8px; height: 8px; border-radius: 999px;
-  background: var(--bg);
-  animation: hpulse 1.6s ease-out infinite;
+.h-cta-mini:hover {
+  background: var(--green-deep);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.2),
+    0 1px 2px rgba(15,22,35,0.14),
+    0 10px 22px -8px color-mix(in srgb, var(--green) 80%, transparent);
 }
-.h-dot-on.small { width: 6px; height: 6px; background: var(--green); }
+.h-cta-mini:active { transform: translateY(1px); }
+.h-cta-mini:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+.h-cta-arrow { width: 15px; height: 15px; flex-shrink: 0; transition: transform .2s ease; }
+.h-cta-mini:hover .h-cta-arrow { transform: translateX(2px); }
 @keyframes hpulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--green) 40%, transparent); } 100% { box-shadow: 0 0 0 6px transparent; } }
 .h-nav-right { display: inline-flex; align-items: center; gap: 8px; }
 @media(max-width:760px) {
