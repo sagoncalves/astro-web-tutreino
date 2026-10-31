@@ -2,13 +2,13 @@
 import { Image } from 'astro:assets';
 import logoSrc from '../assets/logo.png';
 import { SITE_CONFIG } from '../utils/meta';
-import DiscoWordmark from './DiscoWordmark.astro';
+import DiscoLogo from './DiscoLogo.astro';
 
 /**
  * home — when true, nav links use plain anchors (#section)
  *        instead of absolute paths (/#section).
  *        Set this only on the index page.
- * theme — 'disco' swaps the logo for the Disco wordmark (used by /v2).
+ * theme — 'disco' swaps the logo for the Disco logo (used by /v2).
  */
 export interface Props {
   home?: boolean;
@@ -26,7 +26,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
 <nav class="h-nav" aria-label="Principal">
   <a href={home ? '#inicio' : '/'} class="h-logo">
     {theme === 'disco' ? (
-      <DiscoWordmark />
+      <DiscoLogo />
     ) : (
       <Fragment>
         <Image src={logoSrc} alt="" aria-hidden="true" width={24} height={24} densities={[1, 2, 3]} format="png" class="h-logo-img" />

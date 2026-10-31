@@ -2,10 +2,10 @@
 import { Image } from 'astro:assets';
 import logoSrc from '../assets/logo.png';
 import { SITE_CONFIG } from '../utils/meta';
-import DiscoWordmark from './DiscoWordmark.astro';
+import DiscoLogo from './DiscoLogo.astro';
 
 export interface Props {
-  /** 'disco' swaps the logo for the Disco wordmark (used by /v2) */
+  /** 'disco' swaps the logo for the Disco logo (used by /v2) */
   theme?: 'disco';
 }
 
@@ -19,7 +19,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
     <div class="h-foot-brand">
       <a href="/" class="h-logo">
         {theme === 'disco' ? (
-          <DiscoWordmark />
+          <DiscoLogo />
         ) : (
           <Fragment>
             <Image src={logoSrc} alt="" aria-hidden="true" width={32} height={32} densities={[1, 2, 3]} format="png" class="h-logo-img" />
