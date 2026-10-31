@@ -2,11 +2,10 @@
 
 export const SITE_CONFIG = {
   name: "Tutreino",
-  url: "https://www.tutreino.com",
+  url: "https://tutreino.com",
   appRegistrationUrl: `https://wa.me/59891961610?text=${encodeURIComponent('Hola, quiero agendar una demo de Tutreino para mi gimnasio.')}`,
   social: {
-    instagramUrl: "https://www.instagram.com/tutreino/",
-    twitterSite: "@tutreino",
+    instagramUrl: "https://www.instagram.com/tutreino.app/",
   },
   defaultDescription:
     "Sistema de gestión para gimnasios y entrenadores personales: reservas, pagos recurrentes, rutinas con IA y app propia para tus socios.",

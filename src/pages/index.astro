@@ -3,14 +3,25 @@
 // Dark green palette, grid bg, glows, Bricolage+Geist+JetBrains, floating pill nav
 // Content: Tutreino — gym/personal-trainer SaaS with admin panel + member-facing app,
 // multi-branch, white label (Pro), AI routines, churn prediction, role permissions
-import { Image } from 'astro:assets';
 import SiteLayout from '../layouts/SiteLayout.astro';
-import wordmarkSrc from '../assets/logo-wordmark-tutreino.png';
 import { createPageMeta, PAGE_META, SITE_CONFIG } from '../utils/meta';
 const metaData = createPageMeta('/', PAGE_META.home);
 const registroUrl = SITE_CONFIG.appRegistrationUrl;
 const waNumber = '59891961610';
 const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero agendar una demo de Tutreino para mi gimnasio.')}`;
+
+// Single source for the visible FAQ and its FAQPage JSON-LD, so they can't drift apart
+const faqs = [
+  { q: '¿Qué es Tutreino exactamente?', a: 'Es un sistema de gestión para gimnasios y entrenadores personales, disponible como SaaS en app.tutreino.com. Incluye un panel administrativo para tu equipo y una app propia donde tus socios reservan clases, pagan, siguen su rutina y registran su progreso.' },
+  { q: '¿Sirve para gimnasios con varias sucursales?', a: 'Sí. Podés gestionar múltiples sedes desde una sola cuenta: agenda, staff, socios y métricas separados por sucursal, con visión consolidada para los administradores generales.' },
+  { q: '¿Qué es el white label del plan Pro?', a: 'En el plan Pro, la app que usan tus socios se personaliza completamente con tu marca: tu logo, tus colores y tu nombre, sin ninguna referencia a Tutreino. Ideal para gimnasios grandes que quieren su propia identidad.' },
+  { q: '¿Cómo funcionan las rutinas con inteligencia artificial?', a: 'El sistema genera rutinas personalizadas según el objetivo, nivel y progreso de cada socio, y las periodiza automáticamente semana a semana. El entrenador puede ajustarlas, combinarlas con su criterio o publicarlas tal cual.' },
+  { q: '¿Qué pueden hacer los socios desde su app?', a: 'Reservar clases, pagar membresías (incluyendo pagos recurrentes y por transferencia), ver y seguir su rutina, registrar su progreso y completar formularios de intake, lesiones y satisfacción.' },
+  { q: '¿Puedo crear usuarios para mis entrenadores y otros administradores?', a: 'Sí. Podés crear cuentas para entrenadores, recepcionistas u otros administradores, y asignarles permisos según su rol: qué pueden ver, editar o gestionar dentro del sistema.' },
+  { q: '¿Cómo ayuda Tutreino a reducir las bajas de socios?', a: 'El sistema analiza asistencia, pagos y respuestas de satisfacción para identificar socios en riesgo de darse de baja, y te avisa antes de que pase para que puedas actuar a tiempo.' },
+  { q: '¿Puedo probarlo antes de pagar?', a: 'Sí, 30 días gratis y sin tarjeta. Si no te convence, no pagás nada y conservás todos tus datos.' },
+];
+const faqCols = [faqs.slice(0, 4), faqs.slice(4)];
 ---
 <SiteLayout {...metaData} home>
 
@@ -36,59 +47,17 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
         "priceCurrency": "UYU",
         "description": "Socios y sucursales ilimitadas, app con white label, rutinas con IA y periodización automática, predicción de bajas, permisos por rol, seguimiento de lesiones y progreso"
       }
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "reviewCount": "120"
-    }
+    ]
   })} />
 
   <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "¿Qué es Tutreino exactamente?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Es un sistema de gestión para gimnasios y entrenadores personales, disponible como SaaS en app.tutreino.com. Incluye un panel administrativo para tu equipo y una app propia donde tus socios reservan clases, pagan, siguen su rutina y registran su progreso." }
-      },
-      {
-        "@type": "Question",
-        "name": "¿Sirve para gimnasios con varias sucursales?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Sí. Podés gestionar múltiples sedes desde una sola cuenta: agenda, staff, socios y métricas separados por sucursal, con visión consolidada para los administradores generales." }
-      },
-      {
-        "@type": "Question",
-        "name": "¿Qué es el white label del plan Pro?",
-        "acceptedAnswer": { "@type": "Answer", "text": "En el plan Pro, la app que usan tus socios se personaliza completamente con tu marca: tu logo, tus colores y tu nombre, sin ninguna referencia a Tutreino. Ideal para gimnasios grandes que quieren su propia identidad." }
-      },
-      {
-        "@type": "Question",
-        "name": "¿Cómo funcionan las rutinas con inteligencia artificial?",
-        "acceptedAnswer": { "@type": "Answer", "text": "El sistema genera rutinas personalizadas según el objetivo, nivel y progreso de cada socio, y las periodiza automáticamente semana a semana. El entrenador puede ajustarlas, combinarlas con su criterio o publicarlas tal cual." }
-      },
-      {
-        "@type": "Question",
-        "name": "¿Qué pueden hacer los socios desde su app?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Reservar clases, pagar membresías (incluyendo pagos recurrentes y por transferencia), ver y seguir su rutina, registrar su progreso y completar formularios de intake, lesiones y satisfacción." }
-      },
-      {
-        "@type": "Question",
-        "name": "¿Puedo crear usuarios para mis entrenadores y otros administradores?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Sí. Podés crear cuentas para entrenadores, recepcionistas u otros administradores, y asignarles permisos según su rol." }
-      },
-      {
-        "@type": "Question",
-        "name": "¿Cómo ayuda Tutreino a reducir las bajas de socios?",
-        "acceptedAnswer": { "@type": "Answer", "text": "El sistema analiza asistencia, pagos y respuestas de satisfacción para identificar socios en riesgo de darse de baja, y te avisa antes de que pase para que puedas actuar a tiempo." }
-      },
-      {
-        "@type": "Question",
-        "name": "¿Puedo probarlo antes de pagar?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Sí, 30 días gratis y sin tarjeta. Si no te convence, no pagás nada y conservás todos tus datos." }
-      }
-    ]
+    "mainEntity": faqs.map((f) => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a }
+    }))
   })} />
 
     <!-- hero — white label: tu app, tu marca -->
@@ -394,7 +363,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
         </div>
         <div class="cmp-a-panel cmp-a-after">
           <div class="cmp-a-panel-head">
-            <Image src={wordmarkSrc} alt="Tutreino" width={122} height={29} densities={[1, 2, 3]} format="png" class="cmp-a-label-good-img" />
+            <span class="cmp-a-label-brand">Tutreino</span>
             <span class="cmp-a-sublabel">Todo en un lugar</span>
           </div>
           <ul class="cmp-a-list">
@@ -534,42 +503,16 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
         <h2 class="h-h2">Las dudas que ya<br/>nos hicieron <span class="h-grad">100 veces</span>.</h2>
       </div>
       <div class="h-faq">
-        <div class="h-faq-col">
-          <details>
-            <summary><span class="h-qid">P.01</span> ¿Qué es Tutreino exactamente?<span class="h-caret">+</span></summary>
-            <p>Es un sistema de gestión para gimnasios y entrenadores personales, disponible como SaaS en app.tutreino.com. Incluye un panel administrativo para tu equipo y una app propia donde tus socios reservan clases, pagan, siguen su rutina y registran su progreso.</p>
-          </details>
-          <details>
-            <summary><span class="h-qid">P.02</span> ¿Sirve para gimnasios con varias sucursales?<span class="h-caret">+</span></summary>
-            <p>Sí. Podés gestionar múltiples sedes desde una sola cuenta: agenda, staff, socios y métricas separados por sucursal, con visión consolidada para los administradores generales.</p>
-          </details>
-          <details>
-            <summary><span class="h-qid">P.03</span> ¿Qué es el white label del plan Pro?<span class="h-caret">+</span></summary>
-            <p>En el plan Pro, la app que usan tus socios se personaliza completamente con tu marca: tu logo, tus colores y tu nombre, sin ninguna referencia a Tutreino. Ideal para gimnasios grandes que quieren su propia identidad.</p>
-          </details>
-          <details>
-            <summary><span class="h-qid">P.04</span> ¿Cómo funcionan las rutinas con inteligencia artificial?<span class="h-caret">+</span></summary>
-            <p>El sistema genera rutinas personalizadas según el objetivo, nivel y progreso de cada socio, y las periodiza automáticamente semana a semana. El entrenador puede ajustarlas, combinarlas con su criterio o publicarlas tal cual.</p>
-          </details>
-        </div>
-        <div class="h-faq-col">
-          <details>
-            <summary><span class="h-qid">P.05</span> ¿Qué pueden hacer los socios desde su app?<span class="h-caret">+</span></summary>
-            <p>Reservar clases, pagar membresías (incluyendo pagos recurrentes y por transferencia), ver y seguir su rutina, registrar su progreso y completar formularios de intake, lesiones y satisfacción.</p>
-          </details>
-          <details>
-            <summary><span class="h-qid">P.06</span> ¿Puedo crear usuarios para mis entrenadores y otros administradores?<span class="h-caret">+</span></summary>
-            <p>Sí. Podés crear cuentas para entrenadores, recepcionistas u otros administradores, y asignarles permisos según su rol: qué pueden ver, editar o gestionar dentro del sistema.</p>
-          </details>
-          <details>
-            <summary><span class="h-qid">P.07</span> ¿Cómo ayuda Tutreino a reducir las bajas de socios?<span class="h-caret">+</span></summary>
-            <p>El sistema analiza asistencia, pagos y respuestas de satisfacción para identificar socios en riesgo de darse de baja, y te avisa antes de que pase para que puedas actuar a tiempo.</p>
-          </details>
-          <details>
-            <summary><span class="h-qid">P.08</span> ¿Puedo probarlo antes de pagar?<span class="h-caret">+</span></summary>
-            <p>Sí, 30 días gratis y sin tarjeta. Si no te convence, no pagás nada y conservás todos tus datos.</p>
-          </details>
-        </div>
+        {faqCols.map((col) => (
+          <div class="h-faq-col">
+            {col.map((f) => (
+              <details>
+                <summary><span class="h-qid">P.{String(faqs.indexOf(f) + 1).padStart(2, '0')}</span> {f.q}<span class="h-caret">+</span></summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
+          </div>
+        ))}
       </div>
     </section>
 
@@ -911,7 +854,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
 .cmp-a-panel-head { display: flex; flex-direction: column; gap: 6px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
 .cmp-a-label-bad { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px; color: var(--mute); letter-spacing: -.02em; }
 .cmp-a-label-good { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px; color: var(--green); letter-spacing: -.02em; }
-.cmp-a-label-good-img { height: 29px; width: auto; max-width: none; display: block; align-self: flex-start; }
+.cmp-a-label-brand { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px; line-height: 1; letter-spacing: -.02em; text-transform: lowercase; color: #007aff; }
 .cmp-a-sublabel { font-family: 'Space Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--mute); }
 .cmp-a-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
 .cmp-a-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14.5px; line-height: 1.5; }

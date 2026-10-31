@@ -20,7 +20,6 @@ export interface Props {
   ogImageType?: string;
   ogImageAlt?: string;
   twitterCard?: string;
-  twitterSite?: string;
   twitterTitle?: string;
   twitterDescription?: string;
   twitterImage?: string;
@@ -46,7 +45,6 @@ const {
   ogImageType = 'image/jpeg',
   ogImageAlt = `${SITE_CONFIG.name} - ${title}`,
   twitterCard = 'summary_large_image',
-  twitterSite = SITE_CONFIG.social.twitterSite,
   twitterTitle = ogTitle,
   twitterDescription = ogDescription,
   twitterImage = ogImage,
@@ -86,7 +84,6 @@ const absoluteOgImage = ogImage.startsWith('http') ? ogImage : new URL(ogImage, 
     <meta property="og:image:alt" content={ogImageAlt} />
 
     <meta name="twitter:card" content={twitterCard} />
-    <meta name="twitter:site" content={twitterSite} />
     <meta name="twitter:title" content={twitterTitle} />
     <meta name="twitter:description" content={twitterDescription} />
     <meta name="twitter:image" content={absoluteOgImage} />

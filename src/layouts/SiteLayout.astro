@@ -25,7 +25,6 @@ export interface Props {
   ogImageType?: string;
   ogImageAlt?: string;
   twitterCard?: string;
-  twitterSite?: string;
   twitterTitle?: string;
   twitterDescription?: string;
   twitterImage?: string;
@@ -45,6 +44,8 @@ const waUrl = 'https://wa.me/59891961610?text=Hola%2C%20quiero%20agendar%20una%2
   <link slot="head" rel="preconnect" href="https://fonts.googleapis.com" />
   <link slot="head" rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link slot="head" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=Geist:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" />
+  <!-- Forward pages' head content (e.g. JSON-LD) to Layout's <head> -->
+  <slot name="head" slot="head" />
 
   <div class="h-root">
     <div class="h-grid-bg" aria-hidden="true"></div>
@@ -187,7 +188,7 @@ const waUrl = 'https://wa.me/59891961610?text=Hola%2C%20quiero%20agendar%20una%2
   font-weight: 600; font-size: 17px; letter-spacing: -0.02em;
 }
 .h-logo-img { width: 24px; height: 24px; border-radius: 6px; display: block; flex-shrink: 0; }
-.h-logo-wordmark { height: 22px; width: auto; display: block; }
+.h-logo-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 21px; line-height: 1; letter-spacing: -0.03em; text-transform: lowercase; color: #007aff; }
 .h-nav-pill {
   display: flex; align-items: center; gap: 4px; padding: 4px;
   background: var(--bg); border: 1px solid var(--line); border-radius: 999px;
@@ -289,7 +290,7 @@ const waUrl = 'https://wa.me/59891961610?text=Hola%2C%20quiero%20agendar%20una%2
 .h-foot-top { display: grid; grid-template-columns: 280px 1fr; gap: 60px; margin-bottom: 36px; }
 .h-foot-brand { display: flex; flex-direction: column; gap: 16px; }
 .h-foot-brand .h-logo-img { width: 32px; height: 32px; }
-.h-foot-brand .h-logo-wordmark-lg { height: 30px; }
+.h-foot-brand .h-logo-name { font-size: 27px; }
 .h-foot-brand .h-logo { font-size: 18px; }
 .h-foot-tagline { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.6; max-width: 240px; }
 .h-foot-socials { display: flex; align-items: center; gap: 8px; }

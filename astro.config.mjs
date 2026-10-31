@@ -6,12 +6,12 @@ import sitemap from "@astrojs/sitemap";
 // https://astro.build/config
 export default defineConfig({
   // Your site URL - update this to your actual domain
-  site: 'https://www.tutreino.com',
+  site: 'https://tutreino.com',
+  // URLs have no trailing slash (matches canonicals); vercel.json redirects /page/ → /page
+  trailingSlash: 'never',
   integrations: [sitemap({
-    filter: (page) =>
-      page !== 'https://www.tutreino.com/validate/' &&
-      page !== 'https://www.tutreino.com/404/' &&
-      !page.startsWith('https://www.tutreino.com/docs'),
+    // 404 is excluded automatically; /docs is internal API reference (noindex)
+    filter: (page) => !new URL(page).pathname.startsWith('/docs'),
   })],
   vite: {
     plugins: [tailwindcss()],
