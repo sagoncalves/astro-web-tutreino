@@ -34,6 +34,8 @@ const quotes = [
   { name: 'Tomás Pereiro', place: 'Entrenador personal · La Paloma', text: 'Soy entrenador personal y la IA me arma una base sólida para cada cliente según su objetivo. Yo la ajusto con mi criterio y listo. Y los cobros ya no dependen de que yo me acuerde.' },
 ];
 const [leadQuote, ...moreQuotes] = quotes;
+// Testimonials are hidden for now; set to true to bring them back (then re-check the chalk/white bands below)
+const showTestimonials = false;
 ---
 <SiteLayout {...metaData} home ctaBar>
 
@@ -349,7 +351,8 @@ const [leadQuote, ...moreQuotes] = quotes;
       </div>
     </section>
 
-    <!-- testimonios -->
+    <!-- testimonios (hidden for now, see showTestimonials) -->
+    {showTestimonials && (
     <section class="h-section h-chalk" id="testimonios">
       <div class="h-wrap">
         <div class="h-head">
@@ -372,9 +375,10 @@ const [leadQuote, ...moreQuotes] = quotes;
         </div>
       </div>
     </section>
+    )}
 
     <!-- comparativa -->
-    <section class="h-section" id="comparativa">
+    <section class="h-section h-chalk" id="comparativa">
       <div class="h-wrap">
         <div class="h-head">
           <h2 class="h-h2 h-h2-quiet">Planillas y grupos tienen un techo.</h2>
@@ -410,7 +414,7 @@ const [leadQuote, ...moreQuotes] = quotes;
     </section>
 
     <!-- precios -->
-    <section class="h-section h-chalk" id="precios">
+    <section class="h-section" id="precios">
       <div class="h-wrap">
         <div class="h-head h-head-center">
           <h2 class="h-h2">Pagás menos que un día de staff.</h2>
@@ -489,7 +493,7 @@ const [leadQuote, ...moreQuotes] = quotes;
     </section>
 
     <!-- faq -->
-    <section class="h-section" id="faq">
+    <section class="h-section h-chalk" id="faq">
       <div class="h-wrap">
         <div class="h-head">
           <h2 class="h-h2 h-h2-quiet">Las dudas que ya nos hicieron 100 veces.</h2>
@@ -807,7 +811,7 @@ const [leadQuote, ...moreQuotes] = quotes;
 /* ── comparison ───────────────────────────────────── */
 .h-cmp { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
 .h-cmp-panel { display: grid; gap: 18px; align-content: start; padding: clamp(24px, 3vw, 36px); }
-.h-cmp-before { background: var(--bg-2); }
+.h-cmp-before { background: #fff; }
 .h-cmp-after { background: var(--brand-soft); border-left: 1px solid var(--line); }
 .h-cmp-label { margin: 0; display: flex; align-items: center; gap: 9px; font-family: var(--f-head); font-weight: 800; font-size: 26px; line-height: 1; letter-spacing: -.03em; color: var(--ink); }
 .h-cmp-label img { width: 28px; height: 28px; }
@@ -880,7 +884,7 @@ const [leadQuote, ...moreQuotes] = quotes;
 @media(max-width:767px) { .h-faq { grid-template-columns: 1fr; } }
 
 /* ── closing band: the logo blue ──────────────────── */
-.h-final-wrap { padding: 0 clamp(16px, 4vw, 48px) clamp(48px, 6vw, 72px); }
+.h-final-wrap { padding: 0 clamp(16px, 4vw, 48px) clamp(48px, 6vw, 72px); background: var(--bg-2); }
 .h-final { max-width: 1280px; margin: 0 auto; padding: clamp(56px, 9vw, 112px) clamp(24px, 6vw, 80px); background: var(--brand); border-radius: 28px; text-align: center; }
 .h-final-h { margin: 0; font-family: var(--f-head); font-weight: 800; font-size: var(--t-final); line-height: .95; letter-spacing: -.04em; color: #fff; }
 .h-final-h span { color: var(--ink); }
