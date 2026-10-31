@@ -92,13 +92,23 @@ const fontsHref = 'https://fonts.googleapis.com/css2?family=League+Spartan:wght@
 </script>
 
 <style is:global>
+/* Atkinson Hyperlegible Next only ships a slashed zero, so the plain zero comes from Albert Sans:
+   a 1.4 KB subset that holds just "0", so every other character stays Atkinson */
+@font-face {
+  font-family: 'Tutreino Zero';
+  src: url('/fonts/albert-sans-zero.woff2') format('woff2');
+  font-weight: 400 700;
+  font-display: swap;
+  unicode-range: U+0030;
+}
+
 /* ── Design tokens ─────────────────────────────────────────── */
 /* League Spartan 800 for headlines, numbers and the name; Atkinson Hyperlegible Next for text and
    labels, in sentence case. The logo blue and its ink tone carry the brand; weight-plate red,
    yellow and green only mark status. Flat surfaces, chalk bands, white cards. */
 .h-root {
   --f-head: 'League Spartan', Futura, 'Century Gothic', sans-serif;
-  --f-text: 'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, sans-serif;
+  --f-text: 'Tutreino Zero', 'Atkinson Hyperlegible Next', ui-sans-serif, system-ui, sans-serif;
   /* display sizes: four steps, each at least 1.25x the next */
   --t-hero: clamp(44px, 7vw, 96px);
   --t-final: clamp(40px, 6vw, 72px);
