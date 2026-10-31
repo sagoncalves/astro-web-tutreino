@@ -3,6 +3,7 @@
 // the logo blue with weight-plate accents, flat surfaces). Same content as index.astro; noindex and
 // left out of the sitemap. Theme rules are at the end of the style block, scoped to .h-theme-disco.
 import SiteLayout from '../layouts/SiteLayout.astro';
+import DiscoWordmark from '../components/DiscoWordmark.astro';
 import { createPageMeta, PAGE_META, SITE_CONFIG } from '../utils/meta';
 const metaData = createPageMeta('/v2', { ...PAGE_META.home, title: 'Tutreino v2 · Disco' });
 const registroUrl = SITE_CONFIG.appRegistrationUrl;
@@ -329,7 +330,7 @@ const faqCols = [faqs.slice(0, 4), faqs.slice(4)];
         </div>
         <div class="cmp-a-panel cmp-a-after">
           <div class="cmp-a-panel-head">
-            <span class="cmp-a-label-brand">Tutreino</span>
+            <span class="cmp-a-label-brand"><DiscoWordmark /></span>
             <span class="cmp-a-sublabel">Todo en un lugar</span>
           </div>
           <ul class="cmp-a-list">
@@ -1041,15 +1042,13 @@ const faqCols = [faqs.slice(0, 4), faqs.slice(4)];
   background: rgba(255,255,255,.96);
   padding: 10px calc(max(0px, (100% - 1280px) / 2) + clamp(20px,4vw,48px));
 }
-.h-theme-disco .h-logo { gap: 8px; }
-.h-theme-disco .h-logo-img { width: 28px; height: 28px; border-radius: 50%; }
-.h-theme-disco .h-logo-name { font-family: var(--f-head); font-weight: 800; font-size: 23px; letter-spacing: -0.04em; color: var(--ink); }
+.h-theme-disco .h-nav .h-logo { font-size: 25px; }
 .h-theme-disco .h-nav-pill { background: none; border: 0; padding: 0; gap: 2px; }
 .h-theme-disco .h-nav-pill a { font-size: 14.5px; font-weight: 700; color: var(--ink); padding: 8px 12px; }
 .h-theme-disco .h-cta-mini, .h-theme-disco .h-cta-mini:hover { font-weight: 700; font-size: 14.5px; letter-spacing: 0; box-shadow: none; }
 .h-theme-disco .h-mobile-menu { top: 64px; border-radius: 18px; }
 .h-theme-disco .h-mobile-menu a { font-weight: 700; }
-@media (max-width: 760px) { .h-theme-disco .h-nav { padding: 8px 16px; } }
+@media (max-width: 760px) { .h-theme-disco .h-nav { padding: 8px 16px; } .h-theme-disco .h-nav .h-logo { font-size: 23px; } }
 
 /* bands */
 .h-theme-disco .h-wl { background: none; }
@@ -1099,7 +1098,7 @@ const faqCols = [faqs.slice(0, 4), faqs.slice(4)];
 
 /* comparison */
 .h-theme-disco .cmp-a-label-bad { font-weight: 800; font-size: 24px; }
-.h-theme-disco .cmp-a-label-brand { font-weight: 800; font-size: 24px; letter-spacing: -0.04em; color: var(--ink); }
+.h-theme-disco .cmp-a-label-brand { font-size: 28px; color: var(--ink); }
 .h-theme-disco .cmp-a-sublabel { font-size: 13.5px; font-weight: 700; letter-spacing: 0; text-transform: none; }
 .h-theme-disco .cmp-a-after { background: var(--lime-soft); }
 .h-theme-disco .cmp-a-x { color: var(--plate-red); }
@@ -1124,8 +1123,7 @@ const faqCols = [faqs.slice(0, 4), faqs.slice(4)];
 .h-theme-disco .h-final .h-btn-wa:hover { background: rgba(255,255,255,.12); border-color: #fff; }
 
 /* footer */
-.h-theme-disco .h-foot-brand .h-logo-img { width: 36px; height: 36px; }
-.h-theme-disco .h-foot-brand .h-logo-name { font-size: 30px; }
+.h-theme-disco .h-foot-brand .h-logo { font-size: 34px; }
 .h-theme-disco .h-foot-cols h4 { font-family: var(--f-text); font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--ink); }
 .h-theme-disco .h-foot-cols h4::first-letter { text-transform: uppercase; }
 .h-theme-disco .h-foot-cols a { font-size: 15px; }
