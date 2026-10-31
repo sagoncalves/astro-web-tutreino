@@ -507,50 +507,6 @@ const faqCols = [faqs.slice(0, 4), faqs.slice(4)];
     </section>
 
   <script>
-    // The logo's arrow under the highlighted end of each headline. Drawn per line so it
-    // follows the text width; skipped when more of the headline sits below the highlight.
-    const NS = 'http://www.w3.org/2000/svg';
-    const heads = [...document.querySelectorAll<HTMLElement>('.h-theme-disco :is(.h-h1, .h-h2, .h-final-h)')];
-    const drawArrow = (h: HTMLElement) => {
-      h.querySelector(':scope > .h-arrow-under')?.remove();
-      const hl = h.querySelector<HTMLElement>('.h-grad');
-      const rects = hl?.getClientRects();
-      if (!hl || !rects?.length) return;
-      const r = rects[rects.length - 1], hr = h.getBoundingClientRect(), cs = getComputedStyle(h);
-      const contentBottom = hr.bottom - parseFloat(cs.paddingBottom);
-      if (contentBottom - r.bottom > parseFloat(cs.lineHeight) * 0.5) return;
-      const probe = document.createElement('span');
-      probe.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline';
-      hl.appendChild(probe);
-      const base = probe.getBoundingClientRect().top - hr.top;
-      probe.remove();
-      const fs = parseFloat(getComputedStyle(hl).fontSize);
-      // end under the last letter, leaving trailing punctuation clear of the arrowhead
-      let line = r;
-      const text = [...hl.childNodes].reverse().find((n) => n.nodeType === Node.TEXT_NODE && n.textContent?.trim());
-      if (text) {
-        const end = text.textContent!.replace(/[\s.,;:!?…]+$/, '').length;
-        const range = document.createRange();
-        range.setStart(text, 0);
-        range.setEnd(text, end);
-        const lines = range.getClientRects();
-        if (lines.length) line = lines[lines.length - 1];
-      }
-      const x0 = line.left - hr.left + fs * 0.05, x1 = line.right - hr.left - fs * 0.02;
-      const y0 = base + fs * 0.3, y1 = base + fs * 0.21, cx = (x0 + x1) / 2, cy = y0 + fs * 0.5;
-      const back = Math.atan2(cy - y1, cx - x1), len = fs * 0.22, k = 0.62;
-      const leg = (m: number) => `${(x1 + len * Math.cos(back + m * k)).toFixed(1)} ${(y1 + len * Math.sin(back + m * k)).toFixed(1)}`;
-      const svg = document.createElementNS(NS, 'svg');
-      svg.setAttribute('class', 'h-arrow-under');
-      svg.setAttribute('aria-hidden', 'true');
-      svg.setAttribute('width', String(Math.ceil(hr.width)));
-      svg.setAttribute('height', String(Math.ceil(hr.height)));
-      svg.innerHTML = `<path d="M${x0.toFixed(1)} ${y0.toFixed(1)}Q${cx.toFixed(1)} ${cy.toFixed(1)} ${x1.toFixed(1)} ${y1.toFixed(1)}M${leg(1)}L${x1.toFixed(1)} ${y1.toFixed(1)}L${leg(-1)}" fill="none" stroke="currentColor" stroke-width="${Math.max(2.5, fs * 0.07).toFixed(1)}" stroke-linecap="round" stroke-linejoin="round"/>`;
-      h.appendChild(svg);
-    };
-    const ro = new ResizeObserver((entries) => entries.forEach((e) => drawArrow(e.target as HTMLElement)));
-    document.fonts.ready.then(() => heads.forEach((h) => { drawArrow(h); ro.observe(h); }));
-
     // billing toggle
     const billOpts = document.querySelectorAll('.h-bill-opt');
     const amounts = document.querySelectorAll('.h-amt[data-mensual]');
@@ -1166,10 +1122,7 @@ const faqCols = [faqs.slice(0, 4), faqs.slice(4)];
 .h-theme-disco .h-final .h-btn-wa svg { color: #fff; }
 .h-theme-disco .h-final .h-btn-wa:hover { background: rgba(255,255,255,.12); border-color: #fff; }
 
-/* the logo's arrow: under headline highlights and as the "going up" marker */
-.h-theme-disco :is(.h-h1, .h-h2, .h-final-h) { position: relative; padding-bottom: .4em; }
-.h-theme-disco .h-arrow-under { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; color: var(--green); }
-.h-theme-disco .h-final-h .h-arrow-under { color: var(--ink); }
+/* the logo's arrow as the "going up" marker (never under words: that reads as Amazon) */
 .h-theme-disco .h-up { display: inline-block; width: 1.15em; height: .46em; margin-right: .3em; vertical-align: .02em; overflow: visible; }
 
 /* footer */
