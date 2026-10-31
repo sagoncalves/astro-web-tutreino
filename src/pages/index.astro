@@ -1,14 +1,15 @@
 ---
-// Brand H: brand-a content × v2 aesthetic
-// Dark green palette, grid bg, glows, Bricolage+Geist+JetBrains, floating pill nav
-// Content: Tutreino — gym/personal-trainer SaaS with admin panel + member-facing app,
-// multi-branch, white label (Pro), AI routines, churn prediction, role permissions
+// Homepage, in the look reviewed on /v2: League Spartan + Atkinson Hyperlegible Next, the logo
+// blue, flat chalk and white bands. Tokens and the type scale live in SiteLayout.
+// Content: Tutreino, gym/personal-trainer SaaS with admin panel + member-facing app,
+// multi-branch, white label (Pro), AI routines, churn prediction, role permissions.
+// Every call to action opens a WhatsApp chat, so each button carries the WhatsApp glyph.
 import SiteLayout from '../layouts/SiteLayout.astro';
-import { createPageMeta, PAGE_META, SITE_CONFIG } from '../utils/meta';
+import WaGlyph from '../components/WaGlyph.astro';
+import { createPageMeta, PAGE_META, WA, waLink } from '../utils/meta';
 const metaData = createPageMeta('/', PAGE_META.home);
-const registroUrl = SITE_CONFIG.appRegistrationUrl;
-const waNumber = '59891961610';
-const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero agendar una demo de Tutreino para mi gimnasio.')}`;
+const trialStarter = waLink('Hola, quiero probar el plan Starter de Tutreino 30 días gratis.');
+const trialPro = waLink('Hola, quiero probar el plan Pro de Tutreino 30 días gratis.');
 
 // Single source for the visible FAQ and its FAQPage JSON-LD, so they can't drift apart
 const faqs = [
@@ -22,8 +23,19 @@ const faqs = [
   { q: '¿Puedo probarlo antes de pagar?', a: 'Sí, 30 días gratis y sin tarjeta. Si no te convence, no pagás nada y conservás todos tus datos.' },
 ];
 const faqCols = [faqs.slice(0, 4), faqs.slice(4)];
+
+// The first quote leads at a larger size; the rest follow in a strip
+const quotes = [
+  { name: 'Facundo Puigdevall', place: 'SOMA CLUB · Melo, Cerro Largo', text: 'Arrancamos en Melo y no teníamos con qué comparar, pero desde el primer mes dejamos de perder tiempo con planillas y cobros manuales. Hoy nuestros socios reservan y pagan solos y nosotros nos enfocamos en el entrenamiento.' },
+  { name: 'Santiago Sosa', place: 'SPORTFIT · Montevideo', text: 'Lanzamos la app con nuestro logo y nuestros colores y los socios la sintieron como propia desde el día uno. Las rutinas con IA nos ahorran horas de planificación cada semana.' },
+  { name: 'Martín López', place: 'ACCIONGYM · Mercedes', text: 'Manejo las reservas, los cobros y los permisos del staff desde un solo lugar. Antes era un caos por WhatsApp; ahora veo todo junto y actúo rápido cuando un socio está por darse de baja.' },
+  { name: 'Xavier Civitate', place: '1570 House Training · Fray Bentos, Río Negro', text: 'Desde Fray Bentos manejamos todo sin complicaciones. Los socios reservan y pagan desde la app y nosotros no tocamos planillas desde que arrancamos con Tutreino.' },
+  { name: 'Agustín Yauza', place: 'Eco Training Club · Montevideo', text: 'El soporte es lo que marca la diferencia: te responden rápido, en español y te ayudan hasta que el problema queda resuelto. Nunca nos sentimos solos con la herramienta.' },
+  { name: 'Tomás Pereiro', place: 'Entrenador personal · La Paloma', text: 'Soy entrenador personal y la IA me arma una base sólida para cada cliente según su objetivo. Yo la ajusto con mi criterio y listo. Y los cobros ya no dependen de que yo me acuerde.' },
+];
+const [leadQuote, ...moreQuotes] = quotes;
 ---
-<SiteLayout {...metaData} home>
+<SiteLayout {...metaData} home ctaBar>
 
   <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify({
     "@context": "https://schema.org",
@@ -60,19 +72,22 @@ const faqCols = [faqs.slice(0, 4), faqs.slice(4)];
     }))
   })} />
 
-    <!-- hero — white label: tu app, tu marca -->
-    <header class="h-section h-wl h-wl-hero" id="inicio">
-      <div class="h-head h-head-center">
-        <div class="h-meta-strip h-wl-meta">
-          <span><!-- <span class="h-tag-id">●</span> --> ¿Líder de gimnasio? ¿Entrenador personal?</span>
+    <!-- hero: white label, tu app con tu marca -->
+    <header class="h-hero" id="inicio" data-cta-bar-hide>
+      <div class="h-wrap h-hero-copy">
+        <p class="h-hero-kicker">¿Líder de gimnasio? ¿Entrenador personal?</p>
+        <h1 class="h-h1">Tu app.<br/><span class="h-accent">Tu marca.</span></h1>
+        <p class="h-hero-sub">Tus socios reservan, pagan y ven su rutina desde una app que dice <b>tu nombre</b>, con <b>tu logo</b> y <b>tus colores</b>. Vos manejás todo desde un solo panel.</p>
+        <div class="h-hero-ctas">
+          <a href={WA.trial} class="h-btn" target="_blank" rel="noopener noreferrer"><WaGlyph />Probar 30 días gratis</a>
+          <a href="#producto" class="h-link">Ver cómo funciona <span aria-hidden="true">↓</span></a>
         </div>
-        <h1 class="h-h1">Tu app.<br/><span class="h-grad">Tu marca.</span></h1>
-        <p class="h-sub h-sub-center">Tus socios reservan, pagan y ven su rutina desde una app que dice <b>tu nombre</b>, con <b>tu logo</b> y <b>tus colores</b>. Vos manejás todo desde un solo panel.</p>
+        <p class="h-hero-note">Se abre WhatsApp · Sin tarjeta · Cancelás cuando quieras</p>
       </div>
 
-      <div class="h-wl-grid">
-        <!-- Gimnasio 1 — Azul -->
-        <figure class="h-phone" style="--brand:#1d4ed8;--brand-2:#3b82f6;--brand-soft:#dbeafe;">
+      <div class="h-wl-grid" aria-hidden="true">
+        <!-- Gimnasio 1, azul -->
+        <figure class="h-phone" style="--gym:#1d4ed8;--gym-soft:#dbeafe;">
           <div class="h-phone-frame">
             <div class="h-phone-notch"></div>
             <div class="h-phone-screen">
@@ -80,15 +95,16 @@ const faqCols = [faqs.slice(0, 4), faqs.slice(4)];
                 <span class="h-app-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h3v16H6zm9 0h3v16h-3zM4 9h16v6H4z"/></svg>IRON HOUSE</span>
               </div>
               <div class="h-app-hero">Hola, Marcos 👊</div>
-              <div class="h-app-card primary">Tu clase de hoy<br/><b>Funcional · 19:00</b></div>
-              <div class="h-app-card">Próximo pago<br/><b>en 6 días · automático</b></div>
+              <div class="h-app-card primary">Tu clase de hoy<b>Funcional · 19:00</b></div>
+              <div class="h-app-card">Próximo pago<b>en 6 días · automático</b></div>
+              <div class="h-app-card">Tu rutina<b>Día 2 · Tren inferior</b></div>
               <div class="h-app-nav"><span class="on"></span><span></span><span></span><span></span></div>
             </div>
           </div>
         </figure>
 
-        <!-- Gimnasio 2 — Verde -->
-        <figure class="h-phone featured" style="--brand:#059669;--brand-2:#10b981;--brand-soft:#d1fae5;">
+        <!-- Gimnasio 2, verde -->
+        <figure class="h-phone featured" style="--gym:#047857;--gym-soft:#d1fae5;">
           <div class="h-phone-frame">
             <div class="h-phone-notch"></div>
             <div class="h-phone-screen">
@@ -96,15 +112,16 @@ const faqCols = [faqs.slice(0, 4), faqs.slice(4)];
                 <span class="h-app-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 4 7v10l8 5 8-5V7zm0 4 4 2.5v5L12 16l-4-2.5v-5z"/></svg>ZEN STUDIO</span>
               </div>
               <div class="h-app-hero">Hola, Camila 🌿</div>
-              <div class="h-app-card primary">Tu clase de hoy<br/><b>Yoga Flow · 08:00</b></div>
-              <div class="h-app-card">Tu rutina<br/><b>generada con IA</b></div>
+              <div class="h-app-card primary">Tu clase de hoy<b>Yoga Flow · 08:00</b></div>
+              <div class="h-app-card">Tu rutina<b>generada con IA</b></div>
+              <div class="h-app-card">Esta semana<b>3 clases reservadas</b></div>
               <div class="h-app-nav"><span class="on"></span><span></span><span></span><span></span></div>
             </div>
           </div>
         </figure>
 
-        <!-- Gimnasio 3 — Naranja -->
-        <figure class="h-phone" style="--brand:#ea580c;--brand-2:#f97316;--brand-soft:#ffedd5;">
+        <!-- Gimnasio 3, naranja -->
+        <figure class="h-phone" style="--gym:#c2410c;--gym-soft:#ffedd5;">
           <div class="h-phone-frame">
             <div class="h-phone-notch"></div>
             <div class="h-phone-screen">
@@ -112,430 +129,394 @@ const faqCols = [faqs.slice(0, 4), faqs.slice(4)];
                 <span class="h-app-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m13 2-9 12h7l-2 8 9-12h-7z"/></svg>FLOW GYM</span>
               </div>
               <div class="h-app-hero">Hola, Diego ⚡</div>
-              <div class="h-app-card primary">Tu clase de hoy<br/><b>Spinning · 20:30</b></div>
-              <div class="h-app-card">Tu progreso<br/><b>+4kg este mes</b></div>
+              <div class="h-app-card primary">Tu clase de hoy<b>Spinning · 20:30</b></div>
+              <div class="h-app-card">Tu progreso<b>+4kg este mes</b></div>
+              <div class="h-app-card">Tu racha<b>12 días seguidos</b></div>
               <div class="h-app-nav"><span class="on"></span><span></span><span></span><span></span></div>
             </div>
           </div>
         </figure>
       </div>
+
+      <div class="h-proof">
+        <p class="h-wrap">Ya lo usan gimnasios y entrenadores en <b>Montevideo, Mercedes, Fray Bentos, Melo y La Paloma</b>.</p>
+      </div>
     </header>
 
-    <!-- producto — feature blocks que venden resultados -->
+    <!-- producto: cobros (con los medios de pago) y retención -->
     <section class="h-section" id="producto">
-      <div class="h-head">
-        <h2 class="h-h2">Un sistema.<br/><span class="h-grad">Todo tu gimnasio.</span></h2>
-        <p class="h-sub">No es una planilla con más botones. Es el sistema que cobra solo, retiene socios y entrena por vos — con tu marca adelante.</p>
-      </div>
-
-      <!-- BLOQUE 1 — Cobros -->
-      <div class="h-feat" id="cobros">
-        <div class="h-feat-copy">
-          <h3 class="h-feat-h">Cobrás sin perseguir<br/>a nadie.</h3>
-          <p class="h-feat-lead">Recordatorio, link de pago y confirmación salen solos. Vos abrís el panel y el dinero ya entró — débito automático, transferencia o tarjeta.</p>
-          <ul class="h-feat-pts">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span><b>Más cobranza puntual.</b> Se acabó el "te pago la semana que viene".</span></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span><b>Cero recepción.</b> El socio paga desde su app, no en el mostrador.</span></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span><b>Planes a medida.</b> Mensual, anual, pase libre o por clase.</span></li>
-          </ul>
+      <div class="h-wrap">
+        <div class="h-head">
+          <h2 class="h-h2">Un sistema.<br/>Todo tu gimnasio.</h2>
+          <p class="h-sub">No es una planilla con más botones. Es el sistema que cobra solo, retiene socios y entrena por vos, con tu marca adelante.</p>
         </div>
 
-        <!-- mockup: panel de cobros -->
-        <div class="h-feat-vis">
-          <div class="h-screen-body">
-            <div class="h-stat-row">
-              <div class="h-stat">
-                <span class="h-stat-lbl">Ingreso del mes</span>
-                <span class="h-stat-val">$ 684.500</span>
-                <span class="h-stat-trend up">▲ 18% vs. mes anterior</span>
-              </div>
-              <div class="h-stat">
-                <span class="h-stat-lbl">Cobrado solo</span>
-                <span class="h-stat-val">94<small>%</small></span>
-                <span class="h-stat-trend">312 de 332 socios</span>
-              </div>
+        <!-- BLOQUE 1: cobros -->
+        <div class="h-feat" id="cobros">
+          <div class="h-feat-copy">
+            <h3 class="h-feat-h">Cobrás sin perseguir a nadie.</h3>
+            <p class="h-feat-lead">Recordatorio, link de pago y confirmación salen solos. Vos abrís el panel y el dinero ya entró.</p>
+            <ul class="h-feat-pts">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>Más cobranza puntual.</b> Se acabó el “te pago la semana que viene”.</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>Cero recepción.</b> El socio paga desde su app, no en el mostrador.</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>Planes a medida.</b> Mensual, anual, pase libre o por clase.</span></li>
+            </ul>
+            <div class="h-paym">
+              <p class="h-paym-h">Cada socio paga como prefiere</p>
+              <ul class="h-paym-list">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4" stroke-linecap="round"/></svg><span><b>Tarjeta recurrente</b>Se cobra sola, mes a mes</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 10h18M3 6h18M5 14h6m-6 4h10" stroke-linecap="round"/></svg><span><b>Transferencia</b>Con comprobante y conciliación</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Por clase o pase libre</b>Cobros sueltos, sin membresía fija</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 13l4-4 4 3 7-7M14 5h4v4" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Todo conciliado</b>Cada pago queda registrado en el panel</span></li>
+              </ul>
             </div>
-            <div class="h-pay-list">
-              <div class="h-pay"><span class="h-pay-av">MG</span><div class="h-pay-body"><b>Marcos G.</b><small>Plan mensual · débito automático</small></div><span class="h-pay-amt ok">$ 2.200 ✓</span></div>
-              <div class="h-pay"><span class="h-pay-av">LR</span><div class="h-pay-body"><b>Lucía R.</b><small>Mensual · link enviado</small></div><span class="h-pay-amt wait">$ 1.800 ⏳</span></div>
-              <div class="h-pay"><span class="h-pay-av">DC</span><div class="h-pay-body"><b>Diego C.</b><small>Anual · transferencia</small></div><span class="h-pay-amt ok">$ 24.000 ✓</span></div>
-              <div class="h-pay"><span class="h-pay-av">AT</span><div class="h-pay-body"><b>Ana T.</b><small>Plan mensual · débito automático</small></div><span class="h-pay-amt ok">$ 2.200 ✓</span></div>
+          </div>
+
+          <!-- mockup: panel de cobros -->
+          <div class="h-feat-vis" aria-hidden="true">
+            <div class="h-screen-body">
+              <div class="h-stat-row">
+                <div class="h-stat">
+                  <span class="h-stat-lbl">Ingreso del mes</span>
+                  <span class="h-stat-val">$ 684.500</span>
+                  <span class="h-stat-trend up">▲ 18% vs. mes anterior</span>
+                </div>
+                <div class="h-stat">
+                  <span class="h-stat-lbl">Cobrado solo</span>
+                  <span class="h-stat-val">94<small>%</small></span>
+                  <span class="h-stat-trend">312 de 332 socios</span>
+                </div>
+              </div>
+              <div class="h-pay-list">
+                <div class="h-pay"><span class="h-pay-av">MG</span><div class="h-pay-body"><b>Marcos G.</b><small>Plan mensual · débito automático</small></div><span class="h-pay-amt ok">$ 2.200 ✓</span></div>
+                <div class="h-pay"><span class="h-pay-av">LR</span><div class="h-pay-body"><b>Lucía R.</b><small>Mensual · link enviado</small></div><span class="h-pay-amt wait">$ 1.800 · pendiente</span></div>
+                <div class="h-pay"><span class="h-pay-av">DC</span><div class="h-pay-body"><b>Diego C.</b><small>Anual · transferencia</small></div><span class="h-pay-amt ok">$ 24.000 ✓</span></div>
+                <div class="h-pay"><span class="h-pay-av">AT</span><div class="h-pay-body"><b>Ana T.</b><small>Plan mensual · débito automático</small></div><span class="h-pay-amt ok">$ 2.200 ✓</span></div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- BLOQUE 2 — Retención + IA (mockup a la izquierda) -->
-      <div class="h-feat reverse" id="retencion">
-        <div class="h-feat-copy">
-          <h3 class="h-feat-h">Sabés quién se va<br/>antes de que se vaya.</h3>
-          <p class="h-feat-lead">El sistema lee asistencia, pagos y uso, y te avisa qué socios están por darse de baja — con tiempo para hacer algo. Y arma las rutinas que los mantienen enganchados.</p>
-          <ul class="h-feat-pts">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span><b>Alertas de riesgo de baja</b> antes de que dejen de venir.</span></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span><b>Rutinas con IA en segundos,</b> periodizadas por objetivo y nivel.</span></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span><b>El entrenador ajusta,</b> la IA hace el trabajo pesado.</span></li>
-          </ul>
-        </div>
+        <!-- BLOQUE 2: retención + IA (mockup a la izquierda) -->
+        <div class="h-feat reverse" id="retencion">
+          <div class="h-feat-copy">
+            <h3 class="h-feat-h">Sabés quién se va antes de que se vaya.</h3>
+            <p class="h-feat-lead">El sistema lee asistencia, pagos y uso, y te avisa qué socios están por darse de baja, con tiempo para hacer algo. Y arma las rutinas que los mantienen enganchados.</p>
+            <ul class="h-feat-pts">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>Alertas de riesgo de baja</b> antes de que dejen de venir.</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>Rutinas con IA en segundos,</b> periodizadas por objetivo y nivel.</span></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>El entrenador ajusta,</b> la IA hace el trabajo pesado.</span></li>
+            </ul>
+          </div>
 
-        <!-- mockup: alerta de retención -->
-        <div class="h-feat-vis">
-          <div class="h-screen-body">
-            <div class="h-alert">
-              <div class="h-alert-head"><span class="h-alert-pulse"></span><b>4 socios en riesgo de baja</b></div>
-              <p>No asisten hace 12+ días y su pago vence pronto. Contactalos ahora.</p>
-            </div>
-            <div class="h-risk">
-              <div class="h-risk-row"><span class="h-pay-av">SF</span><div class="h-pay-body"><b>Sofía F.</b><small>Sin venir hace 14 días</small></div><span class="h-risk-tag hi">riesgo alto</span></div>
-              <div class="h-risk-row"><span class="h-pay-av">NM</span><div class="h-pay-body"><b>Nahuel M.</b><small>Asistencia ↓ 60%</small></div><span class="h-risk-tag hi">riesgo alto</span></div>
-              <div class="h-risk-row"><span class="h-pay-av">VP</span><div class="h-pay-body"><b>Valentina P.</b><small>Pago vence en 2 días</small></div><span class="h-risk-tag md">riesgo medio</span></div>
-            </div>
-            <div class="h-ai-chip">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3m0 12v3M3 12h3m12 0h3m-2.5-6.5-2 2m-9 9-2 2m0-13 2 2m9 9 2 2"/></svg>
-              <span>IA generó <b>3 rutinas nuevas</b> para reactivarlos</span>
+          <!-- mockup: alerta de retención -->
+          <div class="h-feat-vis" aria-hidden="true">
+            <div class="h-screen-body">
+              <div class="h-alert">
+                <div class="h-alert-head"><span class="h-alert-pulse"></span><b>4 socios en riesgo de baja</b></div>
+                <p>No asisten hace 12+ días y su pago vence pronto. Contactalos ahora.</p>
+              </div>
+              <div class="h-risk">
+                <div class="h-risk-row"><span class="h-pay-av">SF</span><div class="h-pay-body"><b>Sofía F.</b><small>Sin venir hace 14 días</small></div><span class="h-risk-tag hi">Riesgo alto</span></div>
+                <div class="h-risk-row"><span class="h-pay-av">NM</span><div class="h-pay-body"><b>Nahuel M.</b><small>Asistencia ↓ 60%</small></div><span class="h-risk-tag hi">Riesgo alto</span></div>
+                <div class="h-risk-row"><span class="h-pay-av">VP</span><div class="h-pay-body"><b>Valentina P.</b><small>Pago vence en 2 días</small></div><span class="h-risk-tag md">Riesgo medio</span></div>
+              </div>
+              <div class="h-ai-chip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3m0 12v3M3 12h3m12 0h3m-2.5-6.5-2 2m-9 9-2 2m0-13 2 2m9 9 2 2"/></svg>
+                <span>IA generó <b>3 rutinas nuevas</b> para reactivarlos</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- experiencia del socio -->
-    <section class="h-section" id="socios">
-      <div class="h-head">
-        <span class="h-eyebrow">Del lado del socio</span>
-        <h2 class="h-h2">Tus socios hacen<br/><span class="h-grad">todo desde el celular.</span></h2>
-        <p class="h-sub">Sin grupos de WhatsApp ni planillas. Reservan, pagan y entrenan desde su app — y vos te enterás de todo en el panel.</p>
-      </div>
-      <div class="h-journey">
-        <div class="h-jstep">
-          <div class="h-jstep-ic" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4m8-4v4" stroke-linecap="round"/></svg>
-          </div>
-          <div class="h-jstep-body">
+    <!-- experiencia del socio: la app, pantalla por pantalla -->
+    <section class="h-section h-chalk" id="socios">
+      <div class="h-wrap">
+        <div class="h-head">
+          <p class="h-kicker">Del lado del socio</p>
+          <h2 class="h-h2">Tus socios hacen todo desde el celular.</h2>
+          <p class="h-sub">Sin grupos de WhatsApp ni planillas. Reservan, pagan y entrenan desde su app, y vos te enterás de todo en el panel.</p>
+        </div>
+        <ul class="h-journey">
+          <li class="h-jstep">
+            <div class="h-mphone" aria-hidden="true">
+              <div class="h-mscreen">
+                <div class="h-ma-top"><span class="h-ma-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h3v16H6zm9 0h3v16h-3zM4 9h16v6H4z"/></svg>IRON HOUSE</span><span class="h-ma-av">M</span></div>
+                <p class="h-ma-over">Hola, Marcos</p>
+                <p class="h-ma-title">Clases</p>
+                <div class="h-ma-days"><span class="on">Hoy</span><span>Mañana</span><span>Vie</span><span>Sáb</span></div>
+                <ul class="h-ma-list">
+                  <li><span class="h-ma-t">07:00</span><span class="h-ma-c"><b>Funcional</b><small>Sala 1 · 4 lugares</small></span><span class="h-ma-a">Reservar</span></li>
+                  <li><span class="h-ma-t">12:30</span><span class="h-ma-c"><b>Cross</b><small>Lleno</small></span><span class="h-ma-a ghost">En espera</span></li>
+                  <li class="mine"><span class="h-ma-t">19:00</span><span class="h-ma-c"><b>Funcional</b><small>Tu lugar está reservado</small></span><span class="h-ma-a">✓</span></li>
+                  <li><span class="h-ma-t">20:30</span><span class="h-ma-c"><b>Spinning</b><small>Sala 2 · 9 lugares</small></span><span class="h-ma-a">Reservar</span></li>
+                </ul>
+                <div class="h-ma-tab"><span class="on"></span><span></span><span></span><span></span></div>
+              </div>
+            </div>
             <h3>Reserva su clase</h3>
             <p>Ve los horarios con cupo en vivo y reserva en dos toques. Si se llena, entra a lista de espera automática.</p>
-          </div>
-        </div>
-        <div class="h-jline" aria-hidden="true"></div>
-        <div class="h-jstep">
-          <div class="h-jstep-ic" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m6 13 3 3 9-9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9.5"/></svg>
-          </div>
-          <div class="h-jstep-body">
+          </li>
+          <li class="h-jstep">
+            <div class="h-mphone" aria-hidden="true">
+              <div class="h-mscreen">
+                <div class="h-ma-top"><span class="h-ma-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h3v16H6zm9 0h3v16h-3zM4 9h16v6H4z"/></svg>IRON HOUSE</span><span class="h-ma-av">M</span></div>
+                <p class="h-ma-over">Semana 3 · Día 2</p>
+                <p class="h-ma-title">Tren inferior</p>
+                <div class="h-ma-prog"><span></span></div>
+                <p class="h-ma-prog-l">2 de 4 ejercicios</p>
+                <ul class="h-ma-list">
+                  <li class="done"><span class="h-ma-ck">✓</span><span class="h-ma-c"><b>Sentadilla</b><small>4 × 8 · 60 kg</small></span></li>
+                  <li class="done"><span class="h-ma-ck">✓</span><span class="h-ma-c"><b>Peso muerto rumano</b><small>3 × 10 · 40 kg</small></span></li>
+                  <li><span class="h-ma-ck"></span><span class="h-ma-c"><b>Estocadas</b><small>3 × 12 · 12 kg</small></span></li>
+                  <li><span class="h-ma-ck"></span><span class="h-ma-c"><b>Plancha</b><small>3 × 45 s</small></span></li>
+                </ul>
+                <p class="h-ma-chip">Armada con IA · ajustada por tu entrenador</p>
+                <div class="h-ma-tab"><span></span><span class="on"></span><span></span><span></span></div>
+              </div>
+            </div>
             <h3>Entrena con su rutina</h3>
             <p>Abre la rutina que armó la IA, marca cada ejercicio y registra su progreso. El entrenador lo ve al instante.</p>
-          </div>
-        </div>
-        <div class="h-jline" aria-hidden="true"></div>
-        <div class="h-jstep">
-          <div class="h-jstep-ic" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4" stroke-linecap="round"/></svg>
-          </div>
-          <div class="h-jstep-body">
+          </li>
+          <li class="h-jstep">
+            <div class="h-mphone" aria-hidden="true">
+              <div class="h-mscreen">
+                <div class="h-ma-top"><span class="h-ma-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h3v16H6zm9 0h3v16h-3zM4 9h16v6H4z"/></svg>IRON HOUSE</span><span class="h-ma-av">M</span></div>
+                <p class="h-ma-over">Tu membresía</p>
+                <p class="h-ma-title">Plan mensual</p>
+                <div class="h-ma-pay"><span>Próximo débito</span><b>UYU 2.200</b><span>18 de noviembre · automático</span></div>
+                <p class="h-ma-status">Débito automático activo</p>
+                <ul class="h-ma-hist">
+                  <li><span>Octubre</span><span>UYU 2.200</span><span class="ok">Pagado</span></li>
+                  <li><span>Setiembre</span><span>UYU 2.200</span><span class="ok">Pagado</span></li>
+                  <li><span>Agosto</span><span>UYU 2.200</span><span class="ok">Pagado</span></li>
+                </ul>
+                <div class="h-ma-tab"><span></span><span></span><span class="on"></span><span></span></div>
+              </div>
+            </div>
             <h3>Paga sin pensarlo</h3>
             <p>Su membresía se renueva sola con débito automático. Sin filas en recepción ni recordatorios incómodos.</p>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <!-- flujo — v2 numbered steps -->
+    <!-- flujo: puesta en marcha en tres pasos -->
     <section class="h-section" id="flujo">
-      <div class="h-head">
-        <span class="h-eyebrow">Tu puesta en marcha</span>
-        <h2 class="h-h2">En un día,<br/><span class="h-grad">listo para siempre.</span></h2>
+      <div class="h-wrap">
+        <div class="h-head">
+          <p class="h-kicker">Tu puesta en marcha</p>
+          <h2 class="h-h2 h-h2-quiet">En un día, listo para siempre.</h2>
+        </div>
+        <ol class="h-flow">
+          <li>
+            <div class="h-flow-num" aria-hidden="true">1</div>
+            <div class="h-flow-card">
+              <h3>Configurás tu gimnasio</h3>
+              <p>Cargás sucursales, planes, horarios y permisos para tu equipo. Si tenés varias sedes, cada una con su propia agenda y staff.</p>
+              <div class="h-flow-tags">
+                <span class="h-flow-tag">2 sucursales</span>
+                <span class="h-flow-tag">Horarios</span>
+                <span class="h-flow-tag">Permisos de equipo</span>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="h-flow-num" aria-hidden="true">2</div>
+            <div class="h-flow-card">
+              <h3>Invitás a tus socios</h3>
+              <p>Importás tu base desde Excel o los invitás uno a uno. Cada socio entra a su propia app: reserva, paga y carga su ficha de salud y objetivos.</p>
+              <div class="h-flow-tags">
+                <span class="h-flow-tag">248 socios importados</span>
+                <span class="h-flow-tag success">Invitaciones enviadas ✓</span>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="h-flow-num" aria-hidden="true">3</div>
+            <div class="h-flow-card">
+              <h3>La plataforma escala con vos</h3>
+              <p>Cobros recurrentes, recordatorios, reservas, rutinas con IA y alertas de bajas. Tu equipo decide; el sistema hace el trabajo repetitivo.</p>
+              <div class="h-flow-tags">
+                <span class="h-flow-tag success">● En vivo</span>
+                <span class="h-flow-tag">248 socios activos</span>
+                <span class="h-flow-tag">12 rutinas IA generadas hoy</span>
+              </div>
+            </div>
+          </li>
+        </ol>
       </div>
-      <ol class="h-flow">
-        <li>
-          <div class="h-flow-num" data-n="01">01</div>
-          <div class="h-flow-card">
-            <h3>Configurás tu gimnasio</h3>
-            <p>Cargás sucursales, planes, horarios y permisos para tu equipo. Si tenés varias sedes, cada una con su propia agenda y staff.</p>
-            <div class="h-flow-tags">
-              <span class="h-flow-tag">2 sucursales</span>
-              <span class="h-flow-tag">Horarios</span>
-              <span class="h-flow-tag">Permisos de equipo</span>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="h-flow-num" data-n="02">02</div>
-          <div class="h-flow-card">
-            <h3>Invitás a tus socios</h3>
-            <p>Importás tu base desde Excel o los invitás uno a uno. Cada socio entra a su propia app: reserva, paga y carga su ficha de salud y objetivos.</p>
-            <div class="h-flow-tags">
-              <span class="h-flow-tag">248 socios importados</span>
-              <span class="h-flow-tag success">Invitaciones enviadas ✓</span>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="h-flow-num" data-n="03">03</div>
-          <div class="h-flow-card">
-            <h3>La plataforma escala con vos</h3>
-            <p>Cobros recurrentes, recordatorios, reservas, rutinas con IA y alertas de bajas. Tu equipo decide; el sistema hace el trabajo repetitivo.</p>
-            <div class="h-flow-tags">
-              <span class="h-flow-tag success">● En vivo</span>
-              <span class="h-flow-tag">248 socios activos</span>
-              <span class="h-flow-tag">12 rutinas IA generadas hoy</span>
-            </div>
-          </div>
-        </li>
-      </ol>
     </section>
 
     <!-- testimonios -->
-    <section class="h-section" id="testimonios">
-      <div class="h-head">
-        <h2 class="h-h2">Gimnasios que ya<br/><span class="h-grad">dejaron el Excel.</span></h2>
-        <p class="h-sub">Líderes de gimnasio y entrenadores personales gestionan su negocio con Tutreino todos los días.</p>
-      </div>
-      <div class="h-test-grid">
-        <article class="h-test">
-          <p>"Lanzamos la app con nuestro logo y nuestros colores y los socios la sintieron como propia desde el día uno. Las rutinas con IA nos ahorran horas de planificación cada semana."</p>
-          <footer>
-            <span class="h-test-av" style="background:rgba(29,78,216,.12);color:#1d4ed8">S</span>
-            <div><div class="h-test-name">Santiago Sosa</div><div class="h-test-role">SPORTFIT · Montevideo</div></div>
-          </footer>
-        </article>
-        <article class="h-test">
-          <p>"Manejo las reservas, los cobros y los permisos del staff desde un solo lugar. Antes era un caos por WhatsApp; ahora veo todo junto y actúo rápido cuando un socio está por darse de baja."</p>
-          <footer>
-            <span class="h-test-av" style="background:rgba(234,88,12,.12);color:#ea580c">M</span>
-            <div><div class="h-test-name">Martín López</div><div class="h-test-role">ACCIONGYM · Mercedes</div></div>
-          </footer>
-        </article>
-        <article class="h-test">
-          <p>"Desde Fray Bentos manejamos todo sin complicaciones. Los socios reservan y pagan desde la app y nosotros no tocamos planillas desde que arrancamos con Tutreino."</p>
-          <footer>
-            <span class="h-test-av" style="background:rgba(124,58,237,.12);color:#7c3aed">X</span>
-            <div><div class="h-test-name">Xavier Civitate</div><div class="h-test-role">1570 House Training · Fray Bentos, Río Negro</div></div>
-          </footer>
-        </article>
-        <article class="h-test">
-          <p>"El soporte es lo que marca la diferencia: te responden rápido, en español y te ayudan hasta que el problema queda resuelto. Nunca nos sentimos solos con la herramienta."</p>
-          <footer>
-            <span class="h-test-av" style="background:rgba(5,150,105,.12);color:#059669">A</span>
-            <div><div class="h-test-name">Agustín Yauza</div><div class="h-test-role">Eco Training Club · Montevideo</div></div>
-          </footer>
-        </article>
-        <article class="h-test">
-          <p>"Soy entrenador personal y la IA me arma una base sólida para cada cliente según su objetivo. Yo la ajusto con mi criterio y listo. Y los cobros ya no dependen de que yo me acuerde."</p>
-          <footer>
-            <span class="h-test-av" style="background:rgba(15,118,110,.12);color:#0f766e">T</span>
-            <div><div class="h-test-name">Tomás Pereiro</div><div class="h-test-role">Entrenador personal · La Paloma</div></div>
-          </footer>
-        </article>
-        <article class="h-test">
-          <p>"Arrancamos en Melo y no teníamos con qué comparar, pero desde el primer mes dejamos de perder tiempo con planillas y cobros manuales. Hoy nuestros socios reservan y pagan solos y nosotros nos enfocamos en el entrenamiento."</p>
-          <footer>
-            <span class="h-test-av" style="background:rgba(220,38,38,.12);color:#dc2626">F</span>
-            <div><div class="h-test-name">Facundo Puigdevall</div><div class="h-test-role">SOMA CLUB · Melo, Cerro Largo</div></div>
-          </footer>
-        </article>
+    <section class="h-section h-chalk" id="testimonios">
+      <div class="h-wrap">
+        <div class="h-head">
+          <h2 class="h-h2">Gimnasios que ya dejaron el Excel.</h2>
+          <p class="h-sub">Líderes de gimnasio y entrenadores personales gestionan su negocio con Tutreino todos los días.</p>
+        </div>
+        <div class="h-quotes">
+          <figure class="h-quote h-quote-lead">
+            <blockquote><p>“{leadQuote.text}”</p></blockquote>
+            <figcaption><b>{leadQuote.name}</b><span>{leadQuote.place}</span></figcaption>
+          </figure>
+          <div class="h-quotes-rest">
+            {moreQuotes.map((q) => (
+              <figure class="h-quote">
+                <blockquote><p>“{q.text}”</p></blockquote>
+                <figcaption><b>{q.name}</b><span>{q.place}</span></figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- comparativa -->
     <section class="h-section" id="comparativa">
-      <div class="h-head">
-        <h2 class="h-h2">Planillas y grupos<br/><span class="h-grad">tienen un techo.</span></h2>
-        <p class="h-sub">Excel, WhatsApp y libretas no escalan ni te dan una app para tus socios.</p>
-      </div>
-      <div class="cmp-a-split">
-        <div class="cmp-a-panel cmp-a-before">
-          <div class="cmp-a-panel-head">
-            <span class="cmp-a-label-bad">Antes</span>
-            <span class="cmp-a-sublabel">Planillas + WhatsApp</span>
-          </div>
-          <ul class="cmp-a-list">
-            <li><span class="cmp-a-x">✕</span> Mensajes sueltos, sin un lugar propio</li>
-            <li><span class="cmp-a-x">✕</span> Cobro manual, mes a mes</li>
-            <li><span class="cmp-a-x">✕</span> Reservas por grupos de WhatsApp</li>
-            <li><span class="cmp-a-x">✕</span> Hojas sueltas, sin seguimiento de rutinas</li>
-            <li><span class="cmp-a-x">✕</span> Información dispersa por sucursal</li>
-            <li><span class="cmp-a-x">✕</span> Te enterás de las bajas cuando ya pasaron</li>
-          </ul>
+      <div class="h-wrap">
+        <div class="h-head">
+          <h2 class="h-h2 h-h2-quiet">Planillas y grupos tienen un techo.</h2>
+          <p class="h-sub">Excel, WhatsApp y libretas no escalan ni te dan una app para tus socios.</p>
         </div>
-        <div class="cmp-a-divider" aria-hidden="true">
-          <div class="cmp-a-div-line"></div>
-          <div class="cmp-a-div-badge">VS</div>
-          <div class="cmp-a-div-line"></div>
-        </div>
-        <div class="cmp-a-panel cmp-a-after">
-          <div class="cmp-a-panel-head">
-            <span class="cmp-a-label-brand">Tutreino</span>
-            <span class="cmp-a-sublabel">Todo en un lugar</span>
+        <div class="h-cmp">
+          <div class="h-cmp-panel h-cmp-before">
+            <p class="h-cmp-label">Antes</p>
+            <p class="h-cmp-sub">Planillas + WhatsApp</p>
+            <ul class="h-cmp-list">
+              <li><span class="h-cmp-mark" aria-hidden="true">✕</span>Mensajes sueltos, sin un lugar propio</li>
+              <li><span class="h-cmp-mark" aria-hidden="true">✕</span>Cobro manual, mes a mes</li>
+              <li><span class="h-cmp-mark" aria-hidden="true">✕</span>Reservas por grupos de WhatsApp</li>
+              <li><span class="h-cmp-mark" aria-hidden="true">✕</span>Hojas sueltas, sin seguimiento de rutinas</li>
+              <li><span class="h-cmp-mark" aria-hidden="true">✕</span>Información dispersa por sucursal</li>
+              <li><span class="h-cmp-mark" aria-hidden="true">✕</span>Te enterás de las bajas cuando ya pasaron</li>
+            </ul>
           </div>
-          <ul class="cmp-a-list">
-            <li><span class="cmp-a-check">✓</span> App propia con tu marca (plan Pro)</li>
-            <li><span class="cmp-a-check">✓</span> Cobro recurrente por tarjeta o transferencia</li>
-            <li><span class="cmp-a-check">✓</span> Agenda online desde la app del socio</li>
-            <li><span class="cmp-a-check">✓</span> Rutinas con IA, periodizadas y con progreso</li>
-            <li><span class="cmp-a-check">✓</span> Vista consolidada y por sucursal</li>
-            <li><span class="cmp-a-check">✓</span> Alertas de riesgo antes de que se vayan</li>
-          </ul>
+          <div class="h-cmp-panel h-cmp-after">
+            <p class="h-cmp-label"><img src="/favicon-96x96.png" alt="" width="28" height="28" />Con tutreino</p>
+            <p class="h-cmp-sub">Todo en un lugar</p>
+            <ul class="h-cmp-list">
+              <li><span class="h-cmp-mark" aria-hidden="true">✓</span>App propia con tu marca (plan Pro)</li>
+              <li><span class="h-cmp-mark" aria-hidden="true">✓</span>Cobro recurrente por tarjeta o transferencia</li>
+              <li><span class="h-cmp-mark" aria-hidden="true">✓</span>Agenda online desde la app del socio</li>
+              <li><span class="h-cmp-mark" aria-hidden="true">✓</span>Rutinas con IA, periodizadas y con progreso</li>
+              <li><span class="h-cmp-mark" aria-hidden="true">✓</span>Vista consolidada y por sucursal</li>
+              <li><span class="h-cmp-mark" aria-hidden="true">✓</span>Alertas de riesgo antes de que se vayan</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- precios -->
+    <section class="h-section h-chalk" id="precios">
+      <div class="h-wrap">
+        <div class="h-head h-head-center">
+          <h2 class="h-h2">Pagás menos que un día de staff.</h2>
+          <p class="h-sub">Sin permanencia. Cancelás cuando querés. Soporte en español.</p>
+        </div>
 
-    <!-- medios de pago -->
-    <section class="h-section" id="pagos">
-      <div class="h-pagos-layout">
-        <div class="h-head h-pagos-head">
-          <h2 class="h-h2">Cobrás como<br/><span class="h-grad">tus socios prefieren.</span></h2>
-          <p class="h-sub">Tarjeta, transferencia o pagos recurrentes automáticos: el dinero entra por el medio que cada socio ya usa.</p>
+        <div class="h-bill-toggle" role="group" aria-label="Frecuencia de pago">
+          <button type="button" class="h-bill-opt active" data-bill="mensual" aria-pressed="true">Mensual</button>
+          <button type="button" class="h-bill-opt" data-bill="anual" aria-pressed="false">Anual <span class="h-bill-save">1 mes gratis</span></button>
         </div>
-        <div class="h-int-grid h-pagos-grid">
-          <div class="h-int">
-            <span class="h-int-ic" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4" stroke-linecap="round"/></svg>
-            </span>
-            <div><div class="h-int-name">Pagos recurrentes con tarjeta</div><div class="h-int-desc">Se cobran solos, mes a mes</div></div>
-          </div>
-          <div class="h-int">
-            <span class="h-int-ic" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 10h18M3 6h18M5 14h6m-6 4h10" stroke-linecap="round"/></svg>
-            </span>
-            <div><div class="h-int-name">Transferencia bancaria</div><div class="h-int-desc">Con conciliación y comprobante</div></div>
-          </div>
-          <div class="h-int">
-            <span class="h-int-ic" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            <div><div class="h-int-name">Pago por clase o pase libre</div><div class="h-int-desc">Cobros sueltos sin membresía fija</div></div>
-          </div>
-          <div class="h-int">
-            <span class="h-int-ic" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 13l4-4 4 3 7-7M14 5h4v4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            <div><div class="h-int-name">Conciliación automática</div><div class="h-int-desc">Cada pago queda registrado en el panel</div></div>
-          </div>
+
+        <div class="h-price-grid">
+          <article class="h-vprice">
+            <div class="h-vprice-head">
+              <h3>Starter</h3>
+              <p class="h-vprice-tag">Para empezar</p>
+            </div>
+            <div class="h-vprice-amount">
+              <span class="h-cur">UYU</span>
+              <span class="h-amt" data-mensual="1.600" data-anual="1.467">1.600</span>
+              <span class="h-per">/ mes</span>
+            </div>
+            <p class="h-vprice-anual" hidden>Facturado anual · UYU 17.600/año</p>
+            <ul>
+              <li>Hasta 500 socios</li>
+              <li>Una sucursal</li>
+              <li>Reservas de clases y agenda</li>
+              <li>Pagos recurrentes y por transferencia</li>
+              <li>App para socios (marca Tutreino)</li>
+            </ul>
+            <a href={trialStarter} class="h-vprice-cta" target="_blank" rel="noopener noreferrer"><WaGlyph />Probar 30 días gratis</a>
+          </article>
+
+          <article class="h-vprice h-vprice-featured">
+            <div class="h-vprice-head">
+              <h3>Pro <span class="h-hot">Popular</span></h3>
+              <p class="h-vprice-tag">Todo incluido</p>
+            </div>
+            <div class="h-vprice-amount">
+              <span class="h-cur">UYU</span>
+              <span class="h-amt" data-mensual="2.600" data-anual="2.383">2.600</span>
+              <span class="h-per">/ mes</span>
+            </div>
+            <p class="h-vprice-anual" hidden>Facturado anual · UYU 28.600/año</p>
+            <ul>
+              <li>Socios ilimitados</li>
+              <li>Varias sucursales</li>
+              <li>App personalizada (tu marca, tu logo)</li>
+              <li>Rutinas con IA y periodización automática</li>
+              <li>Predicción de bajas y métricas avanzadas</li>
+              <li>Permisos por rol para todo tu equipo</li>
+              <li>Seguimiento de lesiones, progreso y formularios</li>
+              <li>Soporte prioritario</li>
+            </ul>
+            <a href={trialPro} class="h-vprice-cta primary" target="_blank" rel="noopener noreferrer"><WaGlyph />Probar 30 días gratis</a>
+          </article>
         </div>
+
+        <!-- enterprise / multi-sucursal -->
+        <div class="h-enterprise">
+          <div class="h-ent-copy">
+            <h3>¿Cadena con varias sucursales?</h3>
+            <p>Para franquicias y gimnasios grandes armamos un plan a medida: onboarding dedicado, migración de tus datos y soporte prioritario. Te mostramos todo en una demo.</p>
+          </div>
+          <a href={WA.demo} class="h-ent-cta" target="_blank" rel="noopener noreferrer"><WaGlyph />Agendá una demo</a>
+        </div>
+
+        <!-- risk reversal -->
+        <ul class="h-reassure" aria-label="Garantías">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> 30 días gratis, sin tarjeta</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Cancelás cuando quieras</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Te llevás tus datos si te vas</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Soporte en español</li>
+        </ul>
       </div>
-
     </section>
 
-    <!-- precios — v2 style -->
-    <section class="h-section" id="precios">
-      <div class="h-head">
-        <h2 class="h-h2">Pagás <span class="h-grad">menos</span> que un día<br/>de staff.</h2>
-        <p class="h-sub">Sin permanencia. Cancelás cuando querés. Soporte en español.</p>
-      </div>
-
-      <div class="h-bill-toggle" role="group" aria-label="Frecuencia de pago">
-        <button type="button" class="h-bill-opt active" data-bill="mensual" aria-pressed="true">Mensual</button>
-        <button type="button" class="h-bill-opt" data-bill="anual" aria-pressed="false">Anual <span class="h-bill-save">1 mes gratis</span></button>
-      </div>
-
-      <div class="h-price-grid">
-        <article class="h-vprice">
-          <div class="h-vprice-head">
-            <h3>Starter</h3>
-            <span class="h-vprice-tag">para empezar</span>
-          </div>
-          <div class="h-vprice-amount">
-            <span class="h-cur">UYU</span>
-            <span class="h-amt" data-mensual="1.600" data-anual="1.467">1.600</span>
-            <span class="h-per">/ mes</span>
-          </div>
-          <div class="h-vprice-anual" hidden>Facturado anual · UYU 17.600/año</div>
-          <ul>
-            <li>Hasta 500 socios</li>
-            <li>Una sucursal</li>
-            <li>Reservas de clases y agenda</li>
-            <li>Pagos recurrentes y por transferencia</li>
-            <li>App para socios (marca Tutreino)</li>
-          </ul>
-          <a href={registroUrl} class="h-vprice-cta" target="_blank" rel="noopener noreferrer">Empezar →</a>
-        </article>
-
-        <article class="h-vprice h-vprice-featured">
-          <div class="h-vprice-glow" aria-hidden="true"></div>
-          <div class="h-vprice-head">
-            <h3>Pro <span class="h-hot">popular</span></h3>
-            <span class="h-vprice-tag">todo incluido</span>
-          </div>
-          <div class="h-vprice-amount">
-            <span class="h-cur">UYU</span>
-            <span class="h-amt h-grad" data-mensual="2.600" data-anual="2.383">2.600</span>
-            <span class="h-per">/ mes</span>
-          </div>
-          <div class="h-vprice-anual" hidden>Facturado anual · UYU 28.600/año</div>
-          <ul>
-            <li>Socios ilimitados</li>
-            <li>Varias sucursales</li>
-            <li>App personalizada (tu marca, tu logo)</li>
-            <li>Rutinas con IA y periodización automática</li>
-            <li>Predicción de bajas y métricas avanzadas</li>
-            <li>Permisos por rol para todo tu equipo</li>
-            <li>Seguimiento de lesiones, progreso y formularios</li>
-            <li>Soporte prioritario</li>
-          </ul>
-          <a href={registroUrl} class="h-vprice-cta primary" target="_blank" rel="noopener noreferrer">Probar 30 días gratis →</a>
-        </article>
-      </div>
-
-      <!-- enterprise / multi-sucursal -->
-      <div class="h-enterprise">
-        <div class="h-ent-copy">
-          <h3>¿Cadena con varias sucursales?</h3>
-          <p>Para franquicias y gimnasios grandes armamos un plan a medida: onboarding dedicado, migración de tus datos y soporte prioritario. Te mostramos todo en una demo.</p>
-        </div>
-        <a href={waUrl} class="h-ent-cta" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm5.5 14.1c-.2.6-1.2 1.2-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.7-1.2-4.4-3.9-4.5-4-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.2.5-.3.6-.3h.5c.2 0 .4 0 .6.5l.7 1.8c.1.2.1.3 0 .5l-.3.5c-.1.2-.3.3-.1.6.1.2.6 1 1.3 1.6.9.8 1.6 1 1.9 1.2.2.1.4.1.5-.1l.6-.8c.2-.2.4-.2.6-.1l1.7.8c.2.1.4.2.5.3.1.2.1.7-.1 1.4z"/></svg>
-          Agendá una demo
-        </a>
-      </div>
-
-      <!-- risk reversal -->
-      <ul class="h-reassure" aria-label="Garantías">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg> 30 días gratis, sin tarjeta</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg> Cancelás cuando quieras</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg> Te llevás tus datos si te vas</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg> Soporte en español</li>
-      </ul>
-    </section>
-
-    <!-- faq — v2 style -->
+    <!-- faq -->
     <section class="h-section" id="faq">
-      <div class="h-head">
-        <h2 class="h-h2">Las dudas que ya<br/>nos hicieron <span class="h-grad">100 veces</span>.</h2>
-      </div>
-      <div class="h-faq">
-        {faqCols.map((col) => (
-          <div class="h-faq-col">
-            {col.map((f) => (
-              <details>
-                <summary><span class="h-qid">P.{String(faqs.indexOf(f) + 1).padStart(2, '0')}</span> {f.q}<span class="h-caret">+</span></summary>
-                <p>{f.a}</p>
-              </details>
-            ))}
-          </div>
-        ))}
+      <div class="h-wrap">
+        <div class="h-head">
+          <h2 class="h-h2 h-h2-quiet">Las dudas que ya nos hicieron 100 veces.</h2>
+        </div>
+        <div class="h-faq">
+          {faqCols.map((col) => (
+            <div class="h-faq-col">
+              {col.map((f) => (
+                <details>
+                  <summary>{f.q}<span class="h-caret" aria-hidden="true">+</span></summary>
+                  <p>{f.a}</p>
+                </details>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
 
-    <!-- final CTA — v2 style -->
-    <section class="h-final">
-      <div class="h-final-bg" aria-hidden="true"></div>
-      <div class="h-final-inner">
-        <h2 class="h-final-h">
-          Empezá hoy.<br/>
-          <span class="h-grad">Tus socios lo notan mañana.</span>
-        </h2>
-        <p>30 días sin tarjeta · setup asistido · soporte en español.</p>
-        <div class="h-final-cta-row">
-          <a href={registroUrl} class="h-btn-primary big" target="_blank" rel="noopener noreferrer">
-            <span class="h-btn-pulse"></span>
-            Empezar gratis ahora
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href={waUrl} class="h-btn-wa" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm5.5 14.1c-.2.6-1.2 1.2-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.7-1.2-4.4-3.9-4.5-4-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.2.5-.3.6-.3h.5c.2 0 .4 0 .6.5l.7 1.8c.1.2.1.3 0 .5l-.3.5c-.1.2-.3.3-.1.6.1.2.6 1 1.3 1.6.9.8 1.6 1 1.9 1.2.2.1.4.1.5-.1l.6-.8c.2-.2.4-.2.6-.1l1.7.8c.2.1.4.2.5.3.1.2.1.7-.1 1.4z"/></svg>
-            Hablar por WhatsApp
-          </a>
-        </div>
+    <!-- cierre: la banda del azul del logo -->
+    <section class="h-final-wrap" data-cta-bar-hide>
+      <div class="h-final">
+        <h2 class="h-final-h">Empezá hoy.<br/><span>Tus socios lo notan mañana.</span></h2>
+        <p class="h-final-sub">30 días sin tarjeta · Setup asistido · Soporte en español</p>
+        <a href={WA.trial} class="h-btn h-btn-light" target="_blank" rel="noopener noreferrer"><WaGlyph />Probar 30 días gratis</a>
+        <p class="h-final-note">Se abre WhatsApp</p>
       </div>
     </section>
 
@@ -543,7 +524,7 @@ const faqCols = [faqs.slice(0, 4), faqs.slice(4)];
     // billing toggle
     const billOpts = document.querySelectorAll('.h-bill-opt');
     const amounts = document.querySelectorAll('.h-amt[data-mensual]');
-    const anualNotes = document.querySelectorAll('.h-vprice-anual');
+    const anualNotes = document.querySelectorAll<HTMLElement>('.h-vprice-anual');
     billOpts.forEach((btn) => {
       btn.addEventListener('click', () => {
         const mode = btn.getAttribute('data-bill');
@@ -563,487 +544,370 @@ const faqCols = [faqs.slice(0, 4), faqs.slice(4)];
 </SiteLayout>
 
 <style is:global>
-.h-root .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-.h-dot-on.sm { width: 6px; height: 6px; background: var(--green); }
+/* ── page frame ───────────────────────────────────── */
+.h-wrap { max-width: 1280px; margin: 0 auto; padding-inline: clamp(20px, 4vw, 48px); }
+.h-section { position: relative; padding-block: clamp(64px, 8vw, 104px); }
+.h-chalk { background: var(--bg-2); }
 
-/* hero */
-.h-hero {
-  position: relative; z-index: 1;
-  max-width: 1280px; margin: 0 auto;
-  padding: clamp(40px,7vw,88px) clamp(20px,4vw,48px) 60px;
+.h-head { max-width: 760px; margin-bottom: clamp(36px, 5vw, 56px); }
+.h-head-center { margin-inline: auto; text-align: center; }
+.h-kicker { margin: 0 0 12px; font-size: 16px; font-weight: 700; color: var(--brand-ink); }
+.h-h2 { font-family: var(--f-head); font-weight: 800; font-size: var(--t-h2); line-height: 1; letter-spacing: -.035em; margin: 0; color: var(--ink); max-width: 18ch; }
+.h-h2-quiet { font-size: var(--t-h2-quiet); line-height: 1.04; max-width: 22ch; }
+.h-head-center .h-h2 { margin-inline: auto; }
+.h-sub { margin: 18px 0 0; color: var(--ink-2); font-size: clamp(17px, 1.4vw, 19px); line-height: 1.55; max-width: 580px; }
+.h-head-center .h-sub { margin-inline: auto; }
+
+/* ── buttons ──────────────────────────────────────── */
+.h-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 54px; padding: 0 26px; border-radius: 12px;
+  background: var(--brand-ink); color: #fff;
+  text-decoration: none; font-weight: 700; font-size: 17px;
+  transition: background .18s ease;
 }
-
-.h-tag-id { color: var(--lime); }
-.h-h1 {
-  font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600;
-  font-size: clamp(48px,9vw,130px); line-height: .92;
-  letter-spacing: -0.04em; margin: 0; color: var(--ink);
+.h-btn:hover { background: var(--brand-deep); }
+.h-btn .wa-glyph { width: 20px; height: 20px; }
+.h-btn-light { background: #fff; color: var(--brand-ink); }
+.h-btn-light:hover { background: var(--brand-soft); }
+.h-link {
+  font-weight: 700; font-size: 17px; color: var(--ink);
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px;
+  text-decoration-color: var(--line-2); transition: text-decoration-color .18s ease;
 }
-.h-btn-primary {
-  position: relative; display: inline-flex; align-items: center; gap: 10px;
-  padding: 16px 22px; background: var(--green); color: var(--bg);
-  text-decoration: none; border-radius: 12px;
-  font-weight: 600; font-size: 15px; cursor: pointer;
-  box-shadow: 0 0 0 1px var(--green-deep), 0 12px 30px -8px color-mix(in srgb, var(--green) 60%, transparent);
-  transition: background .18s ease, box-shadow .2s ease;
-  overflow: hidden;
-}
-.h-btn-primary:hover { background: var(--lime); box-shadow: 0 0 0 1px var(--lime), 0 14px 36px -8px color-mix(in srgb, var(--lime) 70%, transparent); }
-.h-btn-primary svg { width: 16px; height: 16px; }
-.h-btn-primary.big { padding: 20px 30px; font-size: 17px; }
-.h-btn-pulse { width: 8px; height: 8px; border-radius: 999px; background: var(--bg); margin-right: 4px; animation: hpulse 1.4s ease-out infinite; }
-.h-meta-strip {
-  display: flex; flex-wrap: wrap; gap: 24px;
-  color: var(--mute); font-family: 'Space Mono', monospace;
-  font-size: 12.5px; margin-bottom: 56px;
-}
+.h-link:hover { text-decoration-color: var(--brand-ink); }
 
-/* sections */
-.h-section {
-  position: relative; z-index: 1;
-  max-width: 1280px; margin: 0 auto;
-  padding: clamp(56px,8vw,96px) clamp(20px,4vw,48px);
-}
-.h-head { max-width: 760px; margin-bottom: 60px; }
-.h-eyebrow { display: inline-block; font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--lime); margin-bottom: 16px; }
-.h-h2 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(40px,6.5vw,88px); line-height: .95; letter-spacing: -.035em; margin: 0; }
-.h-sub { margin-top: 22px; color: var(--ink-2); font-size: 18px; max-width: 560px; }
+/* ── hero ─────────────────────────────────────────── */
+.h-hero { background: var(--bg-2); padding-top: clamp(44px, 6vw, 76px); text-align: center; overflow: hidden; }
+.h-hero-copy { max-width: 900px; }
+.h-hero-kicker { margin: 0; font-size: 16px; font-weight: 700; color: var(--brand-ink); }
+.h-h1 { font-family: var(--f-head); font-weight: 800; font-size: var(--t-hero); line-height: .92; letter-spacing: -.04em; margin: 16px 0 0; color: var(--ink); }
+.h-accent { color: var(--brand-ink); }
+.h-hero-sub { margin: 22px auto 0; max-width: 600px; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.5; color: var(--ink-2); text-wrap: balance; }
+.h-hero-sub b { color: var(--ink); }
+.h-hero-ctas { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 28px; margin-top: 30px; }
+.h-hero-note { margin: 14px 0 0; font-size: 14.5px; color: var(--mute); }
+.h-proof { background: #fff; border-top: 1px solid var(--line); }
+.h-proof p { margin: 0 auto; padding-block: 20px; font-size: 15.5px; color: var(--ink-2); }
+.h-proof b { color: var(--ink); }
 
-/* ── feature blocks ───────────────────────────────── */
-.h-head-center { max-width: 720px; margin-left: auto; margin-right: auto; text-align: center; }
-.h-sub-center { margin-left: auto; margin-right: auto; }
-.h-sub-center b, .h-feat-pts b, .h-wl-foot b { color: var(--ink); font-weight: 600; }
-
-.h-feat {
-  display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(32px,5vw,72px);
-  align-items: center; margin-bottom: clamp(72px,10vw,128px);
-}
-.h-feat:last-child { margin-bottom: 0; }
-.h-feat.reverse .h-feat-copy { order: 2; }
-.h-feat.reverse .h-feat-vis { order: 1; }
-@media(max-width:840px) {
-  .h-feat { grid-template-columns: 1fr; gap: 36px; }
-  .h-feat.reverse .h-feat-copy { order: 1; }
-  .h-feat.reverse .h-feat-vis { order: 2; }
-}
-
-.h-feat-h { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(30px,4vw,48px); line-height: 1; letter-spacing: -.03em; margin: 0 0 18px; color: var(--ink); }
-.h-feat-lead { color: var(--ink-2); font-size: clamp(16px,1.3vw,18px); margin: 0 0 28px; max-width: 460px; }
-.h-feat-pts { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
-.h-feat-pts li { display: flex; gap: 12px; align-items: flex-start; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
-.h-feat-pts svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; color: var(--green); background: var(--lime-soft); border-radius: 50%; padding: 3px; }
-
-/* ── mockup screen (dashboard style) ──────────────── */
-.h-feat-vis { perspective: 1600px; display: flex; align-items: center; justify-content: center; }
-.h-feat:not(.reverse) .h-feat-vis { justify-content: flex-end; }
-.h-feat.reverse .h-feat-vis { justify-content: flex-start; }
-@media(max-width:840px) { .h-feat-vis { justify-content: center !important; } }
-.h-screen-body {
-  width: 100%; max-width: 440px; padding: 16px; display: grid; gap: 10px;
-  background: var(--panel); border: 1px solid var(--line); border-radius: 18px;
-  box-shadow: 0 30px 60px -28px rgba(15,22,35,.28), 0 2px 8px rgba(15,22,35,.05);
-  transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease;
-}
-.h-feat-vis:hover .h-screen-body { transform: translateY(-6px); box-shadow: 0 40px 72px -28px rgba(29,78,216,.3), 0 2px 8px rgba(15,22,35,.06); }
-
-.h-stat-row { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; }
-.h-stat { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 4px; }
-.h-stat-lbl { font-size: 11px; color: var(--mute); text-transform: uppercase; letter-spacing: .03em; }
-.h-stat-val { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(20px,2.4vw,28px); letter-spacing: -.02em; color: var(--ink); }
-.h-stat-val small { font-size: .55em; color: var(--mute); margin-left: 2px; }
-.h-stat-trend { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--mute); }
-.h-stat-trend.up { color: var(--green); }
-
-.h-pay-list, .h-risk { display: grid; gap: 6px; }
-.h-pay, .h-risk-row { display: flex; align-items: center; gap: 11px; background: var(--bg); border: 1px solid var(--line); border-radius: 11px; padding: 8px 12px; }
-.h-pay-av { width: 32px; height: 32px; border-radius: 9px; background: var(--lime-soft); color: var(--green); font-size: 12px; font-weight: 700; display: grid; place-items: center; flex-shrink: 0; }
-.h-pay-body { flex: 1; min-width: 0; display: grid; gap: 1px; }
-.h-pay-body b { font-size: 13.5px; color: var(--ink); }
-.h-pay-body small { font-size: 11px; color: var(--mute); }
-.h-pay-amt { font-family: 'Space Mono', monospace; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
-.h-pay-amt.ok { color: var(--green); }
-.h-pay-amt.wait { color: var(--warn); }
-
-.h-alert { background: color-mix(in srgb, var(--red) 7%, var(--panel)); border: 1px solid color-mix(in srgb, var(--red) 28%, var(--line)); border-radius: 12px; padding: 14px; }
-.h-alert-head { display: flex; align-items: center; gap: 9px; }
-.h-alert-head b { font-size: 14px; color: var(--ink); }
-.h-alert p { margin: 6px 0 0; font-size: 12.5px; color: var(--ink-2); }
-.h-alert-pulse { width: 9px; height: 9px; border-radius: 50%; background: var(--red); flex-shrink: 0; animation: halertpulse 1.6s ease-out infinite; }
-@keyframes halertpulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--red) 45%, transparent); } 100% { box-shadow: 0 0 0 7px transparent; } }
-.h-risk-tag { font-family: 'Space Mono', monospace; font-size: 10px; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
-.h-risk-tag.hi { color: var(--red); background: color-mix(in srgb, var(--red) 12%, transparent); }
-.h-risk-tag.md { color: var(--warn); background: color-mix(in srgb, var(--warn) 14%, transparent); }
-.h-ai-chip { display: flex; align-items: center; gap: 10px; background: var(--lime-soft); border: 1px solid color-mix(in srgb, var(--lime) 35%, transparent); border-radius: 11px; padding: 11px 13px; font-size: 13px; color: var(--green-deep); }
-.h-ai-chip b { color: var(--green); }
-.h-ai-chip svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--lime); }
-
-/* ── white label showcase ─────────────────────────── */
-.h-wl { background: linear-gradient(180deg, transparent, var(--bg-2) 40%, transparent); }
-/* white-label hero — first section under the sticky nav */
-.h-wl-hero { padding-top: clamp(28px,5vw,56px); }
-.h-wl-hero .h-h1 { font-size: clamp(48px,9vw,110px); }
-.h-wl-hero .h-sub-center { font-size: clamp(17px,1.5vw,20px); max-width: 600px; }
-.h-wl-meta { justify-content: center; margin-bottom: 22px; }
-/* fanned out like a hand of cards — at every screen size */
-.h-wl-grid { display: flex; justify-content: center; align-items: flex-end; flex-wrap: nowrap; perspective: 1400px; margin-top: 24px; }
-.h-phone { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+/* phones fanned out like a hand of cards: three gyms, three brands */
+.h-wl-grid { display: flex; justify-content: center; align-items: flex-end; flex-wrap: nowrap; margin-top: clamp(36px, 5vw, 52px); padding-bottom: 34px; }
+.h-phone { margin: 0; flex-shrink: 0; }
 .h-phone-frame {
-  width: 230px; height: 470px; background: #0b0f17; border-radius: 38px; padding: 9px;
-  box-shadow: 0 36px 70px -30px rgba(15,22,35,.4), inset 0 0 0 1.5px rgba(255,255,255,.06);
-  position: relative; transform-origin: bottom center; transition: transform .5s cubic-bezier(.22,1,.36,1);
+  width: 230px; height: 440px; background: #0b0f17; border-radius: 38px; padding: 9px;
+  box-shadow: 0 36px 70px -30px rgba(11,18,32,.4), inset 0 0 0 1.5px rgba(255,255,255,.06);
+  position: relative; transform-origin: bottom center;
 }
-/* left card: tilt left, tucked behind */
 .h-phone:nth-child(1) { z-index: 1; margin-right: -40px; }
 .h-phone:nth-child(1) .h-phone-frame { transform: rotate(-9deg) translateY(12px); }
-/* center (featured): upright, raised, on top */
 .h-phone.featured { z-index: 3; }
-.h-phone.featured .h-phone-frame { transform: translateY(-18px) scale(1.04); box-shadow: 0 48px 90px -32px color-mix(in srgb, var(--brand) 45%, rgba(15,22,35,.4)); }
-/* right card: tilt right, tucked behind */
+.h-phone.featured .h-phone-frame { transform: translateY(-18px) scale(1.04); box-shadow: 0 48px 90px -32px color-mix(in srgb, var(--gym) 45%, rgba(11,18,32,.4)); }
 .h-phone:nth-child(3) { z-index: 2; margin-left: -40px; }
 .h-phone:nth-child(3) .h-phone-frame { transform: rotate(9deg) translateY(12px); }
-/* hover lifts each card out of the fan without losing its tilt */
-.h-phone:nth-child(1) .h-phone-frame:hover { transform: rotate(-9deg) translateY(-2px); }
-.h-phone.featured .h-phone-frame:hover { transform: translateY(-30px) scale(1.04); }
-.h-phone:nth-child(3) .h-phone-frame:hover { transform: rotate(9deg) translateY(-2px); }
 .h-phone-notch { position: absolute; top: 9px; left: 50%; transform: translateX(-50%); width: 92px; height: 22px; background: #0b0f17; border-radius: 0 0 14px 14px; z-index: 3; }
-.h-phone-screen { width: 100%; height: 100%; background: var(--brand-soft); border-radius: 30px; overflow: hidden; display: flex; flex-direction: column; padding: 38px 16px 16px; gap: 12px; }
+.h-phone-screen { width: 100%; height: 100%; background: var(--gym-soft); border-radius: 30px; overflow: hidden; display: flex; flex-direction: column; padding: 38px 16px 16px; gap: 10px; text-align: left; }
 .h-app-top { display: flex; align-items: center; }
-.h-app-logo { display: inline-flex; align-items: center; gap: 7px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: -.02em; color: var(--brand); }
+.h-app-logo { display: inline-flex; align-items: center; gap: 7px; font-family: var(--f-head); font-weight: 800; font-size: 14px; letter-spacing: -.01em; color: var(--gym); }
 .h-app-logo svg { width: 18px; height: 18px; }
-.h-app-hero { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 19px; color: #0f1623; letter-spacing: -.02em; }
-.h-app-card { background: #fff; border-radius: 15px; padding: 13px 14px; font-size: 11.5px; color: #64748b; line-height: 1.5; box-shadow: 0 4px 14px -8px rgba(15,22,35,.25); }
-.h-app-card b { display: block; font-size: 14px; color: #0f1623; margin-top: 2px; }
-.h-app-card.primary { background: var(--brand); color: rgba(255,255,255,.85); }
+.h-app-hero { font-family: var(--f-head); font-weight: 700; font-size: 19px; line-height: 1.15; letter-spacing: -.02em; color: var(--ink); }
+.h-app-card { background: #fff; border-radius: 15px; padding: 11px 14px; font-size: 12px; line-height: 1.4; color: var(--ink-2); box-shadow: 0 4px 14px -8px rgba(11,18,32,.25); }
+.h-app-card b { display: block; font-size: 14px; color: var(--ink); margin-top: 2px; }
+.h-app-card.primary { background: var(--gym); color: rgba(255,255,255,.9); }
 .h-app-card.primary b { color: #fff; }
 .h-app-nav { margin-top: auto; display: flex; justify-content: center; gap: 22px; padding-top: 8px; }
-.h-app-nav span { width: 7px; height: 7px; border-radius: 50%; background: rgba(15,22,35,.18); }
-.h-app-nav span.on { background: var(--brand); width: 18px; border-radius: 999px; }
+.h-app-nav span { width: 7px; height: 7px; border-radius: 50%; background: rgba(11,18,32,.18); }
+.h-app-nav span.on { background: var(--gym); width: 18px; border-radius: 999px; }
 @media(max-width:760px) {
-  .h-stat-row { grid-template-columns: 1fr; }
-
-  /* white label: tighten gap between heading and phone fan */
-  .h-wl .h-head { margin-bottom: 16px; }
-
-  /* white label phones: same fan, but pulled tighter and centered for narrow screens */
-  .h-wl-grid { padding: 0 0 8px; transform: scale(.8); transform-origin: center bottom; }
-  .h-phone { gap: 0; }
-  /* tighter overlap so the three cards stay centered in the viewport */
+  /* same fan, pulled tighter and scaled down for narrow screens */
+  .h-wl-grid { transform: scale(.8); transform-origin: center bottom; margin-top: 4px; padding-bottom: 10px; }
   .h-phone:nth-child(1) { margin-right: -88px; }
   .h-phone:nth-child(3) { margin-left: -88px; }
-  /* freeze hover so a touch doesn't make a card jump out of the fan */
-  .h-phone:nth-child(1) .h-phone-frame:hover { transform: rotate(-9deg) translateY(12px); }
-  .h-phone.featured .h-phone-frame:hover { transform: translateY(-18px) scale(1.04); }
-  .h-phone:nth-child(3) .h-phone-frame:hover { transform: rotate(9deg) translateY(12px); }
-}
-@media(prefers-reduced-motion: reduce) {
-  .h-screen-body, .h-phone-frame { transition: none; }
-  .h-alert-pulse { animation: none; }
 }
 
-/* flow as a vertical timeline */
-.h-flow { --node: 64px; --col: 84px; list-style: none; padding: 0; margin: 0; display: grid; gap: 28px; }
-.h-flow li { position: relative; display: grid; grid-template-columns: var(--col) 1fr; gap: 24px; align-items: start; }
+/* ── feature blocks ───────────────────────────────── */
+.h-feat { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+.h-feat + .h-feat { margin-top: clamp(64px, 9vw, 112px); }
+.h-feat.reverse .h-feat-copy { order: 2; }
+@media(max-width:840px) {
+  .h-feat { grid-template-columns: 1fr; gap: 32px; }
+  .h-feat.reverse .h-feat-copy { order: 0; }
+}
+.h-feat-copy { min-width: 0; }
+.h-feat-h { font-family: var(--f-head); font-weight: 800; font-size: clamp(28px, 3vw, 36px); line-height: 1.05; letter-spacing: -.03em; margin: 0 0 16px; color: var(--ink); max-width: 16ch; }
+.h-feat-lead { color: var(--ink-2); font-size: 17px; margin: 0 0 24px; max-width: 46ch; }
+.h-feat-pts { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.h-feat-pts li { display: flex; gap: 12px; align-items: flex-start; color: var(--ink-2); font-size: 16px; line-height: 1.5; }
+.h-feat-pts b { color: var(--ink); }
+.h-feat-pts svg { width: 22px; height: 22px; flex-shrink: 0; margin-top: 1px; padding: 4px; border-radius: 50%; color: var(--brand-ink); background: var(--brand-soft); }
+
+.h-paym { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); }
+.h-paym-h { margin: 0 0 14px; font-size: 15px; font-weight: 700; color: var(--ink); }
+.h-paym-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 22px; }
+.h-paym-list li { display: flex; gap: 10px; align-items: flex-start; }
+.h-paym-list svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; color: var(--brand-ink); }
+.h-paym-list span { display: grid; font-size: 14px; line-height: 1.4; color: var(--ink-2); }
+.h-paym-list b { font-size: 15px; color: var(--ink); }
+@media(max-width:480px) { .h-paym-list { grid-template-columns: 1fr; } }
+
+/* ── dashboard mockups ────────────────────────────── */
+.h-feat-vis { display: flex; justify-content: center; min-width: 0; }
+.h-screen-body {
+  width: 100%; max-width: 480px; padding: 16px; display: grid; gap: 10px;
+  background: #fff; border: 1px solid var(--line); border-radius: 18px;
+  box-shadow: 0 30px 60px -32px rgba(11,18,32,.3), 0 2px 8px rgba(11,18,32,.05);
+}
+.h-stat-row { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; }
+.h-stat { background: var(--bg-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 4px; }
+.h-stat-lbl { font-size: 12.5px; font-weight: 700; color: var(--mute); }
+.h-stat-val { font-family: var(--f-head); font-weight: 800; font-size: clamp(22px, 2.4vw, 30px); line-height: 1.1; letter-spacing: -.02em; color: var(--ink); }
+.h-stat-val small { font-size: .55em; color: var(--mute); margin-left: 2px; }
+.h-stat-trend { font-size: 12.5px; font-weight: 700; color: var(--mute); }
+.h-stat-trend.up { color: var(--ok); }
+.h-pay-list, .h-risk { display: grid; gap: 6px; }
+.h-pay, .h-risk-row { display: flex; align-items: center; gap: 11px; background: #fff; border: 1px solid var(--line); border-radius: 11px; padding: 9px 12px; }
+.h-pay-av { width: 32px; height: 32px; border-radius: 9px; background: var(--brand-soft); color: var(--brand-ink); font-size: 12px; font-weight: 700; display: grid; place-items: center; flex-shrink: 0; }
+.h-pay-body { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.h-pay-body b { font-size: 14px; color: var(--ink); }
+.h-pay-body small { font-size: 12.5px; color: var(--mute); }
+.h-pay-amt { font-size: 13.5px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.h-pay-amt.ok { color: var(--ok); }
+.h-pay-amt.wait { color: var(--pending); }
+.h-alert { background: var(--risk-soft); border: 1px solid color-mix(in srgb, var(--plate-red) 28%, var(--line)); border-radius: 12px; padding: 14px; }
+.h-alert-head { display: flex; align-items: center; gap: 9px; }
+.h-alert-head b { font-size: 15px; color: var(--ink); }
+.h-alert p { margin: 6px 0 0; font-size: 13.5px; color: var(--ink-2); }
+.h-alert-pulse { width: 9px; height: 9px; border-radius: 50%; background: var(--plate-red); flex-shrink: 0; animation: halertpulse 1.6s ease-out infinite; }
+@keyframes halertpulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--plate-red) 45%, transparent); } 100% { box-shadow: 0 0 0 7px transparent; } }
+.h-risk-tag { font-size: 12.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+.h-risk-tag.hi { color: var(--risk); background: var(--risk-soft); }
+.h-risk-tag.md { color: var(--pending); background: var(--pending-soft); }
+.h-ai-chip { display: flex; align-items: center; gap: 10px; background: var(--brand-soft); border-radius: 11px; padding: 11px 13px; font-size: 14px; color: var(--ink-2); }
+.h-ai-chip b { color: var(--brand-ink); }
+.h-ai-chip svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--brand-ink); }
+@media(max-width:760px) { .h-stat-row { grid-template-columns: 1fr; } }
+
+/* ── member journey: the member app, screen by screen ── */
+.h-journey { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 44px); }
+.h-jstep { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; min-width: 0; }
+.h-jstep h3 { font-family: var(--f-head); font-weight: 800; font-size: 22px; line-height: 1.1; letter-spacing: -.02em; margin: 16px 0 0; color: var(--ink); }
+.h-jstep p { margin: 0; font-size: 15.5px; color: var(--ink-2); max-width: 34ch; }
+@media(max-width:840px) {
+  /* a swipeable row on narrow screens */
+  .h-journey {
+    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(240px, 74%);
+    overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+    margin-inline: calc(-1 * clamp(20px, 4vw, 48px)); padding: 4px clamp(20px, 4vw, 48px) 16px;
+    scroll-padding-inline: clamp(20px, 4vw, 48px);
+  }
+  .h-jstep { scroll-snap-align: start; }
+}
+/* phone mockups are sized in container units against the phone frame */
+.h-mphone { container-type: inline-size; width: min(100%, 268px); padding: 8px; border-radius: 34px; background: #0b0f17; box-shadow: 0 30px 60px -32px rgba(11,18,32,.45); }
+.h-mscreen {
+  --gym: #1d4ed8; --gym-soft: #dbeafe;
+  aspect-ratio: 390 / 720; border-radius: 27px; overflow: hidden; background: #f6f8fc;
+  display: flex; flex-direction: column; gap: 4.2cqw; padding: 12cqw 5.6cqw 0;
+  text-align: left; color: var(--ink);
+}
+.h-ma-top { display: flex; align-items: center; justify-content: space-between; }
+.h-ma-logo { display: inline-flex; align-items: center; gap: 1.8cqw; color: var(--gym); font-family: var(--f-head); font-weight: 800; font-size: 4.6cqw; letter-spacing: -.01em; }
+.h-ma-logo svg { width: 5.4cqw; height: 5.4cqw; }
+.h-ma-av { width: 9cqw; height: 9cqw; border-radius: 50%; background: var(--gym-soft); color: var(--gym); display: grid; place-items: center; font-weight: 700; font-size: 3.8cqw; }
+.h-ma-over { margin: 0; font-size: 3.7cqw; font-weight: 700; color: var(--mute); }
+.h-ma-title { margin: -2.6cqw 0 0; font-family: var(--f-head); font-weight: 800; font-size: 8.6cqw; line-height: .95; letter-spacing: -.035em; color: var(--ink); }
+.h-ma-days { display: flex; gap: 2cqw; }
+.h-ma-days span { font-size: 3.5cqw; font-weight: 700; padding: 1.8cqw 3.4cqw; border-radius: 99px; background: #fff; border: 1px solid var(--line); color: var(--ink-2); }
+.h-ma-days .on { background: var(--gym); border-color: var(--gym); color: #fff; }
+.h-ma-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2.6cqw; }
+.h-ma-list li { display: flex; align-items: center; gap: 3cqw; background: #fff; border: 1px solid var(--line); border-radius: 4cqw; padding: 3.4cqw 3.6cqw; }
+.h-ma-t { flex: none; width: 12.5cqw; font-family: var(--f-head); font-weight: 800; font-size: 4.6cqw; letter-spacing: -.02em; color: var(--ink); }
+.h-ma-c { flex: 1; min-width: 0; display: grid; gap: .4cqw; }
+.h-ma-c b { font-size: 4.1cqw; color: var(--ink); }
+.h-ma-c small { font-size: 3.3cqw; color: var(--mute); }
+.h-ma-a { flex: none; font-size: 3.2cqw; font-weight: 700; color: #fff; background: var(--gym); padding: 1.8cqw 2.8cqw; border-radius: 2.4cqw; }
+.h-ma-a.ghost { background: transparent; color: var(--gym); box-shadow: inset 0 0 0 1px var(--gym); }
+.h-ma-list li.mine { background: var(--gym); border-color: var(--gym); }
+.h-ma-list li.mine b, .h-ma-list li.mine .h-ma-t { color: #fff; }
+.h-ma-list li.mine small { color: rgba(255,255,255,.9); }
+.h-ma-list li.mine .h-ma-a { background: #fff; color: var(--gym); }
+.h-ma-prog { height: 2.2cqw; background: #e3e8f1; border-radius: 99px; overflow: hidden; }
+.h-ma-prog span { display: block; width: 50%; height: 100%; background: var(--gym); border-radius: 99px; }
+.h-ma-prog-l { margin: -2.2cqw 0 0; font-size: 3.3cqw; color: var(--mute); }
+.h-ma-ck { flex: none; width: 7cqw; height: 7cqw; border-radius: 50%; box-shadow: inset 0 0 0 .6cqw #c7d0de; display: grid; place-items: center; color: #fff; font-size: 3.6cqw; font-weight: 700; }
+.h-ma-list li.done .h-ma-ck { background: var(--ok); box-shadow: none; }
+.h-ma-list li.done b { text-decoration: line-through; text-decoration-color: rgba(11,18,32,.35); }
+.h-ma-chip { margin: 0; font-size: 3.4cqw; font-weight: 700; color: var(--gym); background: var(--gym-soft); border-radius: 3cqw; padding: 2.6cqw 3.4cqw; }
+.h-ma-pay { display: grid; gap: 1.2cqw; padding: 5cqw; border-radius: 5cqw; background: var(--gym); color: #fff; }
+.h-ma-pay span { font-size: 3.5cqw; color: rgba(255,255,255,.9); }
+.h-ma-pay b { font-family: var(--f-head); font-weight: 800; font-size: 10cqw; line-height: 1; letter-spacing: -.03em; }
+.h-ma-status { align-self: flex-start; display: inline-flex; align-items: center; gap: 2cqw; margin: 0; padding: 1.8cqw 3.4cqw; border-radius: 99px; font-size: 3.5cqw; font-weight: 700; color: var(--ok); background: var(--ok-soft); }
+.h-ma-status::before { content: ""; width: 2.2cqw; height: 2.2cqw; border-radius: 50%; background: var(--ok); }
+.h-ma-hist { list-style: none; margin: 0; padding: 0; background: #fff; border: 1px solid var(--line); border-radius: 4cqw; }
+.h-ma-hist li { display: grid; grid-template-columns: 1fr auto auto; gap: 3cqw; align-items: center; padding: 3.4cqw 4cqw; border-bottom: 1px solid var(--line); font-size: 3.6cqw; color: var(--ink-2); }
+.h-ma-hist li:last-child { border-bottom: 0; }
+.h-ma-hist .ok { color: var(--ok); font-weight: 700; }
+.h-ma-tab { margin: auto -5.6cqw 0; display: flex; justify-content: space-around; padding: 4cqw 2cqw 6cqw; border-top: 1px solid var(--line); background: #fff; }
+.h-ma-tab span { width: 2.2cqw; height: 2.2cqw; border-radius: 50%; background: #cfd6e2; }
+.h-ma-tab span.on { width: 6cqw; border-radius: 99px; background: var(--gym); }
+
+/* ── setup flow as a vertical timeline ────────────── */
+.h-flow { --node: 56px; --col: 72px; list-style: none; padding: 0; margin: 0; display: grid; gap: 24px; }
+.h-flow li { position: relative; display: grid; grid-template-columns: var(--col) minmax(0, 1fr); gap: 20px; align-items: start; }
 /* connecting line: from this node's centre down to the next node (covers the gap) */
 .h-flow li:not(:last-child)::before {
   content: ""; position: absolute;
-  top: calc(var(--node) / 2); height: calc(100% - var(--node) / 2 + 28px);
+  top: calc(var(--node) / 2); height: calc(100% - var(--node) / 2 + 24px);
   left: calc(var(--col) / 2); width: 2px; transform: translateX(-50%);
-  background: linear-gradient(180deg, var(--green), var(--lime));
+  background: var(--line-2);
 }
-/* node: circular badge holding the gradient number, sits on the line */
-.h-flow-num {
-  position: relative; z-index: 1; justify-self: center;
-  width: var(--node); height: var(--node); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--panel); border: 2px solid var(--line-2);
-  box-shadow: 0 6px 18px -8px rgba(15,22,35,.18);
-  font-family: 'Bricolage Grotesque', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: -.02em; line-height: 1;
-  background-clip: padding-box;
-  color: transparent; -webkit-text-fill-color: transparent;
-}
-/* gradient digits via an inner layer so the circle keeps its solid bg */
-.h-flow-num::after {
-  content: attr(data-n); position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(120deg, var(--green) 0%, var(--lime) 60%, var(--green) 100%);
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; color: transparent;
-}
-@media(max-width:520px) {
-  .h-flow { --node: 44px; --col: 56px; gap: 20px; }
-  .h-flow li { gap: 14px; }
-  .h-flow-num { font-size: 17px; border-width: 1.5px; }
-  .h-flow-card { padding: 20px 18px; border-radius: 14px; }
-  .h-flow-card h3 { font-size: 19px; }
-  .h-flow-card p { font-size: 14px; }
-}
-.h-flow-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 28px; transition: border-color .2s ease; }
-.h-flow-card:hover { border-color: var(--green); }
-.h-flow-card h3 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 24px; margin: 0 0 8px; letter-spacing: -.02em; }
-.h-flow-card p { color: var(--ink-2); margin: 0 0 16px; font-size: 15px; }
+.h-flow-num { position: relative; z-index: 1; justify-self: center; width: var(--node); height: var(--node); border-radius: 50%; display: grid; place-items: center; background: var(--brand-ink); color: #fff; font-family: var(--f-head); font-weight: 800; font-size: 24px; line-height: 1; }
+.h-flow-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 26px 28px; }
+.h-flow-card h3 { font-family: var(--f-head); font-weight: 800; font-size: 24px; line-height: 1.1; letter-spacing: -.02em; margin: 0 0 8px; color: var(--ink); }
+.h-flow-card p { margin: 0; color: var(--ink-2); font-size: 16px; max-width: 68ch; }
 .h-flow-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-.h-flow-tag { display: inline-flex; align-items: center; gap: 6px; font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px; font-weight: 500; color: var(--ink-2); background: var(--panel-2); padding: 8px 14px; border-radius: 100px; border: 1px solid var(--line); }
-.h-flow-tag.success { color: var(--lime); background: var(--lime-soft); border-color: var(--lime); }
-
-/* pricing — v2 style */
-.h-price-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; max-width: 920px; margin: 0 auto; }
-@media(max-width:720px) { .h-price-grid { grid-template-columns: 1fr; } }
-.h-vprice { background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 32px; display: flex; flex-direction: column; gap: 22px; position: relative; overflow: hidden; transition: transform .25s ease, border-color .2s ease; }
-.h-vprice:hover { transform: translateY(-4px); border-color: var(--green); }
-.h-vprice-featured { background: var(--bg-2); border-color: var(--green); box-shadow: 0 0 0 1px var(--green-deep), 0 30px 80px -30px color-mix(in srgb, var(--green) 50%, transparent); }
-.h-vprice-glow { position: absolute; width: 380px; height: 380px; background: radial-gradient(circle, var(--lime) 0%, transparent 65%); top: -150px; right: -150px; opacity: .15; pointer-events: none; }
-.h-vprice-head h3 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 26px; margin: 0 0 4px; letter-spacing: -.02em; display: flex; align-items: center; gap: 10px; }
-.h-hot { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--bg); background: var(--lime); padding: 3px 8px; border-radius: 999px; text-transform: uppercase; font-weight: 700; letter-spacing: .05em; }
-.h-vprice-tag { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--mute); }
-.h-vprice-amount { display: flex; align-items: baseline; gap: 6px; font-family: 'Bricolage Grotesque', sans-serif; }
-.h-cur { font-size: 14px; color: var(--mute); font-family: 'Space Mono', monospace; }
-.h-amt { font-size: 56px; font-weight: 600; line-height: 1; letter-spacing: -.04em; }
-.h-per { font-size: 14px; color: var(--mute); font-family: 'Space Mono', monospace; }
-.h-vprice ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
-.h-vprice li { font-size: 14.5px; color: var(--ink-2); padding-left: 24px; position: relative; }
-.h-vprice li::before { content: ''; position: absolute; left: 0; top: 8px; width: 12px; height: 7px; border-left: 2px solid var(--green); border-bottom: 2px solid var(--green); transform: rotate(-45deg); }
-.h-vprice-cta { margin-top: auto; display: inline-flex; align-items: center; justify-content: center; padding: 14px 22px; border-radius: 12px; background: var(--panel-2); color: var(--ink); border: 1px solid var(--line-2); text-decoration: none; font-weight: 500; transition: background .18s ease, border-color .18s ease; cursor: pointer; }
-.h-vprice-cta:hover { background: var(--bg); border-color: var(--green); }
-.h-vprice-cta.primary { background: var(--green); color: var(--bg); border-color: var(--green); font-weight: 600; }
-.h-vprice-cta.primary:hover { background: var(--lime); border-color: var(--lime); }
-
-/* testimonios */
-.h-test-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
-@media(max-width:1100px) and (min-width:901px) { .h-test-grid { grid-template-columns: repeat(2,1fr); } }
-.h-test { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 26px; display: flex; flex-direction: column; gap: 20px; transition: border-color .2s ease, background .2s ease; }
-.h-test:hover { border-color: var(--green); background: var(--panel-2); }
-.h-test p { margin: 0; color: var(--ink-2); font-size: 14.5px; line-height: 1.6; }
-.h-test footer { display: flex; align-items: center; gap: 12px; }
-.h-test-av { width: 36px; height: 36px; border-radius: 999px; display: grid; place-items: center; font-weight: 700; font-size: 14px; flex-shrink: 0; font-family: 'Bricolage Grotesque', sans-serif; }
-.h-test-name { font-size: 13.5px; font-weight: 600; color: var(--ink); }
-.h-test-role { font-size: 11.5px; color: var(--mute); margin-top: 1px; }
-
-@media(max-width:900px) {
-  .h-test-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    overflow: hidden;
-  }
-  .h-test {
-    grid-area: 1 / 1;
-    opacity: 0;
-    transform: translateX(40px);
-    transition: none;
-    animation: h-slide 24s infinite;
-  }
-  .h-test:nth-child(1) { animation-delay: 0s; }
-  .h-test:nth-child(2) { animation-delay: 4s; }
-  .h-test:nth-child(3) { animation-delay: 8s; }
-  .h-test:nth-child(4) { animation-delay: 12s; }
-  .h-test:nth-child(5) { animation-delay: 16s; }
-  .h-test:nth-child(6) { animation-delay: 20s; }
-  @keyframes h-slide {
-    0%   { opacity: 0; transform: translateX(40px); }
-    5%   { opacity: 1; transform: translateX(0); }
-    18%  { opacity: 1; transform: translateX(0); }
-    20%  { opacity: 0; transform: translateX(-40px); }
-    100% { opacity: 0; transform: translateX(-40px); }
-  }
+.h-flow-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 700; color: var(--ink-2); background: var(--bg-2); padding: 6px 12px; border-radius: 999px; }
+.h-flow-tag.success { color: var(--ok); background: var(--ok-soft); }
+@media(max-width:520px) {
+  .h-flow { --node: 44px; --col: 52px; gap: 18px; }
+  .h-flow li { gap: 12px; }
+  .h-flow-num { font-size: 18px; }
+  .h-flow-card { padding: 20px 18px; border-radius: 14px; }
+  .h-flow-card h3 { font-size: 20px; }
+  .h-flow-card p { font-size: 15px; }
 }
 
-/* ── OPTION A: split-panel before/after ─────────────── */
-.cmp-a-split { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; border-radius: 22px; overflow: hidden; border: 1px solid var(--line); }
-.cmp-a-panel { padding: 32px; display: flex; flex-direction: column; gap: 24px; }
-.cmp-a-before { background: color-mix(in srgb, var(--bg-2) 60%, var(--panel)); }
-.cmp-a-after { background: color-mix(in srgb, var(--green) 6%, var(--panel)); border-left: 1px solid color-mix(in srgb, var(--green) 30%, transparent); }
-.cmp-a-panel-head { display: flex; flex-direction: column; gap: 6px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
-.cmp-a-label-bad { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px; color: var(--mute); letter-spacing: -.02em; }
-.cmp-a-label-good { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px; color: var(--green); letter-spacing: -.02em; }
-.cmp-a-label-brand { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px; line-height: 1; letter-spacing: -.02em; text-transform: lowercase; color: #007aff; }
-.cmp-a-sublabel { font-family: 'Space Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--mute); }
-.cmp-a-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
-.cmp-a-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14.5px; line-height: 1.5; }
-.cmp-a-before .cmp-a-list li { color: var(--mute); }
-.cmp-a-after .cmp-a-list li { color: var(--ink-2); }
-.cmp-a-x { font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; color: color-mix(in srgb, var(--mute) 60%, transparent); flex-shrink: 0; margin-top: 2px; }
-.cmp-a-check { font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; color: var(--green); flex-shrink: 0; margin-top: 2px; }
-.cmp-a-divider { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; width: 56px; background: var(--panel); border-left: 1px solid var(--line); border-right: 1px solid var(--line); position: relative; }
-.cmp-a-div-line { flex: 1; width: 1px; background: var(--line); }
-.cmp-a-div-badge { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--mute); padding: 8px 0; writing-mode: vertical-rl; text-orientation: mixed; }
+/* ── testimonials: one lead quote, then the rest ──── */
+.h-quotes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.h-quotes-rest { display: contents; }
+.h-quote { margin: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; padding: 26px; background: #fff; border: 1px solid var(--line); border-radius: 18px; }
+.h-quote blockquote { margin: 0; }
+.h-quote blockquote p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--ink-2); }
+.h-quote figcaption { display: grid; gap: 2px; font-size: 14px; color: var(--mute); }
+.h-quote figcaption b { font-size: 15px; color: var(--ink); }
+.h-quote-lead { grid-column: span 2; grid-row: span 2; padding: clamp(28px, 3.6vw, 48px); justify-content: center; gap: 28px; }
+.h-quote-lead blockquote p { font-family: var(--f-head); font-weight: 700; font-size: clamp(22px, 2.3vw, 30px); line-height: 1.2; letter-spacing: -.02em; color: var(--ink); }
+.h-quote-lead figcaption b { font-size: 17px; }
+.h-quote-lead figcaption { font-size: 15px; }
+@media(max-width:1023px) {
+  .h-quotes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .h-quote-lead { grid-row: auto; }
+  .h-quotes-rest > .h-quote:last-child { grid-column: span 2; }
+}
+@media(max-width:640px) {
+  .h-quotes { display: block; }
+  .h-quote-lead { margin-bottom: 14px; }
+  /* a swipeable row, no autoplay */
+  .h-quotes-rest {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 84%; gap: 12px;
+    overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+    margin-inline: -20px; padding: 0 20px 12px; scroll-padding-inline: 20px;
+  }
+  .h-quotes-rest > .h-quote { scroll-snap-align: start; }
+  .h-quotes-rest > .h-quote:last-child { grid-column: auto; }
+}
+
+/* ── comparison ───────────────────────────────────── */
+.h-cmp { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+.h-cmp-panel { display: grid; gap: 18px; align-content: start; padding: clamp(24px, 3vw, 36px); }
+.h-cmp-before { background: var(--bg-2); }
+.h-cmp-after { background: var(--brand-soft); border-left: 1px solid var(--line); }
+.h-cmp-label { margin: 0; display: flex; align-items: center; gap: 9px; font-family: var(--f-head); font-weight: 800; font-size: 26px; line-height: 1; letter-spacing: -.03em; color: var(--ink); }
+.h-cmp-label img { width: 28px; height: 28px; }
+.h-cmp-sub { margin: -10px 0 0; font-size: 15px; font-weight: 700; color: var(--mute); }
+.h-cmp-list { list-style: none; margin: 0; padding: 18px 0 0; display: grid; gap: 12px; border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); }
+.h-cmp-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 16px; line-height: 1.45; color: var(--ink-2); }
+.h-cmp-mark { flex: none; width: 22px; height: 22px; margin-top: 1px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+.h-cmp-before .h-cmp-mark { background: var(--risk-soft); color: var(--risk); }
+.h-cmp-after .h-cmp-mark { background: var(--ok-soft); color: var(--ok); }
+.h-cmp-after .h-cmp-list li { color: var(--ink); }
 @media(max-width:760px) {
-  .cmp-a-split { grid-template-columns: 1fr; }
-  .cmp-a-divider { flex-direction: row; width: 100%; height: 40px; border-left: none; border-right: none; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .cmp-a-div-line { flex: 1; width: auto; height: 1px; }
-  .cmp-a-div-badge { writing-mode: initial; padding: 0 12px; }
-  .cmp-a-after { border-left: none; border-top: 1px solid color-mix(in srgb, var(--green) 30%, transparent); }
+  .h-cmp { grid-template-columns: 1fr; }
+  .h-cmp-after { border-left: 0; border-top: 1px solid var(--line); }
 }
 
-
-/* integraciones */
-.h-pagos-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-.h-pagos-head { margin-bottom: 0; max-width: 100%; }
-.h-pagos-grid { grid-template-columns: repeat(2,1fr) !important; }
-.h-int-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
-@media(max-width:960px) {
-  .h-pagos-layout { grid-template-columns: 1fr; gap: 36px; }
-  .h-pagos-head { margin-bottom: 0; }
-  .h-pagos-grid { grid-template-columns: repeat(2,1fr) !important; }
+/* ── pricing ──────────────────────────────────────── */
+.h-bill-toggle { display: flex; width: fit-content; gap: 4px; padding: 5px; margin: 0 auto 32px; background: #fff; border: 1px solid var(--line); border-radius: 999px; }
+.h-bill-opt { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border: none; background: transparent; color: var(--ink-2); font-family: inherit; font-size: 15px; font-weight: 700; border-radius: 999px; cursor: pointer; transition: background .18s ease, color .18s ease; }
+.h-bill-opt.active { background: var(--brand-ink); color: #fff; }
+.h-bill-save { font-size: 12.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--ok-soft); color: var(--ok); }
+.h-bill-opt.active .h-bill-save { background: rgba(255,255,255,.2); color: #fff; }
+.h-price-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 920px; margin: 0 auto; }
+@media(max-width:720px) { .h-price-grid { grid-template-columns: 1fr; } }
+.h-vprice { display: flex; flex-direction: column; gap: 20px; padding: 32px; background: #fff; border: 1px solid var(--line); border-radius: 22px; }
+.h-vprice-featured { background: var(--brand-soft); border-color: var(--brand); }
+.h-vprice-head h3 { display: flex; align-items: center; gap: 10px; margin: 0; font-family: var(--f-head); font-weight: 800; font-size: 28px; line-height: 1; letter-spacing: -.025em; color: var(--ink); }
+.h-vprice-tag { margin: 6px 0 0; font-size: 15px; color: var(--mute); }
+.h-hot { font-family: var(--f-text); font-size: 13px; font-weight: 700; letter-spacing: 0; padding: 3px 10px; border-radius: 999px; background: var(--plate-yellow); color: var(--ink); }
+.h-vprice-amount { display: flex; align-items: baseline; gap: 7px; }
+.h-cur, .h-per { font-size: 15px; font-weight: 700; color: var(--ink-2); }
+.h-amt { font-family: var(--f-head); font-weight: 800; font-size: 56px; line-height: 1; letter-spacing: -.04em; color: var(--ink); }
+.h-vprice-featured .h-amt { color: var(--brand-ink); }
+.h-vprice-anual { margin: -10px 0 0; font-size: 14px; font-weight: 700; color: var(--brand-ink); }
+.h-vprice ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.h-vprice li { position: relative; padding-left: 26px; font-size: 15.5px; color: var(--ink-2); }
+.h-vprice li::before { content: ''; position: absolute; left: 2px; top: 7px; width: 12px; height: 7px; border-left: 2px solid var(--brand-ink); border-bottom: 2px solid var(--brand-ink); transform: rotate(-45deg); }
+.h-vprice-cta {
+  margin-top: auto; display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  min-height: 52px; padding: 0 22px; border-radius: 12px;
+  background: #fff; color: var(--brand-ink); box-shadow: inset 0 0 0 1.5px var(--brand-ink);
+  text-decoration: none; font-weight: 700; font-size: 16px;
+  transition: background .18s ease;
 }
-@media(max-width:900px) { .h-int-grid { grid-template-columns: repeat(2,1fr); } }
-@media(max-width:560px) { .h-int-grid { grid-template-columns: 1fr; } .h-pagos-grid { grid-template-columns: 1fr !important; } }
-.h-int { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px; display: flex; align-items: center; gap: 14px; transition: border-color .2s ease, background .2s ease; }
-.h-int:hover { border-color: var(--green); background: var(--panel-2); }
-.h-int-ic { width: 40px; height: 40px; flex-shrink: 0; border-radius: 10px; display: grid; place-items: center; background: color-mix(in srgb, var(--green) 10%, transparent); color: var(--green); }
-.h-int-ic svg { width: 20px; height: 20px; }
-.h-int-name { font-size: 14px; font-weight: 600; color: var(--ink); }
-.h-int-desc { font-size: 12px; color: var(--mute); margin-top: 2px; }
+.h-vprice-cta:hover { background: var(--brand-soft); }
+.h-vprice-cta.primary { background: var(--brand-ink); color: #fff; box-shadow: none; }
+.h-vprice-cta.primary:hover { background: var(--brand-deep); }
+.h-vprice-cta .wa-glyph { width: 19px; height: 19px; }
 
-/* para quién — audiencia */
-.h-aud-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 48px; }
-.h-aud { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; align-items: flex-start; gap: 16px; transition: border-color .2s ease, background .2s ease; }
-.h-aud:hover { border-color: var(--green); background: var(--panel-2); }
-.h-aud .h-int-desc { margin-top: 4px; line-height: 1.5; }
-@media(max-width:720px) { .h-aud-grid { grid-template-columns: 1fr; } }
-
-/* faq — v2 style */
-.h-faq { max-width: 760px; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
-.h-faq-col { display: contents; }
-.h-faq details { border-bottom: 1px solid var(--line); }
-.h-faq details:last-child { border-bottom: none; }
-
-@media (min-width: 768px) {
-  .h-faq { max-width: 1180px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; background: none; border: none; border-radius: 0; overflow: visible; }
-  .h-faq-col { display: flex; flex-direction: column; gap: 24px; }
-  .h-faq details { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; margin-bottom: 0; }
-  .h-faq details:last-child { border-bottom: 1px solid var(--line); }
-}
-.h-faq summary { padding: 22px 26px; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 500; font-size: 17px; color: var(--ink); transition: background .18s ease; }
-.h-faq summary:hover { background: var(--panel-2); }
-.h-faq summary::-webkit-details-marker { display: none; }
-.h-qid { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--lime); margin-right: 14px; flex-shrink: 0; }
-.h-caret { font-family: 'Space Mono', monospace; color: var(--mute); font-size: 18px; margin-left: auto; transition: transform .2s ease; }
-.h-faq details[open] .h-caret { transform: rotate(45deg); color: var(--green); }
-.h-faq p { padding: 0 26px 22px; color: var(--ink-2); font-size: 15px; margin: 0; }
-
-/* final CTA */
-.h-final { position: relative; z-index: 1; margin: 0 clamp(20px,4vw,48px) 60px; padding: clamp(70px,12vw,160px) clamp(28px,6vw,80px); background: var(--panel); border: 1px solid var(--line); border-radius: 32px; text-align: center; overflow: hidden; }
-.h-final-bg { position: absolute; inset: 0; background: radial-gradient(circle at 30% 0%, color-mix(in srgb, var(--green) 30%, transparent) 0%, transparent 50%), radial-gradient(circle at 70% 100%, color-mix(in srgb, var(--lime) 25%, transparent) 0%, transparent 50%); pointer-events: none; }
-.h-final-inner { position: relative; z-index: 1; }
-.h-final-h { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: clamp(44px,8vw,110px); line-height: .95; letter-spacing: -.04em; margin: 16px 0 22px; }
-.h-final p { color: var(--ink-2); font-family: 'Space Mono', monospace; font-size: 14px; margin: 0 0 36px; }
-
-/* ── trust strip ──────────────────────────────────── */
-.h-trust {
-  display: flex; align-items: center; flex-wrap: wrap; gap: 16px 20px;
-  padding: 18px 22px; margin-bottom: 8px;
-  background: color-mix(in srgb, var(--panel) 70%, transparent);
-  border: 1px solid var(--line); border-radius: 14px;
-  backdrop-filter: blur(8px);
-}
-.h-trust-rating { display: inline-flex; align-items: center; gap: 8px; }
-.h-stars { color: var(--lime); font-size: 15px; letter-spacing: 1px; }
-.h-trust-num { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 17px; color: var(--ink); letter-spacing: -.02em; }
-.h-trust-lbl { font-size: 13px; color: var(--mute); }
-.h-trust-stat { font-size: 13.5px; color: var(--ink-2); }
-.h-trust-stat b { font-family: 'Bricolage Grotesque', sans-serif; color: var(--ink); font-weight: 600; }
-.h-trust-sep { width: 1px; height: 20px; background: var(--line-2); }
-@media(max-width:680px) { .h-trust-sep { display: none; } .h-trust { gap: 12px 18px; } }
-
-/* ── member journey ───────────────────────────────── */
-.h-journey { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; gap: 0; }
-.h-jstep { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 30px 26px; transition: border-color .2s ease, transform .2s ease; }
-.h-jstep:hover { border-color: var(--green); transform: translateY(-4px); }
-.h-jstep-ic { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: var(--lime-soft); color: var(--green); margin-bottom: 18px; }
-.h-jstep-ic svg { width: 23px; height: 23px; }
-.h-jstep-body { display: block; }
-.h-jstep h3 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 20px; margin: 0 0 8px; letter-spacing: -.02em; color: var(--ink); }
-.h-jstep p { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
-.h-jline { align-self: center; width: 48px; height: 2px; background: repeating-linear-gradient(90deg, var(--line-2) 0 6px, transparent 6px 12px); }
-@media(max-width:840px) {
-  .h-journey { grid-template-columns: 1fr; gap: 12px; }
-  .h-jline { display: none; }
-  .h-jstep {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 20px;
-    border-radius: 14px;
-    transform: none !important;
-  }
-  .h-jstep-ic { flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px; margin-bottom: 0; }
-  .h-jstep-ic svg { width: 20px; height: 20px; }
-  .h-jstep-body { display: flex; flex-direction: column; }
-  .h-jstep h3 { font-size: 16px; margin-bottom: 4px; }
-  .h-jstep p { font-size: 13.5px; line-height: 1.5; }
-}
-
-/* ── billing toggle ───────────────────────────────── */
-.h-bill-toggle { display: flex; width: fit-content; gap: 4px; padding: 5px; margin: 0 auto 36px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 999px; }
-.h-bill-opt { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border: none; background: transparent; color: var(--ink-2); font-family: inherit; font-size: 14px; font-weight: 500; border-radius: 999px; cursor: pointer; transition: background .18s ease, color .18s ease; }
-.h-bill-opt.active { background: var(--green); color: var(--bg); }
-.h-bill-save { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; padding: 2px 7px; border-radius: 999px; background: var(--lime-soft); color: var(--green); }
-.h-bill-opt.active .h-bill-save { background: color-mix(in srgb, var(--bg) 25%, transparent); color: var(--bg); }
-.h-vprice-anual { font-family: 'Space Mono', monospace; font-size: 11.5px; color: var(--lime); margin-top: -10px; }
-
-/* ── enterprise card ──────────────────────────────── */
-.h-enterprise { max-width: 920px; margin: 18px auto 0; display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 28px 32px; }
+.h-enterprise { max-width: 920px; margin: 16px auto 0; display: flex; align-items: center; justify-content: space-between; gap: 24px 28px; flex-wrap: wrap; padding: 28px 32px; background: #fff; border: 1px solid var(--line); border-radius: 22px; }
 .h-ent-copy { flex: 1; min-width: 260px; }
-.h-ent-copy h3 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 22px; margin: 0 0 6px; letter-spacing: -.02em; color: var(--ink); }
-.h-ent-copy p { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.5; max-width: 520px; }
-.h-ent-cta { display: inline-flex; align-items: center; gap: 9px; padding: 14px 22px; border-radius: 12px; background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 600; font-size: 14.5px; white-space: nowrap; transition: background .18s ease; }
-.h-ent-cta:hover { background: var(--green); }
-.h-ent-cta svg { width: 18px; height: 18px; }
+.h-ent-copy h3 { margin: 0 0 6px; font-family: var(--f-head); font-weight: 800; font-size: 24px; line-height: 1.1; letter-spacing: -.02em; color: var(--ink); }
+.h-ent-copy p { margin: 0; max-width: 520px; font-size: 15.5px; line-height: 1.5; color: var(--ink-2); }
+.h-ent-cta { display: inline-flex; align-items: center; gap: 9px; min-height: 50px; padding: 0 22px; border-radius: 12px; background: var(--ink); color: #fff; text-decoration: none; font-weight: 700; font-size: 16px; white-space: nowrap; transition: background .18s ease; }
+.h-ent-cta:hover { background: var(--brand-ink); }
 
-/* ── reassure row ─────────────────────────────────── */
-.h-reassure { list-style: none; padding: 0; max-width: 920px; margin: 24px auto 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 28px; }
-.h-reassure li { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--ink-2); }
-.h-reassure svg { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; }
+.h-reassure { list-style: none; padding: 0; max-width: 920px; margin: 26px auto 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 28px; }
+.h-reassure li { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: var(--ink-2); }
+.h-reassure svg { width: 17px; height: 17px; flex-shrink: 0; color: var(--ok); }
 
-/* ── final CTA row + whatsapp button ──────────────── */
-.h-final-cta-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-.h-btn-wa { display: inline-flex; align-items: center; gap: 10px; padding: 20px 28px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line-2); color: var(--ink); text-decoration: none; font-weight: 600; font-size: 17px; transition: border-color .18s ease, background .18s ease; }
-.h-btn-wa:hover { border-color: #25d366; background: var(--panel-2); }
-.h-btn-wa svg { width: 20px; height: 20px; color: #25d366; }
+/* ── faq ──────────────────────────────────────────── */
+.h-faq { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 24px; align-items: start; }
+.h-faq-col { display: grid; gap: 14px; }
+.h-faq details { background: #fff; border: 1px solid var(--line); border-radius: 14px; }
+.h-faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; border-radius: 14px; cursor: pointer; list-style: none; font-weight: 700; font-size: 17.5px; line-height: 1.35; color: var(--ink); transition: background .18s ease; }
+.h-faq summary::-webkit-details-marker { display: none; }
+.h-faq summary:hover { background: var(--bg-2); }
+.h-caret { flex-shrink: 0; font-size: 24px; line-height: 1; color: var(--brand-ink); transition: transform .2s ease; }
+.h-faq details[open] .h-caret { transform: rotate(45deg); }
+.h-faq details p { margin: 0; padding: 0 24px 22px; font-size: 16px; color: var(--ink-2); }
+@media(max-width:767px) { .h-faq { grid-template-columns: 1fr; } }
 
-/* focus — add summary to shared rule */
-.h-root summary:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; border-radius: 8px; }
+/* ── closing band: the logo blue ──────────────────── */
+.h-final-wrap { padding: 0 clamp(16px, 4vw, 48px) clamp(48px, 6vw, 72px); }
+.h-final { max-width: 1280px; margin: 0 auto; padding: clamp(56px, 9vw, 112px) clamp(24px, 6vw, 80px); background: var(--brand); border-radius: 28px; text-align: center; }
+.h-final-h { margin: 0; font-family: var(--f-head); font-weight: 800; font-size: var(--t-final); line-height: .95; letter-spacing: -.04em; color: #fff; }
+.h-final-h span { color: var(--ink); }
+.h-final-sub { margin: 22px 0 32px; font-size: clamp(17px, 1.6vw, 20px); font-weight: 700; color: var(--ink); }
+.h-final .h-btn { min-height: 58px; padding: 0 30px; font-size: 18px; }
+.h-final-note { margin: 14px 0 0; font-size: 15px; font-weight: 700; color: var(--ink); }
+.h-final a:focus-visible { outline-color: #fff; }
+
+@media(prefers-reduced-motion: reduce) {
+  .h-alert-pulse { animation: none; }
+}
 
 /* ── phone polish (≤480px) ────────────────────────── */
 @media(max-width:480px) {
-  /* tighter vertical rhythm */
-  .h-section { padding: 44px 18px; }
-  .h-wl { padding-top: 28px; }
-  .h-wl .h-head { margin-bottom: 20px; }
-  .h-head { margin-bottom: 40px; }
-  .h-final { margin: 0 14px 40px; padding: 56px 22px; }
-
-  /* hero type */
-  .h-h1 { font-size: clamp(40px, 13vw, 56px); line-height: .96; }
-  .h-h2 { font-size: clamp(34px, 9vw, 46px); }
-  .h-sub { font-size: 16px; margin-top: 18px; }
-
-  /* meta strip: clean 2-up wrap */
-  .h-meta-strip { gap: 10px 18px; margin-bottom: 40px; font-size: 12px; }
-
-  /* feature mockups full width */
-  .h-screen-body { max-width: 100%; }
-  .h-feat-lead { max-width: 100%; }
-
-  /* pricing */
+  .h-section { padding-block: 52px; }
+  .h-head { margin-bottom: 32px; }
+  .h-hero-ctas { flex-direction: column; align-items: stretch; gap: 16px; }
   .h-vprice { padding: 26px 22px; border-radius: 18px; }
   .h-amt { font-size: 46px; }
-
-  /* enterprise card: stack copy + CTA, full-width button */
   .h-enterprise { padding: 24px 22px; }
   .h-ent-cta { width: 100%; justify-content: center; }
-
-  /* final CTA: calmer buttons, full width */
-  .h-final-h { font-size: clamp(36px, 11vw, 52px); }
-  .h-final-cta-row .h-btn-primary,
-  .h-final-cta-row .h-btn-wa { flex: 1 1 100%; justify-content: center; font-size: 15px; padding: 17px 22px; }
-  .h-btn-primary.big { padding: 17px 22px; font-size: 15px; }
-
-  /* footer bottom: stack instead of cramming */
-  .h-foot-bot { flex-direction: column; align-items: flex-start; gap: 10px; }
-
-  /* faq: a touch tighter */
-  .h-faq summary { padding: 18px 20px; font-size: 15.5px; gap: 12px; }
-  .h-faq p { padding: 0 20px 18px; }
+  .h-final { border-radius: 22px; }
+  .h-final .h-btn { width: 100%; font-size: 17px; }
+  .h-faq summary { padding: 18px 20px; font-size: 16.5px; gap: 12px; }
+  .h-faq details p { padding: 0 20px 18px; }
 }
 </style>

@@ -37,7 +37,7 @@ import { SITE_CONFIG } from '../utils/meta';
 }
 .h-404-code {
   position: absolute; z-index: 0;
-  font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700;
+  font-family: var(--f-head); font-weight: 800;
   font-size: clamp(160px, 28vw, 400px); line-height: 1;
   letter-spacing: -.06em; color: transparent;
   -webkit-text-stroke: 1px var(--line-2);
@@ -51,13 +51,12 @@ import { SITE_CONFIG } from '../utils/meta';
   display: flex; flex-direction: column; align-items: center; gap: 0;
 }
 .h-404-eyebrow {
-  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: .1em; color: var(--lime);
-  margin-bottom: 18px;
+  font-size: 15px; font-weight: 700; color: var(--brand-ink);
+  margin-bottom: 16px;
 }
 .h-404-h1 {
-  font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600;
-  font-size: clamp(52px,9vw,110px); line-height: .92;
+  font-family: var(--f-head); font-weight: 800;
+  font-size: var(--t-final); line-height: .95;
   letter-spacing: -.04em; margin: 0 0 24px; color: var(--ink);
 }
 .h-404-lead {
@@ -67,32 +66,31 @@ import { SITE_CONFIG } from '../utils/meta';
 .h-404-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 36px; }
 .h-btn-primary {
   display: inline-flex; align-items: center; gap: 9px;
-  padding: 14px 22px; background: var(--green); color: var(--bg);
+  padding: 14px 22px; background: var(--brand-ink); color: #fff;
   text-decoration: none; border-radius: 12px;
-  font-weight: 600; font-size: 15px;
-  box-shadow: 0 0 0 1px var(--green-deep), 0 12px 30px -8px color-mix(in srgb, var(--green) 55%, transparent);
-  transition: background .18s ease, box-shadow .2s ease;
+  font-weight: 700; font-size: 16px;
+  transition: background .18s ease;
 }
-.h-btn-primary:hover { background: var(--lime); box-shadow: 0 0 0 1px var(--lime), 0 14px 36px -8px color-mix(in srgb, var(--lime) 65%, transparent); }
+.h-btn-primary:hover { background: var(--brand-deep); }
 .h-btn-primary svg { width: 17px; height: 17px; }
 .h-btn-ghost {
   display: inline-flex; align-items: center; gap: 9px;
   padding: 14px 22px; border: 1px solid var(--line-2);
   background: var(--panel); color: var(--ink);
   text-decoration: none; border-radius: 12px;
-  font-weight: 500; font-size: 15px;
+  font-weight: 700; font-size: 16px;
   transition: background .18s ease, border-color .18s ease;
 }
-.h-btn-ghost:hover { background: var(--panel-2); border-color: var(--green); }
+.h-btn-ghost:hover { background: var(--panel-2); border-color: var(--brand-ink); }
 .h-404-links {
   display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px;
   justify-content: center;
-  font-family: 'Space Mono', monospace; font-size: 12px; color: var(--mute);
+  font-size: 14px; color: var(--mute);
 }
 .h-404-links a {
   color: var(--ink-2); text-decoration: none;
   padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px;
-  background: var(--panel); font-size: 12px;
+  background: var(--panel); font-size: 14px;
   transition: border-color .15s ease, color .15s ease, background .15s ease;
 }
 .h-404-links a:hover { border-color: var(--green); color: var(--green); background: var(--lime-soft); }

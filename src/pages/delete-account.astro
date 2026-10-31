@@ -83,8 +83,8 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Quiero borra
 .h-delete-icon svg { width: 26px; height: 26px; }
 .h-delete-copy { flex: 1; min-width: 260px; }
 .h-delete-copy h2 {
-  font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600;
-  font-size: clamp(20px,2.5vw,26px); letter-spacing: -.02em;
+  font-family: var(--f-head); font-weight: 800;
+  font-size: clamp(20px,2.5vw,26px); line-height: 1.15; letter-spacing: -.02em;
   color: var(--ink); margin: 0 0 12px;
 }
 .h-delete-copy > p { font-size: 16px; color: var(--ink-2); line-height: 1.7; margin: 0 0 24px; }
@@ -100,8 +100,7 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Quiero borra
 .h-delete-btn svg { width: 20px; height: 20px; }
 .h-delete-hint {
   margin: 16px 0 0 !important;
-  font-family: 'Space Mono', monospace;
-  font-size: 12px !important; color: var(--mute) !important;
+  font-size: 13.5px !important; color: var(--mute) !important;
   line-height: 1.5 !important;
 }
 .h-delete-hint span {

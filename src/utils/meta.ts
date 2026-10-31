@@ -13,6 +13,18 @@ export const SITE_CONFIG = {
   locale: "es_ES",
 } as const;
 
+const WA_NUMBER = '59891961610';
+
+/** A WhatsApp chat with a prefilled message. Every call to action on the site opens one. */
+export const waLink = (text: string) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+
+export const WA = {
+  /** "Probar 30 días gratis" buttons */
+  trial: waLink('Hola, quiero probar Tutreino 30 días gratis en mi gimnasio.'),
+  /** demos for chains, the footer link and the floating WhatsApp button */
+  demo: waLink('Hola, quiero agendar una demo de Tutreino para mi gimnasio.'),
+} as const;
+
 export interface PageMeta {
   title: string;
   description?: string;

@@ -1,8 +1,7 @@
 ---
-import { Image } from 'astro:assets';
-import logoSrc from '../assets/logo.png';
-import { SITE_CONFIG } from '../utils/meta';
+import { WA } from '../utils/meta';
 import DiscoLogo from './DiscoLogo.astro';
+import WaGlyph from './WaGlyph.astro';
 
 /**
  * home — when true, nav links use plain anchors (#section)
@@ -17,10 +16,6 @@ export interface Props {
 
 const { home = false, theme } = Astro.props;
 const p = (anchor: string) => (home ? anchor : `/${anchor}`);
-
-const registroUrl = SITE_CONFIG.appRegistrationUrl;
-const waNumber = '59891961610';
-const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero agendar una demo de Tutreino para mi gimnasio.')}`;
 ---
 
 <nav class="h-nav" aria-label="Principal">
@@ -29,22 +24,21 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
       <DiscoLogo />
     ) : (
       <Fragment>
-        <Image src={logoSrc} alt="" aria-hidden="true" width={24} height={24} densities={[1, 2, 3]} format="png" class="h-logo-img" />
-        <span class="h-logo-name">Tutreino</span>
+        <img src="/favicon-96x96.png" alt="" width="30" height="30" class="h-logo-img" />
+        <span class="h-logo-name">tutreino</span>
       </Fragment>
     )}
   </a>
-  <div class="h-nav-pill">
+  <div class="h-nav-links">
     <a href={p('#producto')}>Producto</a>
     <a href={p('#socios')}>Socios</a>
-    <a href={p('#pagos')}>Pagos</a>
     <a href={p('#precios')}>Precios</a>
     <a href={p('#faq')}>FAQ</a>
   </div>
   <div class="h-nav-right">
-    <a href={registroUrl} class="h-cta-mini" target="_blank" rel="noopener noreferrer">
-      Agendar demo
-      <svg class="h-cta-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5"/></svg>
+    <a href={WA.trial} class="h-cta-mini" target="_blank" rel="noopener noreferrer">
+      <WaGlyph />
+      Probar gratis
     </a>
     <button type="button" class="h-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="h-mobile-menu">
       <span></span><span></span><span></span>
@@ -56,11 +50,10 @@ const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Hola, quiero
 <div class="h-mobile-menu" id="h-mobile-menu" hidden>
   <a href={p('#producto')}>Producto</a>
   <a href={p('#socios')}>Socios</a>
-  <a href={p('#pagos')}>Pagos</a>
   <a href={p('#precios')}>Precios</a>
   <a href={p('#faq')}>FAQ</a>
-  <a href={registroUrl} class="h-mm-cta" target="_blank" rel="noopener noreferrer">Empezar prueba · 30 días</a>
-  <a href={waUrl} class="h-mm-wa" target="_blank" rel="noopener noreferrer">Hablar por WhatsApp</a>
+  <a href={WA.trial} class="h-mm-cta" target="_blank" rel="noopener noreferrer"><WaGlyph />Probar 30 días gratis</a>
+  <p class="h-mm-note">Se abre WhatsApp · Sin tarjeta</p>
 </div>
 
 <script>
