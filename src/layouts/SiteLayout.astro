@@ -33,9 +33,14 @@ export interface Props {
   robots?: string;
   /** Pass true on the index page so nav links use #anchors instead of /#anchors */
   home?: boolean;
+  /** Alternate look for review copies of the site (the Disco theme is used by /v2) */
+  theme?: 'disco';
 }
 
-const { home, ...props } = Astro.props;
+const { home, theme, ...props } = Astro.props;
+const fontsHref = theme === 'disco'
+  ? 'https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Atkinson+Hyperlegible+Next:wght@400;600;700&display=swap'
+  : 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=Geist:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap';
 const waUrl = 'https://wa.me/59891961610?text=Hola%2C%20quiero%20agendar%20una%20demo%20de%20Tutreino%20para%20mi%20gimnasio.';
 ---
 
@@ -43,11 +48,11 @@ const waUrl = 'https://wa.me/59891961610?text=Hola%2C%20quiero%20agendar%20una%2
   <!-- Google Fonts -->
   <link slot="head" rel="preconnect" href="https://fonts.googleapis.com" />
   <link slot="head" rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link slot="head" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=Geist:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" />
+  <link slot="head" rel="stylesheet" href={fontsHref} />
   <!-- Forward pages' head content (e.g. JSON-LD) to Layout's <head> -->
   <slot name="head" slot="head" />
 
-  <div class="h-root">
+  <div class:list={['h-root', theme && `h-theme-${theme}`]}>
     <div class="h-grid-bg" aria-hidden="true"></div>
     <div class="h-glow h-glow-1" aria-hidden="true"></div>
     <div class="h-glow h-glow-2" aria-hidden="true"></div>

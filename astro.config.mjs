@@ -10,8 +10,8 @@ export default defineConfig({
   // URLs have no trailing slash (matches canonicals); vercel.json redirects /page/ → /page
   trailingSlash: 'never',
   integrations: [sitemap({
-    // 404 is excluded automatically; /docs is internal API reference (noindex)
-    filter: (page) => !new URL(page).pathname.startsWith('/docs'),
+    // 404 is excluded automatically; /docs (internal API reference) and /v2 (design review) are noindex
+    filter: (page) => !/^\/(docs|v2)(\/|$)/.test(new URL(page).pathname),
   })],
   vite: {
     plugins: [tailwindcss()],
