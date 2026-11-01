@@ -1,9 +1,9 @@
 ---
 /**
- * AppPreview: the homepage's "socios" section. The owner adds a logo, a name and a color, and the three
- * member-app phones follow. It all happens in the browser; nothing is uploaded.
- * Every discipline is rendered up front and the script only shows the chosen one, so each screen
- * has a single template. Store listings are left out while the apps are published under Tutreino's name.
+ * AppPreview: the owner adds a logo, a name, a phrase and a color, and sees their app and its App Store and
+ * Google Play listings follow. It all happens in the browser; nothing is uploaded.
+ * The listings credit Tutreino as the developer, since the apps are published under its name.
+ * Every discipline's classes are rendered up front and the script only shows the chosen one.
  */
 import WaGlyph from './WaGlyph.astro';
 import { waLink } from '../utils/meta';
@@ -14,9 +14,9 @@ const marks = {
   flow: 'm13 2-9 12h7l-2 8 9-12h-7z',
 };
 const examples = [
-  { name: 'Iron House', color: '#1d4ed8', disc: 'funcional', mark: marks.iron },
-  { name: 'Zen Studio', color: '#047857', disc: 'yoga', mark: marks.zen },
-  { name: 'Flow Gym', color: '#c2410c', disc: 'spinning', mark: marks.flow },
+  { name: 'Iron House', tag: 'Fuerza y funcional', color: '#1d4ed8', disc: 'funcional', mark: marks.iron },
+  { name: 'Zen Studio', tag: 'Yoga y movimiento', color: '#047857', disc: 'yoga', mark: marks.zen },
+  { name: 'Flow Gym', tag: 'Spinning todos los días', color: '#c2410c', disc: 'spinning', mark: marks.flow },
 ];
 const swatches = [
   { label: 'Azul', color: '#1d4ed8' },
@@ -26,37 +26,27 @@ const swatches = [
   { label: 'Violeta', color: '#6d28d9' },
   { label: 'Negro', color: '#111827' },
 ];
-// classes: [time, name, detail, open | full | mine]; items: [exercise, detail]
+// classes: [time, name, detail, open | full | mine]
 const disciplines = [
-  { id: 'funcional', label: 'Funcional', over: 'Semana 3 · Día 2', title: 'Tren inferior',
-    classes: [['07:00', 'Funcional', 'Sala 1 · 4 lugares', 'open'], ['12:30', 'Cross', 'Lleno', 'full'], ['19:00', 'Funcional', 'Tu lugar está reservado', 'mine'], ['20:30', 'Spinning', 'Sala 2 · 9 lugares', 'open']],
-    items: [['Sentadilla', '4 × 8 · 60 kg'], ['Peso muerto rumano', '3 × 10 · 40 kg'], ['Estocadas', '3 × 12 · 12 kg'], ['Plancha', '3 × 45 s']] },
-  { id: 'crossfit', label: 'Crossfit', over: 'Semana 3 · Fuerza', title: 'WOD de hoy',
-    classes: [['07:00', 'WOD', 'Box 1 · 6 lugares', 'open'], ['12:30', 'Halterofilia', 'Lleno', 'full'], ['18:30', 'WOD', 'Tu lugar está reservado', 'mine'], ['20:00', 'Open box', 'Box 2 · 8 lugares', 'open']],
-    items: [['Back squat', '5 × 5 · 80 kg'], ['Thruster', '21-15-9 · 40 kg'], ['Box jump', '3 × 15'], ['Burpees', '3 × 12']] },
-  { id: 'musculacion', label: 'Musculación', over: 'Semana 2 · Día 4', title: 'Empuje',
-    classes: [['07:00', 'Sala de pesas', '12 lugares', 'open'], ['12:30', 'Funcional', 'Lleno', 'full'], ['20:00', 'Sala de pesas', 'Tu lugar está reservado', 'mine'], ['21:00', 'Tren superior', 'Sala 2 · 5 lugares', 'open']],
-    items: [['Press de banca', '4 × 8 · 70 kg'], ['Press militar', '3 × 10 · 35 kg'], ['Fondos', '3 × 12'], ['Tríceps en polea', '3 × 15 · 20 kg']] },
-  { id: 'spinning', label: 'Spinning', over: 'Semana 1 · Clase 3', title: 'Intervalos',
-    classes: [['07:00', 'Spinning', 'Sala 2 · 9 lugares', 'open'], ['12:30', 'Cycle power', 'Lleno', 'full'], ['20:30', 'Spinning', 'Tu lugar está reservado', 'mine'], ['21:30', 'Spinning suave', 'Sala 2 · 6 lugares', 'open']],
-    items: [['Entrada en calor', '10 min'], ['Subidas', '5 × 3 min'], ['Sprints', '6 × 30 s'], ['Vuelta a la calma', '5 min']] },
-  { id: 'yoga', label: 'Yoga', over: 'Semana 3 · Día 2', title: 'Secuencia de hoy',
-    classes: [['07:00', 'Hatha', 'Sala 1 · 5 lugares', 'open'], ['08:00', 'Yoga Flow', 'Tu lugar está reservado', 'mine'], ['12:30', 'Vinyasa', 'Lleno', 'full'], ['19:00', 'Meditación', 'Sala 2 · 8 lugares', 'open']],
-    items: [['Saludo al sol', '5 rondas'], ['Guerrero II', '3 × 30 s'], ['Paloma', '2 × 60 s'], ['Savasana', '5 min']] },
-  { id: 'pilates', label: 'Pilates', over: 'Semana 2 · Día 3', title: 'Core y movilidad',
-    classes: [['08:00', 'Mat', 'Sala 1 · 3 lugares', 'open'], ['10:00', 'Reformer', 'Tu lugar está reservado', 'mine'], ['12:30', 'Reformer', 'Lleno', 'full'], ['19:00', 'Mat', 'Sala 1 · 6 lugares', 'open']],
-    items: [['Hundred', '1 × 100'], ['Roll up', '3 × 8'], ['Side plank', '2 × 30 s'], ['Spine stretch', '2 × 10']] },
+  { id: 'funcional', label: 'Funcional', classes: [['07:00', 'Funcional', 'Sala 1 · 4 lugares', 'open'], ['12:30', 'Cross', 'Lleno', 'full'], ['19:00', 'Funcional', 'Tu lugar está reservado', 'mine'], ['20:30', 'Spinning', 'Sala 2 · 9 lugares', 'open']] },
+  { id: 'crossfit', label: 'Crossfit', classes: [['07:00', 'WOD', 'Box 1 · 6 lugares', 'open'], ['12:30', 'Halterofilia', 'Lleno', 'full'], ['18:30', 'WOD', 'Tu lugar está reservado', 'mine'], ['20:00', 'Open box', 'Box 2 · 8 lugares', 'open']] },
+  { id: 'musculacion', label: 'Musculación', classes: [['07:00', 'Sala de pesas', '12 lugares', 'open'], ['12:30', 'Funcional', 'Lleno', 'full'], ['20:00', 'Sala de pesas', 'Tu lugar está reservado', 'mine'], ['21:00', 'Tren superior', 'Sala 2 · 5 lugares', 'open']] },
+  { id: 'spinning', label: 'Spinning', classes: [['07:00', 'Spinning', 'Sala 2 · 9 lugares', 'open'], ['12:30', 'Cycle power', 'Lleno', 'full'], ['20:30', 'Spinning', 'Tu lugar está reservado', 'mine'], ['21:30', 'Spinning suave', 'Sala 2 · 6 lugares', 'open']] },
+  { id: 'yoga', label: 'Yoga', classes: [['07:00', 'Hatha', 'Sala 1 · 5 lugares', 'open'], ['08:00', 'Yoga Flow', 'Tu lugar está reservado', 'mine'], ['12:30', 'Vinyasa', 'Lleno', 'full'], ['19:00', 'Meditación', 'Sala 2 · 8 lugares', 'open']] },
+  { id: 'pilates', label: 'Pilates', classes: [['08:00', 'Mat', 'Sala 1 · 3 lugares', 'open'], ['10:00', 'Reformer', 'Tu lugar está reservado', 'mine'], ['12:30', 'Reformer', 'Lleno', 'full'], ['19:00', 'Mat', 'Sala 1 · 6 lugares', 'open']] },
 ];
 const [firstExample] = examples;
-const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Rutina' }, { view: 'membresia', tab: 'Membresía' }];
+const views = [{ view: 'app', tab: 'Tu app' }, { view: 'appstore', tab: 'App Store' }, { view: 'play', tab: 'Google Play' }];
+// store screenshots: their caption and which row of the mini app is highlighted
+const shots = [{ caption: 'Reservá tu clase', on: 0 }, { caption: 'Pagá en segundos', on: 1 }, { caption: 'Seguí tu rutina', on: 2 }];
 ---
 
-<section class="h-section h-bld-sec" id="socios" data-cta-bar-hide>
+<section class="h-section h-chalk h-bld-sec" id="tu-app" data-cta-bar-hide>
   <div class="h-wrap">
     <div class="h-head">
       <p class="h-kicker">Probalo con tu gimnasio</p>
       <h2 class="h-h2">Mirá cómo queda tu app.</h2>
-      <p class="h-sub">Subí tu logo, ponele nombre y elegí tu color. Así ven tus socios la app donde reservan, entrenan y pagan.</p>
+      <p class="h-sub">Subí tu logo, ponele nombre y elegí tu color. Así se ve tu app, y así aparece en las tiendas.</p>
     </div>
 
     <div class="h-bld">
@@ -70,14 +60,20 @@ const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Ruti
           </label>
           <p class="h-bf-ex">
             <span>¿No lo tenés a mano? Probá con</span>
-            {examples.map((e, i) => <button type="button" data-name={e.name} data-color={e.color} data-trains={e.disc} data-mark={e.mark} aria-pressed={i === 0 ? 'true' : 'false'}>{e.name}</button>)}
+            {examples.map((e, i) => <button type="button" data-name={e.name} data-tag={e.tag} data-color={e.color} data-trains={e.disc} data-mark={e.mark} aria-pressed={i === 0 ? 'true' : 'false'}>{e.name}</button>)}
           </p>
           <p class="h-bf-status" role="status"></p>
         </div>
 
         <div class="h-bf-row">
-          <label class="h-bf-lab" for="h-bf-name">Nombre de tu gimnasio <span class="h-bf-count" aria-hidden="true">{firstExample.name.length}/30</span></label>
+          <label class="h-bf-lab" for="h-bf-name">Nombre de tu gimnasio <span class="h-bf-count" id="h-bf-name-count" aria-hidden="true">{firstExample.name.length}/30</span></label>
           <input class="h-bf-input" id="h-bf-name" type="text" maxlength="30" autocomplete="organization" placeholder="Ej: Iron House" value={firstExample.name} />
+        </div>
+
+        <div class="h-bf-row">
+          <label class="h-bf-lab" for="h-bf-tag">Frase corta <span class="h-bf-count" id="h-bf-tag-count" aria-hidden="true">{firstExample.tag.length}/30</span></label>
+          <input class="h-bf-input" id="h-bf-tag" type="text" maxlength="30" autocomplete="off" placeholder="Ej: Fuerza y funcional" value={firstExample.tag} />
+          <p class="h-bf-hint">Va debajo del nombre en las tiendas.</p>
         </div>
 
         <fieldset class="h-bf-row">
@@ -103,13 +99,13 @@ const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Ruti
         </div>
       </form>
 
-      <div class="h-bld-stage" data-view="clases">
-        <div class="h-bld-tabs" role="group" aria-label="Qué pantalla mostrar">
-          {screens.map((s, i) => <button type="button" data-view-btn={s.view} aria-pressed={i === 0 ? 'true' : 'false'}>{s.tab}</button>)}
+      <div class="h-bld-stage" data-view="app">
+        <div class="h-bld-tabs" role="group" aria-label="Qué vista mostrar">
+          {views.map((v, i) => <button type="button" data-view-btn={v.view} aria-pressed={i === 0 ? 'true' : 'false'}>{v.tab}</button>)}
         </div>
         <div class="h-bld-crop">
           <div class="h-bld-row">
-            <figure class="h-bpv h-bpv-main" data-screen="clases">
+            <figure class="h-bpv h-bpv-main" data-screen="app">
               <div class="h-mphone" aria-hidden="true">
                 <div class="h-mscreen">
                   <div class="h-ma-top"><span class="h-bic" data-bld-icon><svg viewBox="0 0 24 24"><path fill="currentColor" d={firstExample.mark} /></svg></span><span class="h-ma-name" data-bld-name>{firstExample.name}</span></div>
@@ -130,50 +126,61 @@ const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Ruti
                   <div class="h-ma-tab"><span class="on"></span><span></span><span></span><span></span></div>
                 </div>
               </div>
-              <figcaption>Reserva su clase</figcaption>
+              <figcaption>Tu app</figcaption>
             </figure>
 
-            <figure class="h-bpv" data-screen="rutina">
+            <figure class="h-bpv" data-screen="appstore">
               <div class="h-mphone" aria-hidden="true">
-                <div class="h-mscreen">
-                  <div class="h-ma-top"><span class="h-bic" data-bld-icon><svg viewBox="0 0 24 24"><path fill="currentColor" d={firstExample.mark} /></svg></span><span class="h-ma-name" data-bld-name>{firstExample.name}</span></div>
-                  {disciplines.map((d, i) => (
-                    <div class="h-bld-disc" data-disc={d.id} hidden={i > 0}>
-                      <p class="h-ma-over">{d.over}</p>
-                      <p class="h-ma-title">{d.title}</p>
-                      <div class="h-ma-prog"><span></span></div>
-                      <p class="h-ma-prog-l">2 de 4 ejercicios</p>
-                      <ul class="h-ma-list">
-                        {d.items.map(([name, detail], n) => (
-                          <li class:list={[n < 2 && 'done']}><span class="h-ma-ck">{n < 2 ? '✓' : ''}</span><span class="h-ma-c"><b>{name}</b><small>{detail}</small></span></li>
-                        ))}
-                      </ul>
+                <div class="h-lst">
+                  <div class="h-lst-bar"><span class="h-as-back">‹ Apps</span><span class="h-lst-pv">Vista previa</span></div>
+                  <div class="h-lst-top">
+                    <span class="h-bic h-bic-edge" data-bld-icon style="--s:66px"><svg viewBox="0 0 24 24"><path fill="currentColor" d={firstExample.mark} /></svg></span>
+                    <div class="h-lst-txt">
+                      <div class="h-lst-title" data-bld-name>{firstExample.name}</div>
+                      <div class="h-lst-subt" data-bld-tag>{firstExample.tag}</div>
+                      <span class="h-as-get">Obtener</span>
                     </div>
-                  ))}
-                  <p class="h-ma-chip">Armada con IA · ajustada por tu entrenador</p>
-                  <div class="h-ma-tab"><span></span><span class="on"></span><span></span><span></span></div>
+                  </div>
+                  <div class="h-as-stats">
+                    <div><small>Edad</small><b>4+</b></div>
+                    <div><small>Categoría</small><b>Salud</b></div>
+                    <div><small>Idioma</small><b>ES</b></div>
+                  </div>
+                  <div class="h-shots">
+                    {shots.map((s) => (
+                      <div class="h-shot"><p>{s.caption}</p><div class="h-mini"><em data-bld-name>{firstExample.name}</em>{[0, 1, 2, 3].map((n) => <i class:list={[n === s.on && 'on', n === 0 && 'lg']}></i>)}</div></div>
+                    ))}
+                  </div>
+                  <p class="h-lst-desc">Reservá clases, pagá tu membresía y seguí tu rutina desde el celular.</p>
+                  <div class="h-as-dev">Tutreino</div>
                 </div>
               </div>
-              <figcaption>Entrena con su rutina</figcaption>
+              <figcaption>En App Store</figcaption>
             </figure>
 
-            <figure class="h-bpv" data-screen="membresia">
+            <figure class="h-bpv" data-screen="play">
               <div class="h-mphone" aria-hidden="true">
-                <div class="h-mscreen">
-                  <div class="h-ma-top"><span class="h-bic" data-bld-icon><svg viewBox="0 0 24 24"><path fill="currentColor" d={firstExample.mark} /></svg></span><span class="h-ma-name" data-bld-name>{firstExample.name}</span></div>
-                  <p class="h-ma-over">Tu membresía</p>
-                  <p class="h-ma-title">Plan mensual</p>
-                  <div class="h-ma-pay"><span>Próximo débito</span><b>UYU 2.200</b><span>18 de noviembre · automático</span></div>
-                  <p class="h-ma-status">Débito automático activo</p>
-                  <ul class="h-ma-hist">
-                    <li><span>Octubre</span><span>UYU 2.200</span><span class="ok">Pagado</span></li>
-                    <li><span>Setiembre</span><span>UYU 2.200</span><span class="ok">Pagado</span></li>
-                    <li><span>Agosto</span><span>UYU 2.200</span><span class="ok">Pagado</span></li>
-                  </ul>
-                  <div class="h-ma-tab"><span></span><span></span><span class="on"></span><span></span></div>
+                <div class="h-lst h-gp">
+                  <div class="h-lst-bar"><span></span><span class="h-lst-pv">Vista previa</span></div>
+                  <div class="h-lst-top">
+                    <span class="h-bic h-bic-edge" data-bld-icon style="--s:58px"><svg viewBox="0 0 24 24"><path fill="currentColor" d={firstExample.mark} /></svg></span>
+                    <div class="h-lst-txt">
+                      <div class="h-lst-title" data-bld-name>{firstExample.name}</div>
+                      <div class="h-gp-dev">Tutreino</div>
+                    </div>
+                  </div>
+                  <div class="h-gp-stats"><span><b>Nueva</b>app</span><span><b>Para todos</b>clasificación</span><span><b>Salud</b>categoría</span></div>
+                  <span class="h-gp-install">Instalar</span>
+                  <div class="h-shots">
+                    {shots.map((s) => (
+                      <div class="h-shot"><p>{s.caption}</p><div class="h-mini"><em data-bld-name>{firstExample.name}</em>{[0, 1, 2, 3].map((n) => <i class:list={[n === s.on && 'on', n === 0 && 'lg']}></i>)}</div></div>
+                    ))}
+                  </div>
+                  <p class="h-gp-about">Acerca de esta app</p>
+                  <p class="h-lst-desc" data-bld-tag>{firstExample.tag}</p>
                 </div>
               </div>
-              <figcaption>Paga sin pensarlo</figcaption>
+              <figcaption>En Google Play</figcaption>
             </figure>
           </div>
         </div>
@@ -195,6 +202,7 @@ const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Ruti
     const press = (el: Element, on: boolean) => el.setAttribute('aria-pressed', String(on));
 
     const nameIn = q<HTMLInputElement>('#h-bf-name');
+    const tagIn = q<HTMLInputElement>('#h-bf-tag');
     const fileIn = q<HTMLInputElement>('#h-bf-file');
     const colorIn = q<HTMLInputElement>('#h-bf-color');
     const statusEl = q<HTMLElement>('.h-bf-status');
@@ -205,6 +213,7 @@ const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Ruti
 
     const firstBtn = exampleBtns[0];
     let name = firstBtn.dataset.name || '';
+    let tag = firstBtn.dataset.tag || '';
     let example: string | null = name;
     let logo: Logo = { kind: 'mark', path: firstBtn.dataset.mark || '' };
 
@@ -266,10 +275,12 @@ const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Ruti
     };
 
     /* ── text and the WhatsApp message; an example gym's name never goes into the message ── */
-    const paintName = () => {
+    const paintText = () => {
       const typed = name.trim();
       qa<HTMLElement>('[data-bld-name]').forEach((el) => { el.textContent = typed || 'Tu gimnasio'; });
-      q<HTMLElement>('.h-bf-count').textContent = `${nameIn.value.length}/30`;
+      qa<HTMLElement>('[data-bld-tag]').forEach((el) => { el.textContent = tag.trim() || 'Reservá, pagá y entrená'; });
+      q<HTMLElement>('#h-bf-name-count').textContent = `${nameIn.value.length}/30`;
+      q<HTMLElement>('#h-bf-tag-count').textContent = `${tagIn.value.length}/30`;
       const message = typed && !example
         ? `Hola, soy de ${typed}. Vi cómo quedaría nuestra app y quiero probar Tutreino 30 días gratis.`
         : 'Hola, vi cómo quedaría la app de mi gimnasio y quiero probar Tutreino 30 días gratis.';
@@ -280,6 +291,11 @@ const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Ruti
     const setDisc = (id: string) => {
       qa<HTMLElement>('[data-disc]').forEach((el) => { el.hidden = el.dataset.disc !== id; });
       qa<HTMLElement>('[data-disc-btn]').forEach((b) => press(b, b.dataset.discBtn === id));
+    };
+
+    const setView = (view: string) => {
+      q<HTMLElement>('.h-bld-stage').dataset.view = view;
+      qa<HTMLElement>('[data-view-btn]').forEach((b) => press(b, b.dataset.viewBtn === view));
     };
 
     const say = (message: string, isError = false) => {
@@ -363,8 +379,8 @@ const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Ruti
       paintIcons(true);
       const wasExample = !!example;
       example = null;
-      if (wasExample) { name = ''; nameIn.value = ''; nameIn.classList.add('nudge'); }
-      paintName();
+      if (wasExample) { name = ''; tag = ''; nameIn.value = ''; tagIn.value = ''; nameIn.classList.add('nudge'); }
+      paintText();
       say((colors.length ? 'Tomamos el color de tu logo.' : 'Tu logo no tiene un color marcado: elegí uno abajo.') + (wasExample ? ' Ahora escribí el nombre.' : ''));
       track('app_preview_logo');
     };
@@ -388,7 +404,9 @@ const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Ruti
     /* ── events ── */
     exampleBtns.forEach((b) => b.addEventListener('click', () => {
       name = example = b.dataset.name || '';
+      tag = b.dataset.tag || '';
       nameIn.value = name;
+      tagIn.value = tag;
       nameIn.classList.remove('nudge');
       logo = { kind: 'mark', path: b.dataset.mark || '' };
       fileIn.value = '';
@@ -397,7 +415,7 @@ const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Ruti
       setColor(b.dataset.color || '');
       setDisc(b.dataset.trains || '');
       paintIcons(true);
-      paintName();
+      paintText();
     }));
 
     fileIn.addEventListener('change', () => handleFile(fileIn.files?.[0]));
@@ -410,8 +428,11 @@ const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Ruti
       example = null;
       nameIn.classList.remove('nudge');
       if (logo?.kind !== 'upload') { logo = null; paintIcons(false); }
-      paintName();
+      paintText();
     });
+    tagIn.addEventListener('input', () => { tag = tagIn.value; paintText(); });
+    /* one phone at a time: show the listing while editing the phrase that only appears there */
+    tagIn.addEventListener('focus', () => setView('appstore'));
 
     q('.h-sws').addEventListener('click', (e) => {
       const b = (e.target as Element).closest<HTMLElement>('.h-sw');
@@ -420,13 +441,11 @@ const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Ruti
     colorIn.addEventListener('input', () => setColor(colorIn.value));
     q('.h-bf-chips').addEventListener('click', (e) => {
       const b = (e.target as Element).closest<HTMLElement>('[data-disc-btn]');
-      if (b?.dataset.discBtn) setDisc(b.dataset.discBtn);
+      if (b?.dataset.discBtn) { setDisc(b.dataset.discBtn); setView('app'); }
     });
     q('.h-bld-tabs').addEventListener('click', (e) => {
       const b = (e.target as Element).closest<HTMLElement>('[data-view-btn]');
-      if (!b?.dataset.viewBtn) return;
-      q<HTMLElement>('.h-bld-stage').dataset.view = b.dataset.viewBtn;
-      qa<HTMLElement>('[data-view-btn]').forEach((x) => press(x, x === b));
+      if (b?.dataset.viewBtn) setView(b.dataset.viewBtn);
     });
     q('.h-bf').addEventListener('submit', (e) => e.preventDefault());
     cta.addEventListener('click', () => track('app_preview_cta', { logo: logo?.kind === 'upload', named: !example && !!name.trim() }));
@@ -434,7 +453,7 @@ const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Ruti
 </script>
 
 <style is:global>
-/* ── the owner tries their brand on the member app ── */
+/* ── the owner tries their brand on the app and its store listings ── */
 .h-bld-sec { --gym: #1d4ed8; --gym-soft: #dfe6fa; --gym-on: #ffffff; --gym-ink: #1d4ed8; }
 .h-bld { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: clamp(24px, 3.4vw, 48px); align-items: start; }
 
@@ -444,12 +463,13 @@ const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Ruti
 .h-bf-lab { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; width: 100%; padding: 0; font-size: 14.5px; font-weight: 700; color: var(--ink); }
 legend.h-bf-lab { margin-bottom: 7px; }
 .h-bf-count { font-size: 12.5px; font-weight: 400; color: var(--mute); font-variant-numeric: tabular-nums; }
+.h-bf-hint { margin: 0; font-size: 13.5px; line-height: 1.4; color: var(--mute); }
 .h-bf-input { width: 100%; height: 48px; padding: 0 14px; border: 1px solid var(--line-2); border-radius: 11px; background: #fff; color: var(--ink); font: inherit; font-size: 16px; }
 .h-bf-input::placeholder { color: var(--mute); }
 .h-bf-input:focus { outline: 2px solid var(--brand-ink); outline-offset: -1px; border-color: var(--brand-ink); }
 .h-bf-input.nudge { border-color: var(--brand-ink); box-shadow: 0 0 0 3px var(--brand-soft); }
 .h-bf-file { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
-.h-bf-drop { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 14px; padding: 12px; border: 1.5px dashed var(--line-2); border-radius: 14px; background: var(--bg-2); color: var(--ink); cursor: pointer; transition: border-color .15s ease, background .15s ease; }
+.h-bf-drop { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 14px; padding: 12px; border: 1.5px dashed var(--line-2); border-radius: 14px; background: #fff; color: var(--ink); cursor: pointer; transition: border-color .15s ease, background .15s ease; }
 .h-bf-drop:hover, .h-bf-drop.over { border-color: var(--brand-ink); background: var(--brand-soft); }
 .h-bf-file:focus-visible + .h-bf-drop { outline: 2px solid var(--brand-ink); outline-offset: 2px; }
 .h-bf-drop b { display: block; font-size: 16px; line-height: 1.25; }
@@ -463,10 +483,10 @@ legend.h-bf-lab { margin-bottom: 7px; }
 .h-sws { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .h-sws-logo { display: contents; }
 .h-sw { appearance: none; width: 34px; height: 34px; padding: 0; border: 0; border-radius: 50%; background: var(--c); cursor: pointer; box-shadow: inset 0 0 0 1px rgba(11,18,32,.14); }
-.h-sw[aria-pressed="true"] { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--ink); }
+.h-sw[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--bg-2), 0 0 0 4px var(--ink); }
 .h-sw-sep { width: 1px; height: 22px; margin-inline: 2px; background: var(--line-2); }
 .h-sw-sep[hidden] { display: none; }
-.h-sw-other { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px 0 6px; border: 1px solid var(--line-2); border-radius: 999px; font-size: 13.5px; font-weight: 700; color: var(--ink); cursor: pointer; }
+.h-sw-other { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px 0 6px; border: 1px solid var(--line-2); border-radius: 999px; background: #fff; font-size: 13.5px; font-weight: 700; color: var(--ink); cursor: pointer; }
 .h-sw-other input { width: 22px; height: 22px; padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer; }
 .h-sw-other input::-webkit-color-swatch-wrapper { padding: 0; }
 .h-sw-other input::-webkit-color-swatch { border: 0; border-radius: 50%; }
@@ -482,6 +502,7 @@ legend.h-bf-lab { margin-bottom: 7px; }
 
 /* app icon: logo, example mark or initials */
 .h-bic { --s: 64px; flex-shrink: 0; display: grid; place-items: center; width: var(--s); height: var(--s); overflow: hidden; border-radius: calc(var(--s) * .225); background: var(--gym); color: var(--gym-on); font-family: var(--f-head); font-weight: 800; line-height: 1; transition: background-color .25s ease, color .25s ease; }
+.h-bic-edge { box-shadow: inset 0 0 0 1px rgba(11,18,32,.1); }
 .h-bic.pad { padding: calc(var(--s) * .13); }
 .h-bic img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .h-bic svg { display: block; width: 62%; height: 62%; }
@@ -496,82 +517,81 @@ legend.h-bf-lab { margin-bottom: 7px; }
 .h-bpv { flex-shrink: 0; margin: 30px 0 0; }
 .h-bpv-main { margin-top: 0; }
 .h-bpv figcaption { margin-top: 12px; text-align: center; font-size: 14px; font-weight: 700; color: var(--ink-2); }
+
+/* the shared phone mockup, with a notch, this section's colors and room for the listings */
+.h-bpv .h-mphone { width: 240px; }
+.h-bpv-main .h-mphone { width: 270px; box-shadow: 0 44px 80px -34px color-mix(in srgb, var(--gym) 50%, rgba(11,18,32,.4)); }
+.h-bpv .h-mphone::before { content: ""; position: absolute; top: 8px; left: 50%; z-index: 1; transform: translateX(-50%); width: 36cqw; height: 8.5cqw; background: #0b0f17; border-radius: 0 0 14px 14px; }
+.h-bpv .h-mphone { position: relative; }
+.h-bpv .h-mscreen { aspect-ratio: auto; height: 524px; background: var(--gym-soft); transition: background-color .25s ease; }
+.h-bpv .h-ma-top { justify-content: flex-start; gap: 2.6cqw; min-width: 0; }
+.h-bpv .h-ma-top .h-bic { --s: 10.4cqw; }
+.h-bpv .h-ma-over { color: var(--ink-2); }
+.h-ma-name { min-width: 0; padding-top: .12em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--f-head); font-weight: 800; font-size: 5cqw; line-height: 1.2; letter-spacing: -.01em; text-transform: uppercase; color: var(--gym-ink); transition: color .25s ease; }
+.h-ma-list[hidden] { display: none; }
+
+/* store listings */
+.h-lst { height: 464px; padding: 36px 13px 0; overflow: hidden; display: flex; flex-direction: column; border-radius: 27px; background: #fff; color: #1c1c1e; font-size: 11.5px; line-height: 1.35; text-align: left; }
+.h-lst p { margin: 0; }
+.h-lst-bar { display: flex; justify-content: space-between; align-items: center; min-height: 18px; margin-bottom: 8px; font-size: 11px; }
+.h-as-back { color: #007aff; font-weight: 600; }
+.h-lst-pv { color: #6b7280; font-size: 10px; font-weight: 600; }
+.h-lst-top { display: flex; gap: 10px; align-items: flex-start; min-width: 0; }
+.h-lst-txt { flex: 1; min-width: 0; }
+.h-lst-title { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; font-size: 15px; font-weight: 700; line-height: 1.2; }
+.h-lst-subt { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; margin-top: 2px; color: #6b7280; }
+.h-as-get { display: inline-block; margin-top: 7px; padding: 4px 15px; border-radius: 999px; background: #007aff; color: #fff; font-size: 12px; font-weight: 700; }
+.h-as-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 11px; padding-block: 7px; border-block: 1px solid #e5e7eb; text-align: center; }
+.h-as-stats div { min-width: 0; padding-inline: 3px; }
+.h-as-stats div + div { border-left: 1px solid #e5e7eb; }
+.h-as-stats small { display: block; font-size: 8.5px; color: #6b7280; }
+.h-as-stats b { display: block; margin-top: 1px; font-size: 10.5px; color: #6b7280; }
+.h-shots { display: flex; gap: 7px; margin: 10px -13px 0 0; overflow: hidden; }
+.h-shot { flex: 0 0 96px; height: 172px; padding: 8px 7px 0; overflow: hidden; border-radius: 10px; background: var(--gym); transition: background-color .25s ease; }
+.h-lst .h-shot p { margin: 0 0 6px; font-family: var(--f-head); font-weight: 700; font-size: 11.5px; line-height: 1.05; letter-spacing: -.01em; text-wrap: balance; color: var(--gym-on); }
+.h-mini { display: grid; gap: 4px; height: 150px; padding: 8px 6px; align-content: start; border-radius: 10px 10px 0 0; background: var(--gym-soft); }
+.h-mini em { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-style: normal; font-family: var(--f-head); font-weight: 700; font-size: 8px; line-height: 1.1; color: var(--ink); }
+.h-mini i { display: block; height: 19px; border-radius: 5px; background: #fff; }
+.h-mini i.on { background: var(--gym); }
+.h-mini i.lg { height: 30px; }
+.h-lst .h-lst-desc { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; margin-top: 9px; }
+.h-as-dev { margin-top: 5px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: #007aff; font-weight: 600; }
+.h-gp .h-bic { border-radius: calc(var(--s) * .2); }
+.h-gp-dev { margin-top: 2px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: #01875f; font-weight: 700; }
+.h-gp-stats { display: flex; justify-content: space-between; gap: 6px; margin-top: 11px; text-align: center; font-size: 10px; color: #6b7280; }
+.h-gp-stats b { display: block; font-size: 10.5px; color: #1c1c1e; }
+.h-gp-install { display: block; margin-top: 10px; padding: 7px; border-radius: 8px; background: #01875f; color: #fff; text-align: center; font-size: 12px; font-weight: 700; }
+.h-gp .h-shot { flex-basis: 88px; height: 152px; border-radius: 8px; }
+.h-lst .h-gp-about { margin-top: 11px; font-size: 12.5px; font-weight: 700; }
+.h-gp .h-lst-desc { margin-top: 3px; -webkit-line-clamp: 2; }
+
 @media(max-width:1239px) { .h-bld-row { zoom: .84; } }
 @media(max-width:1099px) { .h-bld-row { zoom: .7; } }
 /* one phone at a time, picked with tabs */
 @media(max-width:960px) {
   .h-bld-row { zoom: 1; }
-  .h-bld-tabs { display: flex; gap: 2px; width: fit-content; margin: 0 auto 14px; padding: 3px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 11px; }
+  .h-bld-tabs { display: flex; gap: 2px; width: fit-content; margin: 0 auto 14px; padding: 3px; background: rgba(11,18,32,.06); border-radius: 11px; }
   .h-bld-tabs button { appearance: none; padding: 8px 12px; border: 0; border-radius: 8px; background: transparent; color: var(--ink-2); font: inherit; font-size: 13.5px; font-weight: 700; line-height: 1.2; cursor: pointer; }
   .h-bld-tabs button[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(11,18,32,.16); }
   .h-bpv { display: none; margin-top: 0; }
   .h-bpv figcaption { display: none; }
-  .h-bld-stage[data-view="clases"] [data-screen="clases"],
-  .h-bld-stage[data-view="rutina"] [data-screen="rutina"],
-  .h-bld-stage[data-view="membresia"] [data-screen="membresia"] { display: block; }
+  .h-bld-stage[data-view="app"] [data-screen="app"],
+  .h-bld-stage[data-view="appstore"] [data-screen="appstore"],
+  .h-bld-stage[data-view="play"] [data-screen="play"] { display: block; }
   .h-bpv .h-mphone { width: 270px; }
 }
 /* phones: the preview comes first and sticks under the nav; it shrinks while typing so the keyboard doesn't hide it */
 @media(max-width:760px) {
+  /* the hero is chalk here too, with no strip between them */
+  .h-bld-sec { border-top: 1px solid var(--line); }
   .h-bld { grid-template-columns: minmax(0, 1fr); }
   .h-bld-stage {
     order: -1; top: 57px; z-index: 6;
     margin-inline: calc(-1 * clamp(20px, 4vw, 48px)); padding: 10px clamp(20px, 4vw, 48px) 0;
-    background: var(--bg); border-bottom: 1px solid var(--line);
+    background: var(--bg-2); border-bottom: 1px solid var(--line);
   }
   .h-bld-tabs { margin-bottom: 10px; }
   .h-bld-crop { height: 300px; overflow: hidden; }
   .h-bld:has(.h-bf-input:focus) .h-bld-crop { height: 166px; }
 }
-
-/* phone mockups are sized in container units against the phone frame */
-.h-mphone { container-type: inline-size; position: relative; width: 240px; padding: 8px; border-radius: 34px; background: #0b0f17; box-shadow: 0 30px 60px -32px rgba(11,18,32,.45); }
-.h-bpv-main .h-mphone { width: 270px; box-shadow: 0 44px 80px -34px color-mix(in srgb, var(--gym) 50%, rgba(11,18,32,.4)); }
-.h-mphone::before { content: ""; position: absolute; top: 8px; left: 50%; z-index: 1; transform: translateX(-50%); width: 36cqw; height: 8.5cqw; background: #0b0f17; border-radius: 0 0 14px 14px; }
-.h-mscreen {
-  aspect-ratio: 390 / 720; border-radius: 27px; overflow: hidden; background: var(--gym-soft);
-  display: flex; flex-direction: column; gap: 4.2cqw; padding: 12cqw 5.6cqw 0;
-  text-align: left; color: var(--ink); transition: background-color .25s ease;
-}
-.h-mscreen p { margin: 0; }
-.h-ma-top { display: flex; align-items: center; gap: 2.6cqw; min-width: 0; }
-.h-ma-top .h-bic { --s: 10.4cqw; }
-.h-ma-name { min-width: 0; padding-top: .12em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--f-head); font-weight: 800; font-size: 5cqw; line-height: 1.2; letter-spacing: -.01em; text-transform: uppercase; color: var(--gym-ink); transition: color .25s ease; }
-.h-bld-disc { display: contents; }
-.h-bld-disc[hidden], .h-ma-list[hidden] { display: none; }
-.h-mscreen .h-ma-over { font-size: 3.7cqw; font-weight: 700; color: var(--ink-2); }
-.h-mscreen .h-ma-title { margin-top: -2.6cqw; font-family: var(--f-head); font-weight: 800; font-size: 8.6cqw; line-height: .95; letter-spacing: -.035em; color: var(--ink); }
-.h-ma-days { display: flex; gap: 2cqw; }
-.h-ma-days span { font-size: 3.5cqw; font-weight: 700; padding: 1.8cqw 3.4cqw; border-radius: 99px; background: #fff; border: 1px solid var(--line); color: var(--ink-2); }
-.h-ma-days .on { background: var(--gym); border-color: var(--gym); color: var(--gym-on); }
-.h-ma-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2.6cqw; }
-.h-ma-list li { display: flex; align-items: center; gap: 3cqw; background: #fff; border: 1px solid var(--line); border-radius: 4cqw; padding: 3.4cqw 3.6cqw; }
-.h-ma-t { flex: none; width: 12.5cqw; font-family: var(--f-head); font-weight: 800; font-size: 4.6cqw; letter-spacing: -.02em; color: var(--ink); }
-.h-ma-c { flex: 1; min-width: 0; display: grid; gap: .4cqw; }
-.h-ma-c b { font-size: 4.1cqw; line-height: 1.3; color: var(--ink); }
-.h-ma-c small { font-size: 3.3cqw; line-height: 1.3; color: var(--mute); }
-.h-ma-a { flex: none; font-size: 3.2cqw; font-weight: 700; color: var(--gym-on); background: var(--gym); padding: 1.8cqw 2.8cqw; border-radius: 2.4cqw; }
-.h-ma-a.ghost { background: transparent; color: var(--gym-ink); box-shadow: inset 0 0 0 1px var(--gym-ink); }
-.h-ma-list li.mine { background: var(--gym); border-color: var(--gym); }
-.h-ma-list li.mine b, .h-ma-list li.mine .h-ma-t, .h-ma-list li.mine small { color: var(--gym-on); }
-.h-ma-list li.mine .h-ma-a { background: var(--gym-on); color: var(--gym); }
-.h-ma-prog { height: 2.2cqw; background: #fff; border-radius: 99px; overflow: hidden; }
-.h-ma-prog span { display: block; width: 50%; height: 100%; background: var(--gym); border-radius: 99px; }
-.h-mscreen .h-ma-prog-l { margin-top: -2.2cqw; font-size: 3.3cqw; color: var(--ink-2); }
-.h-ma-ck { flex: none; width: 7cqw; height: 7cqw; border-radius: 50%; box-shadow: inset 0 0 0 .6cqw #c7d0de; display: grid; place-items: center; color: #fff; font-size: 3.6cqw; font-weight: 700; }
-.h-ma-list li.done .h-ma-ck { background: var(--ok); box-shadow: none; }
-.h-ma-list li.done b { text-decoration: line-through; text-decoration-color: rgba(11,18,32,.35); }
-.h-mscreen .h-ma-chip { font-size: 3.4cqw; font-weight: 700; color: var(--gym-ink); background: #fff; border-radius: 3cqw; padding: 2.6cqw 3.4cqw; }
-.h-ma-pay { display: grid; gap: 1.2cqw; padding: 5cqw; border-radius: 5cqw; background: var(--gym); color: var(--gym-on); }
-.h-ma-pay span { font-size: 3.5cqw; }
-.h-ma-pay b { font-family: var(--f-head); font-weight: 800; font-size: 10cqw; line-height: 1; letter-spacing: -.03em; }
-.h-mscreen .h-ma-status { align-self: flex-start; display: inline-flex; align-items: center; gap: 2cqw; padding: 1.8cqw 3.4cqw; border-radius: 99px; font-size: 3.5cqw; font-weight: 700; color: var(--ok); background: var(--ok-soft); }
-.h-ma-status::before { content: ""; width: 2.2cqw; height: 2.2cqw; border-radius: 50%; background: var(--ok); }
-.h-ma-hist { list-style: none; margin: 0; padding: 0; background: #fff; border: 1px solid var(--line); border-radius: 4cqw; }
-.h-ma-hist li { display: grid; grid-template-columns: 1fr auto auto; gap: 3cqw; align-items: center; padding: 3.4cqw 4cqw; border-bottom: 1px solid var(--line); font-size: 3.6cqw; color: var(--ink-2); }
-.h-ma-hist li:last-child { border-bottom: 0; }
-.h-ma-hist .ok { color: var(--ok); font-weight: 700; }
-.h-ma-tab { margin: auto -5.6cqw 0; display: flex; justify-content: space-around; padding: 4cqw 2cqw 6cqw; border-top: 1px solid var(--line); background: #fff; }
-.h-ma-tab span { width: 2.2cqw; height: 2.2cqw; border-radius: 50%; background: #cfd6e2; }
-.h-ma-tab span.on { width: 6cqw; border-radius: 99px; background: var(--gym); }
 </style>

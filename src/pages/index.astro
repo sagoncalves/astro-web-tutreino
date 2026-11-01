@@ -83,7 +83,7 @@ const showTestimonials = false;
         <p class="h-hero-sub">Tus socios reservan, pagan y ven su rutina desde una app que dice <b>tu nombre</b>, con <b>tu logo</b> y <b>tus colores</b>. Vos manejás todo desde un solo panel.</p>
         <div class="h-hero-ctas">
           <a href={WA.trial} class="h-btn" target="_blank" rel="noopener noreferrer"><WaGlyph />Probar 30 días gratis</a>
-          <a href="#socios" class="h-link">Mirá tu app con tu logo <span aria-hidden="true">↓</span></a>
+          <a href="#tu-app" class="h-link">Mirá tu app con tu logo <span aria-hidden="true">↓</span></a>
         </div>
       </div>
 
@@ -145,11 +145,11 @@ const showTestimonials = false;
       </div>
     </header>
 
-    <!-- socios: el dueño prueba su marca en la app, pantalla por pantalla -->
+    <!-- tu app: el dueño prueba su marca en la app y en las tiendas -->
     <AppPreview />
 
     <!-- producto: cobros (con los medios de pago) y retención -->
-    <section class="h-section h-chalk" id="producto">
+    <section class="h-section" id="producto">
       <div class="h-wrap">
         <div class="h-head">
           <h2 class="h-h2">Un sistema.<br/>Todo tu gimnasio.</h2>
@@ -233,6 +233,78 @@ const showTestimonials = false;
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- experiencia del socio: la app, pantalla por pantalla -->
+    <section class="h-section h-chalk" id="socios">
+      <div class="h-wrap">
+        <div class="h-head">
+          <p class="h-kicker">Del lado del socio</p>
+          <h2 class="h-h2">Tus socios hacen todo desde el celular.</h2>
+          <p class="h-sub">Sin grupos de WhatsApp ni planillas. Reservan, pagan y entrenan desde su app, y vos te enterás de todo en el panel.</p>
+        </div>
+        <ul class="h-journey">
+          <li class="h-jstep">
+            <div class="h-mphone" aria-hidden="true">
+              <div class="h-mscreen">
+                <div class="h-ma-top"><span class="h-ma-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h3v16H6zm9 0h3v16h-3zM4 9h16v6H4z"/></svg>IRON HOUSE</span><span class="h-ma-av">M</span></div>
+                <p class="h-ma-over">Hola, Marcos</p>
+                <p class="h-ma-title">Clases</p>
+                <div class="h-ma-days"><span class="on">Hoy</span><span>Mañana</span><span>Vie</span><span>Sáb</span></div>
+                <ul class="h-ma-list">
+                  <li><span class="h-ma-t">07:00</span><span class="h-ma-c"><b>Funcional</b><small>Sala 1 · 4 lugares</small></span><span class="h-ma-a">Reservar</span></li>
+                  <li><span class="h-ma-t">12:30</span><span class="h-ma-c"><b>Cross</b><small>Lleno</small></span><span class="h-ma-a ghost">En espera</span></li>
+                  <li class="mine"><span class="h-ma-t">19:00</span><span class="h-ma-c"><b>Funcional</b><small>Tu lugar está reservado</small></span><span class="h-ma-a">✓</span></li>
+                  <li><span class="h-ma-t">20:30</span><span class="h-ma-c"><b>Spinning</b><small>Sala 2 · 9 lugares</small></span><span class="h-ma-a">Reservar</span></li>
+                </ul>
+                <div class="h-ma-tab"><span class="on"></span><span></span><span></span><span></span></div>
+              </div>
+            </div>
+            <h3>Reserva su clase</h3>
+            <p>Ve los horarios con cupo en vivo y reserva en dos toques. Si se llena, entra a lista de espera automática.</p>
+          </li>
+          <li class="h-jstep">
+            <div class="h-mphone" aria-hidden="true">
+              <div class="h-mscreen">
+                <div class="h-ma-top"><span class="h-ma-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h3v16H6zm9 0h3v16h-3zM4 9h16v6H4z"/></svg>IRON HOUSE</span><span class="h-ma-av">M</span></div>
+                <p class="h-ma-over">Semana 3 · Día 2</p>
+                <p class="h-ma-title">Tren inferior</p>
+                <div class="h-ma-prog"><span></span></div>
+                <p class="h-ma-prog-l">2 de 4 ejercicios</p>
+                <ul class="h-ma-list">
+                  <li class="done"><span class="h-ma-ck">✓</span><span class="h-ma-c"><b>Sentadilla</b><small>4 × 8 · 60 kg</small></span></li>
+                  <li class="done"><span class="h-ma-ck">✓</span><span class="h-ma-c"><b>Peso muerto rumano</b><small>3 × 10 · 40 kg</small></span></li>
+                  <li><span class="h-ma-ck"></span><span class="h-ma-c"><b>Estocadas</b><small>3 × 12 · 12 kg</small></span></li>
+                  <li><span class="h-ma-ck"></span><span class="h-ma-c"><b>Plancha</b><small>3 × 45 s</small></span></li>
+                </ul>
+                <p class="h-ma-chip">Armada con IA · ajustada por tu entrenador</p>
+                <div class="h-ma-tab"><span></span><span class="on"></span><span></span><span></span></div>
+              </div>
+            </div>
+            <h3>Entrena con su rutina</h3>
+            <p>Abre la rutina que armó la IA, marca cada ejercicio y registra su progreso. El entrenador lo ve al instante.</p>
+          </li>
+          <li class="h-jstep">
+            <div class="h-mphone" aria-hidden="true">
+              <div class="h-mscreen">
+                <div class="h-ma-top"><span class="h-ma-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h3v16H6zm9 0h3v16h-3zM4 9h16v6H4z"/></svg>IRON HOUSE</span><span class="h-ma-av">M</span></div>
+                <p class="h-ma-over">Tu membresía</p>
+                <p class="h-ma-title">Plan mensual</p>
+                <div class="h-ma-pay"><span>Próximo débito</span><b>UYU 2.200</b><span>18 de noviembre · automático</span></div>
+                <p class="h-ma-status">Débito automático activo</p>
+                <ul class="h-ma-hist">
+                  <li><span>Octubre</span><span>UYU 2.200</span><span class="ok">Pagado</span></li>
+                  <li><span>Setiembre</span><span>UYU 2.200</span><span class="ok">Pagado</span></li>
+                  <li><span>Agosto</span><span>UYU 2.200</span><span class="ok">Pagado</span></li>
+                </ul>
+                <div class="h-ma-tab"><span></span><span></span><span class="on"></span><span></span></div>
+              </div>
+            </div>
+            <h3>Paga sin pensarlo</h3>
+            <p>Su membresía se renueva sola con débito automático. Sin filas en recepción ni recordatorios incómodos.</p>
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -644,6 +716,69 @@ const showTestimonials = false;
 .h-ai-chip b { color: var(--brand-ink); }
 .h-ai-chip svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--brand-ink); }
 @media(max-width:760px) { .h-stat-row { grid-template-columns: 1fr; } }
+
+/* ── member journey: the member app, screen by screen ── */
+.h-journey { --gym: #1d4ed8; --gym-soft: #dbeafe; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 44px); }
+.h-jstep { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; min-width: 0; }
+.h-jstep h3 { font-family: var(--f-head); font-weight: 800; font-size: 22px; line-height: 1.1; letter-spacing: -.02em; margin: 16px 0 0; color: var(--ink); }
+.h-jstep > p { margin: 0; font-size: 15.5px; color: var(--ink-2); max-width: 34ch; }
+@media(max-width:840px) {
+  /* a swipeable row on narrow screens */
+  .h-journey {
+    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(240px, 74%);
+    overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+    margin-inline: calc(-1 * clamp(20px, 4vw, 48px)); padding: 4px clamp(20px, 4vw, 48px) 16px;
+    scroll-padding-inline: clamp(20px, 4vw, 48px);
+  }
+  .h-jstep { scroll-snap-align: start; }
+}
+/* phone mockups are sized in container units against the phone frame; AppPreview shares them and sets its own colors */
+.h-mphone { container-type: inline-size; width: min(100%, 268px); padding: 8px; border-radius: 34px; background: #0b0f17; box-shadow: 0 30px 60px -32px rgba(11,18,32,.45); }
+.h-mscreen {
+  aspect-ratio: 390 / 720; border-radius: 27px; overflow: hidden; background: #f6f8fc;
+  display: flex; flex-direction: column; gap: 4.2cqw; padding: 12cqw 5.6cqw 0;
+  text-align: left; color: var(--ink);
+}
+.h-ma-top { display: flex; align-items: center; justify-content: space-between; }
+.h-ma-logo { display: inline-flex; align-items: center; gap: 1.8cqw; color: var(--gym); font-family: var(--f-head); font-weight: 800; font-size: 4.6cqw; letter-spacing: -.01em; }
+.h-ma-logo svg { width: 5.4cqw; height: 5.4cqw; }
+.h-ma-av { width: 9cqw; height: 9cqw; border-radius: 50%; background: var(--gym-soft); color: var(--gym); display: grid; place-items: center; font-weight: 700; font-size: 3.8cqw; }
+.h-ma-over { margin: 0; font-size: 3.7cqw; font-weight: 700; color: var(--mute); }
+.h-ma-title { margin: -2.6cqw 0 0; font-family: var(--f-head); font-weight: 800; font-size: 8.6cqw; line-height: .95; letter-spacing: -.035em; color: var(--ink); }
+.h-ma-days { display: flex; gap: 2cqw; }
+.h-ma-days span { font-size: 3.5cqw; font-weight: 700; padding: 1.8cqw 3.4cqw; border-radius: 99px; background: #fff; border: 1px solid var(--line); color: var(--ink-2); }
+.h-ma-days .on { background: var(--gym); border-color: var(--gym); color: var(--gym-on, #fff); }
+.h-ma-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2.6cqw; }
+.h-ma-list li { display: flex; align-items: center; gap: 3cqw; background: #fff; border: 1px solid var(--line); border-radius: 4cqw; padding: 3.4cqw 3.6cqw; }
+.h-ma-t { flex: none; width: 12.5cqw; font-family: var(--f-head); font-weight: 800; font-size: 4.6cqw; letter-spacing: -.02em; color: var(--ink); }
+.h-ma-c { flex: 1; min-width: 0; display: grid; gap: .4cqw; }
+.h-ma-c b { font-size: 4.1cqw; color: var(--ink); }
+.h-ma-c small { font-size: 3.3cqw; color: var(--mute); }
+.h-ma-a { flex: none; font-size: 3.2cqw; font-weight: 700; color: var(--gym-on, #fff); background: var(--gym); padding: 1.8cqw 2.8cqw; border-radius: 2.4cqw; }
+.h-ma-a.ghost { background: transparent; color: var(--gym-ink, var(--gym)); box-shadow: inset 0 0 0 1px var(--gym-ink, var(--gym)); }
+.h-ma-list li.mine { background: var(--gym); border-color: var(--gym); }
+.h-ma-list li.mine b, .h-ma-list li.mine .h-ma-t { color: var(--gym-on, #fff); }
+.h-ma-list li.mine small { color: var(--gym-on, rgba(255,255,255,.9)); }
+.h-ma-list li.mine .h-ma-a { background: var(--gym-on, #fff); color: var(--gym); }
+.h-ma-prog { height: 2.2cqw; background: #e3e8f1; border-radius: 99px; overflow: hidden; }
+.h-ma-prog span { display: block; width: 50%; height: 100%; background: var(--gym); border-radius: 99px; }
+.h-ma-prog-l { margin: -2.2cqw 0 0; font-size: 3.3cqw; color: var(--mute); }
+.h-ma-ck { flex: none; width: 7cqw; height: 7cqw; border-radius: 50%; box-shadow: inset 0 0 0 .6cqw #c7d0de; display: grid; place-items: center; color: #fff; font-size: 3.6cqw; font-weight: 700; }
+.h-ma-list li.done .h-ma-ck { background: var(--ok); box-shadow: none; }
+.h-ma-list li.done b { text-decoration: line-through; text-decoration-color: rgba(11,18,32,.35); }
+.h-ma-chip { margin: 0; font-size: 3.4cqw; font-weight: 700; color: var(--gym); background: var(--gym-soft); border-radius: 3cqw; padding: 2.6cqw 3.4cqw; }
+.h-ma-pay { display: grid; gap: 1.2cqw; padding: 5cqw; border-radius: 5cqw; background: var(--gym); color: #fff; }
+.h-ma-pay span { font-size: 3.5cqw; color: rgba(255,255,255,.9); }
+.h-ma-pay b { font-family: var(--f-head); font-weight: 800; font-size: 10cqw; line-height: 1; letter-spacing: -.03em; }
+.h-ma-status { align-self: flex-start; display: inline-flex; align-items: center; gap: 2cqw; margin: 0; padding: 1.8cqw 3.4cqw; border-radius: 99px; font-size: 3.5cqw; font-weight: 700; color: var(--ok); background: var(--ok-soft); }
+.h-ma-status::before { content: ""; width: 2.2cqw; height: 2.2cqw; border-radius: 50%; background: var(--ok); }
+.h-ma-hist { list-style: none; margin: 0; padding: 0; background: #fff; border: 1px solid var(--line); border-radius: 4cqw; }
+.h-ma-hist li { display: grid; grid-template-columns: 1fr auto auto; gap: 3cqw; align-items: center; padding: 3.4cqw 4cqw; border-bottom: 1px solid var(--line); font-size: 3.6cqw; color: var(--ink-2); }
+.h-ma-hist li:last-child { border-bottom: 0; }
+.h-ma-hist .ok { color: var(--ok); font-weight: 700; }
+.h-ma-tab { margin: auto -5.6cqw 0; display: flex; justify-content: space-around; padding: 4cqw 2cqw 6cqw; border-top: 1px solid var(--line); background: #fff; }
+.h-ma-tab span { width: 2.2cqw; height: 2.2cqw; border-radius: 50%; background: #cfd6e2; }
+.h-ma-tab span.on { width: 6cqw; border-radius: 99px; background: var(--gym); }
 
 /* ── setup flow as a vertical timeline ────────────── */
 .h-flow { --node: 56px; --col: 72px; list-style: none; padding: 0; margin: 0; display: grid; gap: 24px; }
