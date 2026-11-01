@@ -74,72 +74,73 @@ const showTestimonials = false;
     }))
   })} />
 
-    <!-- hero: white label, tu app con tu marca. Copy and phones side by side on desktop, stacked below 1080px -->
+    <!-- hero: white label, tu app con tu marca -->
     <header class="h-hero" id="inicio" data-cta-bar-hide>
-      <div class="h-wrap h-hero-in">
-        <div class="h-hero-copy">
-          <p class="h-hero-kicker">¿Líder de gimnasio? ¿Entrenador personal?</p>
-          <h1 class="h-h1">Tu app.<br/><span class="h-accent">Tu marca.</span></h1>
-          <p class="h-hero-sub">Tus socios reservan, pagan y ven su rutina desde una app que dice <b>tu nombre</b>, con <b>tu logo</b> y <b>tus colores</b>. Vos manejás todo desde un solo panel.</p>
-          <div class="h-hero-ctas">
-            <a href={WA.trial} class="h-btn" target="_blank" rel="noopener noreferrer"><WaGlyph />Probar 30 días gratis</a>
-            <a href="#producto" class="h-link">Ver cómo funciona <span aria-hidden="true">↓</span></a>
+      <div class="h-wrap h-hero-copy">
+        <p class="h-hero-kicker">¿Líder de gimnasio? ¿Entrenador personal?</p>
+        <h1 class="h-h1">Tu app.<br/><span class="h-accent">Tu marca.</span></h1>
+        <p class="h-hero-sub">Tus socios reservan, pagan y ven su rutina desde una app que dice <b>tu nombre</b>, con <b>tu logo</b> y <b>tus colores</b>. Vos manejás todo desde un solo panel.</p>
+        <div class="h-hero-ctas">
+          <a href={WA.trial} class="h-btn" target="_blank" rel="noopener noreferrer"><WaGlyph />Probar 30 días gratis</a>
+          <a href="#producto" class="h-link">Ver cómo funciona <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+
+      <div class="h-wl-grid" aria-hidden="true">
+        <!-- Gimnasio 1, azul -->
+        <figure class="h-phone" style="--gym:#1d4ed8;--gym-soft:#dbeafe;">
+          <div class="h-phone-frame">
+            <div class="h-phone-notch"></div>
+            <div class="h-phone-screen">
+              <div class="h-app-top">
+                <span class="h-app-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h3v16H6zm9 0h3v16h-3zM4 9h16v6H4z"/></svg>IRON HOUSE</span>
+              </div>
+              <div class="h-app-hero">Hola, Marcos 👊</div>
+              <div class="h-app-card primary">Tu clase de hoy<b>Funcional · 19:00</b></div>
+              <div class="h-app-card">Próximo pago<b>en 6 días · automático</b></div>
+              <div class="h-app-card">Tu rutina<b>Día 2 · Tren inferior</b></div>
+              <div class="h-app-nav"><span class="on"></span><span></span><span></span><span></span></div>
+            </div>
           </div>
-          <p class="h-hero-proof">Ya lo usan gimnasios en <b>todo Uruguay y Argentina</b>.</p>
-        </div>
+        </figure>
 
-        <div class="h-wl-grid" aria-hidden="true">
-          <!-- Gimnasio 1, azul -->
-          <figure class="h-phone" style="--gym:#1d4ed8;--gym-soft:#dbeafe;">
-            <div class="h-phone-frame">
-              <div class="h-phone-notch"></div>
-              <div class="h-phone-screen">
-                <div class="h-app-top">
-                  <span class="h-app-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h3v16H6zm9 0h3v16h-3zM4 9h16v6H4z"/></svg>IRON HOUSE</span>
-                </div>
-                <div class="h-app-hero">Hola, Marcos 👊</div>
-                <div class="h-app-card primary">Tu clase de hoy<b>Funcional · 19:00</b></div>
-                <div class="h-app-card">Próximo pago<b>en 6 días · automático</b></div>
-                <div class="h-app-card">Tu rutina<b>Día 2 · Tren inferior</b></div>
-                <div class="h-app-nav"><span class="on"></span><span></span><span></span><span></span></div>
+        <!-- Gimnasio 2, verde -->
+        <figure class="h-phone featured" style="--gym:#047857;--gym-soft:#d1fae5;">
+          <div class="h-phone-frame">
+            <div class="h-phone-notch"></div>
+            <div class="h-phone-screen">
+              <div class="h-app-top">
+                <span class="h-app-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 4 7v10l8 5 8-5V7zm0 4 4 2.5v5L12 16l-4-2.5v-5z"/></svg>ZEN STUDIO</span>
               </div>
+              <div class="h-app-hero">Hola, Camila 🌿</div>
+              <div class="h-app-card primary">Tu clase de hoy<b>Yoga Flow · 08:00</b></div>
+              <div class="h-app-card">Tu rutina<b>generada con IA</b></div>
+              <div class="h-app-card">Esta semana<b>3 clases reservadas</b></div>
+              <div class="h-app-nav"><span class="on"></span><span></span><span></span><span></span></div>
             </div>
-          </figure>
+          </div>
+        </figure>
 
-          <!-- Gimnasio 2, verde -->
-          <figure class="h-phone featured" style="--gym:#047857;--gym-soft:#d1fae5;">
-            <div class="h-phone-frame">
-              <div class="h-phone-notch"></div>
-              <div class="h-phone-screen">
-                <div class="h-app-top">
-                  <span class="h-app-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 4 7v10l8 5 8-5V7zm0 4 4 2.5v5L12 16l-4-2.5v-5z"/></svg>ZEN STUDIO</span>
-                </div>
-                <div class="h-app-hero">Hola, Camila 🌿</div>
-                <div class="h-app-card primary">Tu clase de hoy<b>Yoga Flow · 08:00</b></div>
-                <div class="h-app-card">Tu rutina<b>generada con IA</b></div>
-                <div class="h-app-card">Esta semana<b>3 clases reservadas</b></div>
-                <div class="h-app-nav"><span class="on"></span><span></span><span></span><span></span></div>
+        <!-- Gimnasio 3, naranja -->
+        <figure class="h-phone" style="--gym:#c2410c;--gym-soft:#ffedd5;">
+          <div class="h-phone-frame">
+            <div class="h-phone-notch"></div>
+            <div class="h-phone-screen">
+              <div class="h-app-top">
+                <span class="h-app-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m13 2-9 12h7l-2 8 9-12h-7z"/></svg>FLOW GYM</span>
               </div>
+              <div class="h-app-hero">Hola, Diego ⚡</div>
+              <div class="h-app-card primary">Tu clase de hoy<b>Spinning · 20:30</b></div>
+              <div class="h-app-card">Tu progreso<b>+4kg este mes</b></div>
+              <div class="h-app-card">Tu racha<b>12 días seguidos</b></div>
+              <div class="h-app-nav"><span class="on"></span><span></span><span></span><span></span></div>
             </div>
-          </figure>
+          </div>
+        </figure>
+      </div>
 
-          <!-- Gimnasio 3, naranja -->
-          <figure class="h-phone" style="--gym:#c2410c;--gym-soft:#ffedd5;">
-            <div class="h-phone-frame">
-              <div class="h-phone-notch"></div>
-              <div class="h-phone-screen">
-                <div class="h-app-top">
-                  <span class="h-app-logo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m13 2-9 12h7l-2 8 9-12h-7z"/></svg>FLOW GYM</span>
-                </div>
-                <div class="h-app-hero">Hola, Diego ⚡</div>
-                <div class="h-app-card primary">Tu clase de hoy<b>Spinning · 20:30</b></div>
-                <div class="h-app-card">Tu progreso<b>+4kg este mes</b></div>
-                <div class="h-app-card">Tu racha<b>12 días seguidos</b></div>
-                <div class="h-app-nav"><span class="on"></span><span></span><span></span><span></span></div>
-              </div>
-            </div>
-          </figure>
-        </div>
+      <div class="h-proof">
+        <p class="h-wrap">Ya lo usan gimnasios en <b>todo Uruguay y Argentina</b>.</p>
       </div>
     </header>
 
@@ -579,24 +580,25 @@ const showTestimonials = false;
 .h-link:hover { text-decoration-color: var(--brand-ink); }
 
 /* ── hero ─────────────────────────────────────────── */
-/* copy left, phones right, sized so the whole hero fits a 1366×768 laptop screen;
-   below 1080px the two stack, and below 761px the phones stand in a staggered row */
-.h-hero { background: var(--bg-2); overflow: hidden; }
-.h-hero-in { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: clamp(24px, 3vw, 48px); padding-block: clamp(36px, 4vw, 56px); }
-.h-hero-copy { min-width: 0; }
-.h-hero-kicker { margin: 0; font-size: 16px; font-weight: 700; color: var(--brand-ink); }
-.h-h1 { font-family: var(--f-head); font-weight: 700; font-size: var(--t-hero); line-height: .92; letter-spacing: -.04em; margin: 14px 0 0; color: var(--ink); }
+/* centered, big type over a big fan, as on /v2; the top padding and --t-hero follow the screen
+   height so shorter laptops still see the phones. Below 761px it turns into a left-aligned stack */
+.h-hero { background: var(--bg-2); padding-top: clamp(28px, 6.2vh, 56px); text-align: center; overflow: hidden; }
+.h-hero-copy { max-width: 900px; }
+.h-hero-kicker { margin: 0; font-size: 15px; font-weight: 700; color: var(--brand-ink); }
+.h-h1 { font-family: var(--f-head); font-weight: 800; font-size: var(--t-hero); line-height: .92; letter-spacing: -.04em; margin: 14px 0 0; color: var(--ink); }
 .h-accent { color: var(--brand-ink); }
-.h-hero-sub { margin: 20px 0 0; max-width: 30em; font-size: clamp(17px, 1.4vw, 19px); line-height: 1.5; color: var(--ink-2); }
-.h-hero-sub b { color: var(--ink); }
-.h-hero-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 28px; }
-/* a rule sets the proof apart from the buttons, so it reads as evidence rather than a button caption */
-.h-hero-proof { margin: 30px 0 0; padding-top: 18px; max-width: 30em; border-top: 1px solid var(--line-2); font-size: 15.5px; color: var(--ink-2); }
-.h-hero-proof b { color: var(--ink); }
+.h-hero-sub { margin: 22px auto 0; max-width: 740px; font-size: 19px; line-height: 1.5; color: var(--ink-2); }
+/* two classes to outrank the global .h-root p { text-wrap: pretty } */
+.h-hero .h-hero-sub { text-wrap: balance; }
+.h-hero-sub b { color: var(--ink); white-space: nowrap; }
+.h-hero-ctas { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 28px; margin-top: 26px; }
+.h-proof { background: #fff; border-top: 1px solid var(--line); }
+.h-proof p { margin: 0 auto; padding-block: 20px; font-size: 15.5px; color: var(--ink-2); }
+.h-proof b { color: var(--ink); }
 
-/* phones fanned out like a hand of cards: three gyms, three brands. The side padding holds the
-   tilted phones' corners; zoom (not transform) shrinks the layout box along with the phones */
-.h-wl-grid { display: flex; justify-content: center; align-items: flex-end; flex-wrap: nowrap; padding: 30px 70px 34px; zoom: .86; }
+/* phones fanned out like a hand of cards: three gyms, three brands. The raised center phone
+   eats about 36px of the top margin */
+.h-wl-grid { display: flex; justify-content: center; align-items: flex-end; flex-wrap: nowrap; margin-top: 64px; padding-bottom: 34px; }
 .h-phone { margin: 0; flex-shrink: 0; }
 .h-phone-frame {
   width: 230px; height: 440px; background: #0b0f17; border-radius: 38px; padding: 9px;
@@ -622,27 +624,22 @@ const showTestimonials = false;
 .h-app-nav { margin-top: auto; display: flex; justify-content: center; gap: 22px; padding-top: 8px; }
 .h-app-nav span { width: 7px; height: 7px; border-radius: 50%; background: rgba(11,18,32,.18); }
 .h-app-nav span.on { background: var(--gym); width: 18px; border-radius: 999px; }
-@media(max-width:1279px) { .h-wl-grid { zoom: .76; } }
-@media(max-width:1179px) { .h-wl-grid { zoom: .66; } }
-@media(max-width:1079px) {
-  /* stacked: copy on top, the full fan below */
-  .h-hero-in { grid-template-columns: minmax(0, 1fr); gap: 0; padding-block: 48px 16px; }
-  .h-hero-copy { max-width: 640px; }
-  .h-h1 { font-size: clamp(60px, 10vw, 84px); }
-  .h-wl-grid { zoom: .9; margin-top: 28px; }
-}
 @media(max-width:760px) {
-  .h-hero-in { padding-block: 28px 40px; }
-  .h-hero-kicker { font-size: 15px; }
-  .h-h1 { font-size: min(60px, 15.4vw); margin-top: 12px; }
-  .h-hero-sub { margin-top: 16px; font-size: 17px; }
+  /* left-aligned, with the proof line between the button and the phones */
+  .h-hero { display: flex; flex-direction: column; padding-block: 28px 40px; text-align: left; }
+  .h-hero-copy { width: 100%; }
+  .h-h1 { font-weight: 700; font-size: min(60px, 15.4vw); margin-top: 12px; }
+  .h-hero-sub { margin: 16px 0 0; max-width: 30em; font-size: 17px; }
+  .h-hero .h-hero-sub { text-wrap: pretty; }
+  .h-hero-sub b { white-space: normal; }
   .h-hero-ctas { margin-top: 24px; }
   .h-hero-ctas .h-btn { flex: 1 1 100%; }
   /* on a phone, scrolling is already the way down */
   .h-hero-ctas .h-link { display: none; }
-  .h-hero-proof { margin-top: 12px; padding-top: 0; border-top: 0; font-size: 14.5px; }
+  .h-proof { order: 1; background: none; border-top: 0; }
+  .h-proof p { margin-top: 12px; padding-block: 0; font-size: 14.5px; }
   /* three phones staggered inside the screen: the back two smaller, lower and tilted, so only the front one hides them */
-  .h-wl-grid { position: relative; display: block; width: 350px; height: 350px; margin: 30px auto 0; padding: 0; zoom: 1; }
+  .h-wl-grid { order: 2; position: relative; display: block; width: 350px; height: 350px; margin: 30px auto 0; padding: 0; }
   .h-phone { position: absolute; }
   .h-phone:nth-child(1) { left: 5px; top: 38px; margin: 0; transform-origin: 0 0; transform: rotate(-5deg) scale(.68); }
   .h-phone.featured { left: 85px; top: 0; transform-origin: 0 0; transform: scale(.78); }
