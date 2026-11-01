@@ -35,8 +35,6 @@ export interface Props {
   robots?: string;
   /** Pass true on the index page so nav links use #anchors instead of /#anchors */
   home?: boolean;
-  /** Alternate look for review copies of the site (the Disco theme is used by /v2) */
-  theme?: 'disco';
   /**
    * Phones get a sticky "Probar 30 días gratis" bar instead of the floating WhatsApp button.
    * The bar stays hidden while any element marked data-cta-bar-hide is on screen.
@@ -44,7 +42,7 @@ export interface Props {
   ctaBar?: boolean;
 }
 
-const { home, theme, ctaBar, ...props } = Astro.props;
+const { home, ctaBar, ...props } = Astro.props;
 const fontsHref = 'https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Atkinson+Hyperlegible+Next:wght@400;600;700&display=swap';
 ---
 
@@ -56,12 +54,12 @@ const fontsHref = 'https://fonts.googleapis.com/css2?family=League+Spartan:wght@
   <!-- Forward pages' head content (e.g. JSON-LD) to Layout's <head> -->
   <slot name="head" slot="head" />
 
-  <div class:list={['h-root', theme && `h-theme-${theme}`, ctaBar && 'h-has-bar']}>
-    <Navbar home={home} theme={theme} />
+  <div class:list={['h-root', ctaBar && 'h-has-bar']}>
+    <Navbar home={home} />
 
     <slot />
 
-    <Footer theme={theme} />
+    <Footer />
 
     <a href={WA.demo} class="h-wa-fab" target="_blank" rel="noopener noreferrer" aria-label="Escribinos por WhatsApp">
       <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

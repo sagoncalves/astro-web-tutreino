@@ -1,27 +1,13 @@
 ---
 import { SITE_CONFIG, WA } from '../utils/meta';
-import DiscoLogo from './DiscoLogo.astro';
-
-export interface Props {
-  /** 'disco' swaps the logo for the Disco logo (used by /v2) */
-  theme?: 'disco';
-}
-
-const { theme } = Astro.props;
 ---
 
 <footer class="h-foot" data-cta-bar-hide>
   <div class="h-foot-top">
     <div class="h-foot-brand">
       <a href="/" class="h-logo">
-        {theme === 'disco' ? (
-          <DiscoLogo />
-        ) : (
-          <Fragment>
-            <img src="/favicon-96x96.png" alt="" width="36" height="36" class="h-logo-img" />
-            <span class="h-logo-name">tutreino</span>
-          </Fragment>
-        )}
+        <img src="/favicon-96x96.png" alt="" width="36" height="36" class="h-logo-img" />
+        <span class="h-logo-name">tutreino</span>
       </a>
       <p class="h-foot-tagline">Sistema de gestión para gimnasios, estudios y entrenadores personales.</p>
       <div class="h-foot-socials">

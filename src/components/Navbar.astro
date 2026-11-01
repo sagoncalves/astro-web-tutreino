@@ -1,33 +1,24 @@
 ---
 import { WA } from '../utils/meta';
-import DiscoLogo from './DiscoLogo.astro';
 import WaGlyph from './WaGlyph.astro';
 
 /**
  * home — when true, nav links use plain anchors (#section)
  *        instead of absolute paths (/#section).
  *        Set this only on the index page.
- * theme — 'disco' swaps the logo for the Disco logo (used by /v2).
  */
 export interface Props {
   home?: boolean;
-  theme?: 'disco';
 }
 
-const { home = false, theme } = Astro.props;
+const { home = false } = Astro.props;
 const p = (anchor: string) => (home ? anchor : `/${anchor}`);
 ---
 
 <nav class="h-nav" aria-label="Principal">
   <a href={home ? '#inicio' : '/'} class="h-logo">
-    {theme === 'disco' ? (
-      <DiscoLogo />
-    ) : (
-      <Fragment>
-        <img src="/favicon-96x96.png" alt="" width="30" height="30" class="h-logo-img" />
-        <span class="h-logo-name">tutreino</span>
-      </Fragment>
-    )}
+    <img src="/favicon-96x96.png" alt="" width="30" height="30" class="h-logo-img" />
+    <span class="h-logo-name">tutreino</span>
   </a>
   <div class="h-nav-links">
     <a href={p('#producto')}>Producto</a>
