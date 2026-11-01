@@ -1,0 +1,577 @@
+---
+/**
+ * AppPreview: the homepage's "socios" section. The owner adds a logo, a name and a color, and the three
+ * member-app phones follow. It all happens in the browser; nothing is uploaded.
+ * Every discipline is rendered up front and the script only shows the chosen one, so each screen
+ * has a single template. Store listings are left out while the apps are published under Tutreino's name.
+ */
+import WaGlyph from './WaGlyph.astro';
+import { waLink } from '../utils/meta';
+
+const marks = {
+  iron: 'M6 4h3v16H6zm9 0h3v16h-3zM4 9h16v6H4z',
+  zen: 'M12 2 4 7v10l8 5 8-5V7zm0 4 4 2.5v5L12 16l-4-2.5v-5z',
+  flow: 'm13 2-9 12h7l-2 8 9-12h-7z',
+};
+const examples = [
+  { name: 'Iron House', color: '#1d4ed8', disc: 'funcional', mark: marks.iron },
+  { name: 'Zen Studio', color: '#047857', disc: 'yoga', mark: marks.zen },
+  { name: 'Flow Gym', color: '#c2410c', disc: 'spinning', mark: marks.flow },
+];
+const swatches = [
+  { label: 'Azul', color: '#1d4ed8' },
+  { label: 'Verde', color: '#047857' },
+  { label: 'Naranja', color: '#c2410c' },
+  { label: 'Rojo', color: '#b91c1c' },
+  { label: 'Violeta', color: '#6d28d9' },
+  { label: 'Negro', color: '#111827' },
+];
+// classes: [time, name, detail, open | full | mine]; items: [exercise, detail]
+const disciplines = [
+  { id: 'funcional', label: 'Funcional', over: 'Semana 3 · Día 2', title: 'Tren inferior',
+    classes: [['07:00', 'Funcional', 'Sala 1 · 4 lugares', 'open'], ['12:30', 'Cross', 'Lleno', 'full'], ['19:00', 'Funcional', 'Tu lugar está reservado', 'mine'], ['20:30', 'Spinning', 'Sala 2 · 9 lugares', 'open']],
+    items: [['Sentadilla', '4 × 8 · 60 kg'], ['Peso muerto rumano', '3 × 10 · 40 kg'], ['Estocadas', '3 × 12 · 12 kg'], ['Plancha', '3 × 45 s']] },
+  { id: 'crossfit', label: 'Crossfit', over: 'Semana 3 · Fuerza', title: 'WOD de hoy',
+    classes: [['07:00', 'WOD', 'Box 1 · 6 lugares', 'open'], ['12:30', 'Halterofilia', 'Lleno', 'full'], ['18:30', 'WOD', 'Tu lugar está reservado', 'mine'], ['20:00', 'Open box', 'Box 2 · 8 lugares', 'open']],
+    items: [['Back squat', '5 × 5 · 80 kg'], ['Thruster', '21-15-9 · 40 kg'], ['Box jump', '3 × 15'], ['Burpees', '3 × 12']] },
+  { id: 'musculacion', label: 'Musculación', over: 'Semana 2 · Día 4', title: 'Empuje',
+    classes: [['07:00', 'Sala de pesas', '12 lugares', 'open'], ['12:30', 'Funcional', 'Lleno', 'full'], ['20:00', 'Sala de pesas', 'Tu lugar está reservado', 'mine'], ['21:00', 'Tren superior', 'Sala 2 · 5 lugares', 'open']],
+    items: [['Press de banca', '4 × 8 · 70 kg'], ['Press militar', '3 × 10 · 35 kg'], ['Fondos', '3 × 12'], ['Tríceps en polea', '3 × 15 · 20 kg']] },
+  { id: 'spinning', label: 'Spinning', over: 'Semana 1 · Clase 3', title: 'Intervalos',
+    classes: [['07:00', 'Spinning', 'Sala 2 · 9 lugares', 'open'], ['12:30', 'Cycle power', 'Lleno', 'full'], ['20:30', 'Spinning', 'Tu lugar está reservado', 'mine'], ['21:30', 'Spinning suave', 'Sala 2 · 6 lugares', 'open']],
+    items: [['Entrada en calor', '10 min'], ['Subidas', '5 × 3 min'], ['Sprints', '6 × 30 s'], ['Vuelta a la calma', '5 min']] },
+  { id: 'yoga', label: 'Yoga', over: 'Semana 3 · Día 2', title: 'Secuencia de hoy',
+    classes: [['07:00', 'Hatha', 'Sala 1 · 5 lugares', 'open'], ['08:00', 'Yoga Flow', 'Tu lugar está reservado', 'mine'], ['12:30', 'Vinyasa', 'Lleno', 'full'], ['19:00', 'Meditación', 'Sala 2 · 8 lugares', 'open']],
+    items: [['Saludo al sol', '5 rondas'], ['Guerrero II', '3 × 30 s'], ['Paloma', '2 × 60 s'], ['Savasana', '5 min']] },
+  { id: 'pilates', label: 'Pilates', over: 'Semana 2 · Día 3', title: 'Core y movilidad',
+    classes: [['08:00', 'Mat', 'Sala 1 · 3 lugares', 'open'], ['10:00', 'Reformer', 'Tu lugar está reservado', 'mine'], ['12:30', 'Reformer', 'Lleno', 'full'], ['19:00', 'Mat', 'Sala 1 · 6 lugares', 'open']],
+    items: [['Hundred', '1 × 100'], ['Roll up', '3 × 8'], ['Side plank', '2 × 30 s'], ['Spine stretch', '2 × 10']] },
+];
+const [firstExample] = examples;
+const screens = [{ view: 'clases', tab: 'Clases' }, { view: 'rutina', tab: 'Rutina' }, { view: 'membresia', tab: 'Membresía' }];
+---
+
+<section class="h-section h-bld-sec" id="socios" data-cta-bar-hide>
+  <div class="h-wrap">
+    <div class="h-head">
+      <p class="h-kicker">Probalo con tu gimnasio</p>
+      <h2 class="h-h2">Mirá cómo queda tu app.</h2>
+      <p class="h-sub">Subí tu logo, ponele nombre y elegí tu color. Así ven tus socios la app donde reservan, entrenan y pagan.</p>
+    </div>
+
+    <div class="h-bld">
+      <form class="h-bf" novalidate>
+        <div class="h-bf-row">
+          <span class="h-bf-lab">Tu logo</span>
+          <input class="h-bf-file" type="file" id="h-bf-file" accept="image/*" aria-label="Subí tu logo" />
+          <label class="h-bf-drop" for="h-bf-file">
+            <span class="h-bic" data-bld-icon aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d={firstExample.mark} /></svg></span>
+            <span><b>Subí tu logo</b><small>PNG, JPG o SVG. Queda en tu navegador, no lo guardamos.</small></span>
+          </label>
+          <p class="h-bf-ex">
+            <span>¿No lo tenés a mano? Probá con</span>
+            {examples.map((e, i) => <button type="button" data-name={e.name} data-color={e.color} data-trains={e.disc} data-mark={e.mark} aria-pressed={i === 0 ? 'true' : 'false'}>{e.name}</button>)}
+          </p>
+          <p class="h-bf-status" role="status"></p>
+        </div>
+
+        <div class="h-bf-row">
+          <label class="h-bf-lab" for="h-bf-name">Nombre de tu gimnasio <span class="h-bf-count" aria-hidden="true">{firstExample.name.length}/30</span></label>
+          <input class="h-bf-input" id="h-bf-name" type="text" maxlength="30" autocomplete="organization" placeholder="Ej: Iron House" value={firstExample.name} />
+        </div>
+
+        <fieldset class="h-bf-row">
+          <legend class="h-bf-lab">Tu color</legend>
+          <div class="h-sws">
+            <span class="h-sws-logo"></span>
+            <span class="h-sw-sep" hidden></span>
+            {swatches.map((s) => <button type="button" class="h-sw" style={`--c:${s.color}`} data-color={s.color} aria-label={s.label} title={s.label} aria-pressed={s.color === firstExample.color ? 'true' : 'false'}></button>)}
+            <label class="h-sw-other"><input type="color" id="h-bf-color" value={firstExample.color} aria-label="Elegir otro color" />Otro</label>
+          </div>
+        </fieldset>
+
+        <fieldset class="h-bf-row">
+          <legend class="h-bf-lab">¿Qué entrenan?</legend>
+          <div class="h-bf-chips">
+            {disciplines.map((d, i) => <button type="button" data-disc-btn={d.id} aria-pressed={i === 0 ? 'true' : 'false'}>{d.label}</button>)}
+          </div>
+        </fieldset>
+
+        <div class="h-bf-cta">
+          <a href={waLink('Hola, vi cómo quedaría la app de mi gimnasio y quiero probar Tutreino 30 días gratis.')} data-wa-base={waLink('')} class="h-btn" target="_blank" rel="noopener noreferrer"><WaGlyph />Quiero esta app</a>
+          <p class="h-bf-pro">La app con tu marca viene en el <b>plan Pro</b>. En las tiendas se publica a nombre de Tutreino.</p>
+        </div>
+      </form>
+
+      <div class="h-bld-stage" data-view="clases">
+        <div class="h-bld-tabs" role="group" aria-label="Qué pantalla mostrar">
+          {screens.map((s, i) => <button type="button" data-view-btn={s.view} aria-pressed={i === 0 ? 'true' : 'false'}>{s.tab}</button>)}
+        </div>
+        <div class="h-bld-crop">
+          <div class="h-bld-row">
+            <figure class="h-bpv h-bpv-main" data-screen="clases">
+              <div class="h-mphone" aria-hidden="true">
+                <div class="h-mscreen">
+                  <div class="h-ma-top"><span class="h-bic" data-bld-icon><svg viewBox="0 0 24 24"><path fill="currentColor" d={firstExample.mark} /></svg></span><span class="h-ma-name" data-bld-name>{firstExample.name}</span></div>
+                  <p class="h-ma-over">Hola, Marcos</p>
+                  <p class="h-ma-title">Clases</p>
+                  <div class="h-ma-days"><span class="on">Hoy</span><span>Mañana</span><span>Vie</span><span>Sáb</span></div>
+                  {disciplines.map((d, i) => (
+                    <ul class="h-ma-list" data-disc={d.id} hidden={i > 0}>
+                      {d.classes.map(([time, name, detail, kind]) => (
+                        <li class:list={[kind === 'mine' && 'mine']}>
+                          <span class="h-ma-t">{time}</span>
+                          <span class="h-ma-c"><b>{name}</b><small>{detail}</small></span>
+                          <span class:list={['h-ma-a', kind === 'full' && 'ghost']}>{kind === 'open' ? 'Reservar' : kind === 'full' ? 'En espera' : '✓'}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ))}
+                  <div class="h-ma-tab"><span class="on"></span><span></span><span></span><span></span></div>
+                </div>
+              </div>
+              <figcaption>Reserva su clase</figcaption>
+            </figure>
+
+            <figure class="h-bpv" data-screen="rutina">
+              <div class="h-mphone" aria-hidden="true">
+                <div class="h-mscreen">
+                  <div class="h-ma-top"><span class="h-bic" data-bld-icon><svg viewBox="0 0 24 24"><path fill="currentColor" d={firstExample.mark} /></svg></span><span class="h-ma-name" data-bld-name>{firstExample.name}</span></div>
+                  {disciplines.map((d, i) => (
+                    <div class="h-bld-disc" data-disc={d.id} hidden={i > 0}>
+                      <p class="h-ma-over">{d.over}</p>
+                      <p class="h-ma-title">{d.title}</p>
+                      <div class="h-ma-prog"><span></span></div>
+                      <p class="h-ma-prog-l">2 de 4 ejercicios</p>
+                      <ul class="h-ma-list">
+                        {d.items.map(([name, detail], n) => (
+                          <li class:list={[n < 2 && 'done']}><span class="h-ma-ck">{n < 2 ? '✓' : ''}</span><span class="h-ma-c"><b>{name}</b><small>{detail}</small></span></li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                  <p class="h-ma-chip">Armada con IA · ajustada por tu entrenador</p>
+                  <div class="h-ma-tab"><span></span><span class="on"></span><span></span><span></span></div>
+                </div>
+              </div>
+              <figcaption>Entrena con su rutina</figcaption>
+            </figure>
+
+            <figure class="h-bpv" data-screen="membresia">
+              <div class="h-mphone" aria-hidden="true">
+                <div class="h-mscreen">
+                  <div class="h-ma-top"><span class="h-bic" data-bld-icon><svg viewBox="0 0 24 24"><path fill="currentColor" d={firstExample.mark} /></svg></span><span class="h-ma-name" data-bld-name>{firstExample.name}</span></div>
+                  <p class="h-ma-over">Tu membresía</p>
+                  <p class="h-ma-title">Plan mensual</p>
+                  <div class="h-ma-pay"><span>Próximo débito</span><b>UYU 2.200</b><span>18 de noviembre · automático</span></div>
+                  <p class="h-ma-status">Débito automático activo</p>
+                  <ul class="h-ma-hist">
+                    <li><span>Octubre</span><span>UYU 2.200</span><span class="ok">Pagado</span></li>
+                    <li><span>Setiembre</span><span>UYU 2.200</span><span class="ok">Pagado</span></li>
+                    <li><span>Agosto</span><span>UYU 2.200</span><span class="ok">Pagado</span></li>
+                  </ul>
+                  <div class="h-ma-tab"><span></span><span></span><span class="on"></span><span></span></div>
+                </div>
+              </div>
+              <figcaption>Paga sin pensarlo</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { track } from '@vercel/analytics';
+
+  type Rgb = [number, number, number];
+  type Logo = { kind: 'mark'; path: string } | { kind: 'upload'; src: string; bg: string; pad: boolean } | null;
+
+  const root = document.querySelector<HTMLElement>('.h-bld-sec');
+  if (root) {
+    const q = <T extends Element>(s: string) => root.querySelector<T>(s) as T;
+    const qa = <T extends Element>(s: string) => Array.from(root.querySelectorAll<T>(s));
+    const press = (el: Element, on: boolean) => el.setAttribute('aria-pressed', String(on));
+
+    const nameIn = q<HTMLInputElement>('#h-bf-name');
+    const fileIn = q<HTMLInputElement>('#h-bf-file');
+    const colorIn = q<HTMLInputElement>('#h-bf-color');
+    const statusEl = q<HTMLElement>('.h-bf-status');
+    const drop = q<HTMLElement>('.h-bf-drop');
+    const cta = q<HTMLAnchorElement>('.h-bf-cta a');
+    const logoSwatches = q<HTMLElement>('.h-sws-logo');
+    const exampleBtns = qa<HTMLButtonElement>('.h-bf-ex button');
+
+    const firstBtn = exampleBtns[0];
+    let name = firstBtn.dataset.name || '';
+    let example: string | null = name;
+    let logo: Logo = { kind: 'mark', path: firstBtn.dataset.mark || '' };
+
+    /* ── color ── */
+    const WHITE: Rgb = [255, 255, 255];
+    const INK: Rgb = [11, 18, 32];
+    const rgb = (hex: string): Rgb => { const n = parseInt(hex.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; };
+    const hex = (c: number[]) => '#' + c.map((v) => Math.round(v).toString(16).padStart(2, '0')).join('');
+    const mix = (a: Rgb, b: Rgb, t: number) => a.map((v, i) => v + (b[i] - v) * t) as Rgb;
+    const lum = (c: number[]) => {
+      const [r, g, b] = c.map((v) => { const s = v / 255; return s <= .03928 ? s / 12.92 : ((s + .055) / 1.055) ** 2.4; });
+      return .2126 * r + .7152 * g + .0722 * b;
+    };
+    const contrast = (a: number[], b: number[]) => { const [x, y] = [lum(a), lum(b)]; return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
+
+    /* any color has to work: text flips to dark on pale colors, and the gym name darkens until it reads on the tint */
+    const setColor = (color: string) => {
+      const c = rgb(color);
+      const soft = mix(c, WHITE, .86);
+      const on = contrast(c, WHITE) >= 4.5 || contrast(c, WHITE) >= contrast(c, INK) ? WHITE : INK;
+      let ink = c;
+      for (let i = 0; i < 24 && contrast(ink, soft) < 4.5; i++) ink = ink.map((v) => v * .88) as Rgb;
+      root.style.setProperty('--gym', color);
+      root.style.setProperty('--gym-soft', hex(soft));
+      root.style.setProperty('--gym-on', hex(on));
+      root.style.setProperty('--gym-ink', hex(ink));
+      colorIn.value = color;
+      qa<HTMLElement>('.h-sw').forEach((b) => press(b, b.dataset.color === color));
+    };
+
+    /* ── icon: uploaded logo, example mark or initials ── */
+    const initials = () => {
+      const words = (name.trim() || 'Tu gimnasio').split(/\s+/);
+      return (words[0][0] + (words[1] ? words[1][0] : '')).toUpperCase();
+    };
+    const iconNode = () => {
+      if (logo?.kind === 'upload') { const im = new Image(); im.alt = ''; im.src = logo.src; return im; }
+      if (logo?.kind === 'mark') {
+        const ns = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(ns, 'svg');
+        const path = document.createElementNS(ns, 'path');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        path.setAttribute('fill', 'currentColor');
+        path.setAttribute('d', logo.path);
+        svg.append(path);
+        return svg;
+      }
+      const span = document.createElement('span');
+      span.textContent = initials();
+      return span;
+    };
+    const paintIcons = (pop: boolean) => {
+      qa<HTMLElement>('[data-bld-icon]').forEach((el) => {
+        el.replaceChildren(iconNode());
+        el.classList.toggle('pad', logo?.kind === 'upload' && logo.pad);
+        el.style.background = logo?.kind === 'upload' ? logo.bg : '';
+        if (pop) { el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
+      });
+    };
+
+    /* ── text and the WhatsApp message; an example gym's name never goes into the message ── */
+    const paintName = () => {
+      const typed = name.trim();
+      qa<HTMLElement>('[data-bld-name]').forEach((el) => { el.textContent = typed || 'Tu gimnasio'; });
+      q<HTMLElement>('.h-bf-count').textContent = `${nameIn.value.length}/30`;
+      const message = typed && !example
+        ? `Hola, soy de ${typed}. Vi cómo quedaría nuestra app y quiero probar Tutreino 30 días gratis.`
+        : 'Hola, vi cómo quedaría la app de mi gimnasio y quiero probar Tutreino 30 días gratis.';
+      cta.href = (cta.dataset.waBase || '') + encodeURIComponent(message);
+      exampleBtns.forEach((b) => press(b, b.dataset.name === example));
+    };
+
+    const setDisc = (id: string) => {
+      qa<HTMLElement>('[data-disc]').forEach((el) => { el.hidden = el.dataset.disc !== id; });
+      qa<HTMLElement>('[data-disc-btn]').forEach((b) => press(b, b.dataset.discBtn === id));
+    };
+
+    const say = (message: string, isError = false) => {
+      statusEl.textContent = message;
+      statusEl.classList.toggle('err', isError);
+    };
+
+    /* ── logo: sample its colors and decide how it sits in the icon ── */
+    const analyze = (img: HTMLImageElement) => {
+      const S = 48;
+      const cv = document.createElement('canvas');
+      cv.width = cv.height = S;
+      const cx = cv.getContext('2d', { willReadFrequently: true }) as CanvasRenderingContext2D;
+      cx.drawImage(img, 0, 0, S, S);
+      const d = cx.getImageData(0, 0, S, S).data;
+      let clear = 0, solid = 0, lumSum = 0;
+      const buckets = new Map<string, { n: number; sum: Rgb; sat: number }>();
+      for (let i = 0; i < d.length; i += 4) {
+        if (d[i + 3] < 40) { clear++; continue; }
+        solid++;
+        const c: Rgb = [d[i], d[i + 1], d[i + 2]];
+        const max = Math.max(...c), min = Math.min(...c);
+        const light = (max + min) / 510;
+        const sat = max === min ? 0 : (max - min) / (255 - Math.abs(max + min - 255));
+        lumSum += lum(c);
+        if (sat < .22 || light < .08 || light > .93) continue;
+        const key = c.map((v) => v >> 5).join();
+        const b = buckets.get(key) || { n: 0, sum: [0, 0, 0] as Rgb, sat: 0 };
+        b.n++; b.sat += sat; c.forEach((v, k) => { b.sum[k] += v; });
+        buckets.set(key, b);
+      }
+      const ranked = [...buckets.values()]
+        .filter((b) => b.n >= Math.max(3, solid * .012))
+        .map((b) => ({ c: b.sum.map((v) => v / b.n), score: b.n * (.5 + b.sat / b.n) }))
+        .sort((a, b) => b.score - a.score);
+      const colors: number[][] = [];
+      ranked.forEach(({ c }) => {
+        const near = colors.some((y) => Math.hypot(c[0] - y[0], c[1] - y[1], c[2] - y[2]) < 70);
+        if (!near && colors.length < 3) colors.push(c);
+      });
+      const corners = [0, (S - 1) * 4, S * (S - 1) * 4, (S * S - 1) * 4];
+      const corner = [0, 1, 2].map((k) => corners.reduce((sum, o) => sum + d[o + k] / 4, 0));
+      return { hasAlpha: clear / (S * S) > .03, meanLum: solid ? lumSum / solid : 0, colors: colors.map(hex), corner };
+    };
+
+    const shrink = (img: HTMLImageElement, fallback: string) => {
+      try {
+        const max = 512, w = img.naturalWidth, h = img.naturalHeight;
+        if (!w || !h || (w <= max && h <= max)) return fallback;
+        const k = max / Math.max(w, h);
+        const cv = document.createElement('canvas');
+        cv.width = Math.round(w * k);
+        cv.height = Math.round(h * k);
+        (cv.getContext('2d') as CanvasRenderingContext2D).drawImage(img, 0, 0, cv.width, cv.height);
+        return cv.toDataURL('image/png');
+      } catch { return fallback; }
+    };
+
+    const setLogoSwatches = (colors: string[]) => {
+      logoSwatches.replaceChildren(...colors.map((c, i) => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'h-sw'; b.dataset.color = c;
+        b.style.setProperty('--c', c);
+        b.setAttribute('aria-label', `Color de tu logo ${i + 1}`);
+        return b;
+      }));
+      q<HTMLElement>('.h-sw-sep').hidden = !colors.length;
+    };
+
+    const applyLogo = (img: HTMLImageElement, src: string) => {
+      let a: ReturnType<typeof analyze> | null = null;
+      try { a = analyze(img); } catch { /* an image the canvas refuses still works as a logo, just without its colors */ }
+      let bg = '#ffffff', pad = true;
+      if (a?.hasAlpha) bg = a.meanLum > .72 ? 'var(--gym)' : '#ffffff';
+      else if (a) { bg = hex(a.corner); pad = lum(a.corner) > .8; }
+      logo = { kind: 'upload', src: shrink(img, src), bg, pad };
+      const colors = a ? a.colors : [];
+      setLogoSwatches(colors);
+      if (colors.length) setColor(colors[0]);
+      else setColor(colorIn.value);
+      paintIcons(true);
+      const wasExample = !!example;
+      example = null;
+      if (wasExample) { name = ''; nameIn.value = ''; nameIn.classList.add('nudge'); }
+      paintName();
+      say((colors.length ? 'Tomamos el color de tu logo.' : 'Tu logo no tiene un color marcado: elegí uno abajo.') + (wasExample ? ' Ahora escribí el nombre.' : ''));
+      track('app_preview_logo');
+    };
+
+    const handleFile = (file?: File) => {
+      if (!file) return;
+      if (!file.type.startsWith('image/')) { say('Ese archivo no es una imagen. Probá con PNG, JPG o SVG.', true); return; }
+      if (file.size > 10 * 1024 * 1024) { say('Esa imagen pesa más de 10 MB. Probá con una más liviana.', true); return; }
+      const reader = new FileReader();
+      reader.onerror = () => say('No pudimos leer ese archivo. Probá con otro.', true);
+      reader.onload = () => {
+        const src = reader.result as string;
+        const img = new Image();
+        img.onload = () => applyLogo(img, src);
+        img.onerror = () => say('No pudimos abrir esa imagen. Probá con PNG o JPG.', true);
+        img.src = src;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    /* ── events ── */
+    exampleBtns.forEach((b) => b.addEventListener('click', () => {
+      name = example = b.dataset.name || '';
+      nameIn.value = name;
+      nameIn.classList.remove('nudge');
+      logo = { kind: 'mark', path: b.dataset.mark || '' };
+      fileIn.value = '';
+      say('');
+      setLogoSwatches([]);
+      setColor(b.dataset.color || '');
+      setDisc(b.dataset.trains || '');
+      paintIcons(true);
+      paintName();
+    }));
+
+    fileIn.addEventListener('change', () => handleFile(fileIn.files?.[0]));
+    ['dragenter', 'dragover'].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add('over'); }));
+    ['dragleave', 'drop'].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.remove('over'); }));
+    drop.addEventListener('drop', (e) => handleFile((e as DragEvent).dataTransfer?.files[0]));
+
+    nameIn.addEventListener('input', () => {
+      name = nameIn.value;
+      example = null;
+      nameIn.classList.remove('nudge');
+      if (logo?.kind !== 'upload') { logo = null; paintIcons(false); }
+      paintName();
+    });
+
+    q('.h-sws').addEventListener('click', (e) => {
+      const b = (e.target as Element).closest<HTMLElement>('.h-sw');
+      if (b?.dataset.color) setColor(b.dataset.color);
+    });
+    colorIn.addEventListener('input', () => setColor(colorIn.value));
+    q('.h-bf-chips').addEventListener('click', (e) => {
+      const b = (e.target as Element).closest<HTMLElement>('[data-disc-btn]');
+      if (b?.dataset.discBtn) setDisc(b.dataset.discBtn);
+    });
+    q('.h-bld-tabs').addEventListener('click', (e) => {
+      const b = (e.target as Element).closest<HTMLElement>('[data-view-btn]');
+      if (!b?.dataset.viewBtn) return;
+      q<HTMLElement>('.h-bld-stage').dataset.view = b.dataset.viewBtn;
+      qa<HTMLElement>('[data-view-btn]').forEach((x) => press(x, x === b));
+    });
+    q('.h-bf').addEventListener('submit', (e) => e.preventDefault());
+    cta.addEventListener('click', () => track('app_preview_cta', { logo: logo?.kind === 'upload', named: !example && !!name.trim() }));
+  }
+</script>
+
+<style is:global>
+/* ── the owner tries their brand on the member app ── */
+.h-bld-sec { --gym: #1d4ed8; --gym-soft: #dfe6fa; --gym-on: #ffffff; --gym-ink: #1d4ed8; }
+.h-bld { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: clamp(24px, 3.4vw, 48px); align-items: start; }
+
+/* form */
+.h-bf { display: grid; gap: 18px; min-width: 0; margin: 0; }
+.h-bf-row { display: grid; gap: 7px; min-width: 0; margin: 0; padding: 0; border: 0; }
+.h-bf-lab { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; width: 100%; padding: 0; font-size: 14.5px; font-weight: 700; color: var(--ink); }
+legend.h-bf-lab { margin-bottom: 7px; }
+.h-bf-count { font-size: 12.5px; font-weight: 400; color: var(--mute); font-variant-numeric: tabular-nums; }
+.h-bf-input { width: 100%; height: 48px; padding: 0 14px; border: 1px solid var(--line-2); border-radius: 11px; background: #fff; color: var(--ink); font: inherit; font-size: 16px; }
+.h-bf-input::placeholder { color: var(--mute); }
+.h-bf-input:focus { outline: 2px solid var(--brand-ink); outline-offset: -1px; border-color: var(--brand-ink); }
+.h-bf-input.nudge { border-color: var(--brand-ink); box-shadow: 0 0 0 3px var(--brand-soft); }
+.h-bf-file { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.h-bf-drop { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 14px; padding: 12px; border: 1.5px dashed var(--line-2); border-radius: 14px; background: var(--bg-2); color: var(--ink); cursor: pointer; transition: border-color .15s ease, background .15s ease; }
+.h-bf-drop:hover, .h-bf-drop.over { border-color: var(--brand-ink); background: var(--brand-soft); }
+.h-bf-file:focus-visible + .h-bf-drop { outline: 2px solid var(--brand-ink); outline-offset: 2px; }
+.h-bf-drop b { display: block; font-size: 16px; line-height: 1.25; }
+.h-bf-drop small { display: block; margin-top: 3px; font-size: 13px; line-height: 1.35; color: var(--ink-2); }
+.h-bf-ex { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; font-size: 13.5px; line-height: 1.4; color: var(--mute); }
+.h-bf-ex span { flex-basis: 100%; }
+.h-bf-ex button { appearance: none; padding: 2px 3px; border: 0; border-radius: 5px; background: none; font: inherit; font-weight: 700; color: var(--brand-ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.h-bf-ex button[aria-pressed="true"] { color: var(--ink); text-decoration: none; }
+.h-bf-status { margin: 0; min-height: 1.4em; font-size: 13.5px; line-height: 1.4; font-weight: 600; color: var(--ink-2); }
+.h-bf-status.err { color: var(--risk); }
+.h-sws { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.h-sws-logo { display: contents; }
+.h-sw { appearance: none; width: 34px; height: 34px; padding: 0; border: 0; border-radius: 50%; background: var(--c); cursor: pointer; box-shadow: inset 0 0 0 1px rgba(11,18,32,.14); }
+.h-sw[aria-pressed="true"] { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--ink); }
+.h-sw-sep { width: 1px; height: 22px; margin-inline: 2px; background: var(--line-2); }
+.h-sw-sep[hidden] { display: none; }
+.h-sw-other { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px 0 6px; border: 1px solid var(--line-2); border-radius: 999px; font-size: 13.5px; font-weight: 700; color: var(--ink); cursor: pointer; }
+.h-sw-other input { width: 22px; height: 22px; padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer; }
+.h-sw-other input::-webkit-color-swatch-wrapper { padding: 0; }
+.h-sw-other input::-webkit-color-swatch { border: 0; border-radius: 50%; }
+.h-sw-other input::-moz-color-swatch { border: 0; border-radius: 50%; }
+.h-sw-other:focus-within { outline: 2px solid var(--brand-ink); outline-offset: 2px; }
+.h-bf-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.h-bf-chips button { appearance: none; height: 36px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 999px; background: #fff; color: var(--ink); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.h-bf-chips button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.h-bf-cta { display: grid; gap: 10px; padding-top: 2px; }
+.h-bf-cta .h-btn { width: 100%; }
+.h-bf-pro { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink-2); text-align: center; }
+.h-bf-pro b { color: var(--ink); }
+
+/* app icon: logo, example mark or initials */
+.h-bic { --s: 64px; flex-shrink: 0; display: grid; place-items: center; width: var(--s); height: var(--s); overflow: hidden; border-radius: calc(var(--s) * .225); background: var(--gym); color: var(--gym-on); font-family: var(--f-head); font-weight: 800; line-height: 1; transition: background-color .25s ease, color .25s ease; }
+.h-bic.pad { padding: calc(var(--s) * .13); }
+.h-bic img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.h-bic svg { display: block; width: 62%; height: 62%; }
+.h-bic span { padding-top: .12em; font-size: calc(var(--s) * .42); letter-spacing: -.03em; }
+.h-bic.pop { animation: hBicPop .42s cubic-bezier(.22, 1, .36, 1); }
+@keyframes hBicPop { from { transform: scale(.78); opacity: .4; } to { transform: none; opacity: 1; } }
+
+/* the phones stay in view while the form scrolls past them */
+.h-bld-stage { position: sticky; top: 77px; min-width: 0; }
+.h-bld-tabs { display: none; }
+.h-bld-row { display: flex; justify-content: center; align-items: flex-start; gap: 16px; }
+.h-bpv { flex-shrink: 0; margin: 30px 0 0; }
+.h-bpv-main { margin-top: 0; }
+.h-bpv figcaption { margin-top: 12px; text-align: center; font-size: 14px; font-weight: 700; color: var(--ink-2); }
+@media(max-width:1239px) { .h-bld-row { zoom: .84; } }
+@media(max-width:1099px) { .h-bld-row { zoom: .7; } }
+/* one phone at a time, picked with tabs */
+@media(max-width:960px) {
+  .h-bld-row { zoom: 1; }
+  .h-bld-tabs { display: flex; gap: 2px; width: fit-content; margin: 0 auto 14px; padding: 3px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 11px; }
+  .h-bld-tabs button { appearance: none; padding: 8px 12px; border: 0; border-radius: 8px; background: transparent; color: var(--ink-2); font: inherit; font-size: 13.5px; font-weight: 700; line-height: 1.2; cursor: pointer; }
+  .h-bld-tabs button[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(11,18,32,.16); }
+  .h-bpv { display: none; margin-top: 0; }
+  .h-bpv figcaption { display: none; }
+  .h-bld-stage[data-view="clases"] [data-screen="clases"],
+  .h-bld-stage[data-view="rutina"] [data-screen="rutina"],
+  .h-bld-stage[data-view="membresia"] [data-screen="membresia"] { display: block; }
+  .h-bpv .h-mphone { width: 270px; }
+}
+/* phones: the preview comes first and sticks under the nav; it shrinks while typing so the keyboard doesn't hide it */
+@media(max-width:760px) {
+  .h-bld { grid-template-columns: minmax(0, 1fr); }
+  .h-bld-stage {
+    order: -1; top: 57px; z-index: 6;
+    margin-inline: calc(-1 * clamp(20px, 4vw, 48px)); padding: 10px clamp(20px, 4vw, 48px) 0;
+    background: var(--bg); border-bottom: 1px solid var(--line);
+  }
+  .h-bld-tabs { margin-bottom: 10px; }
+  .h-bld-crop { height: 300px; overflow: hidden; }
+  .h-bld:has(.h-bf-input:focus) .h-bld-crop { height: 166px; }
+}
+
+/* phone mockups are sized in container units against the phone frame */
+.h-mphone { container-type: inline-size; position: relative; width: 240px; padding: 8px; border-radius: 34px; background: #0b0f17; box-shadow: 0 30px 60px -32px rgba(11,18,32,.45); }
+.h-bpv-main .h-mphone { width: 270px; box-shadow: 0 44px 80px -34px color-mix(in srgb, var(--gym) 50%, rgba(11,18,32,.4)); }
+.h-mphone::before { content: ""; position: absolute; top: 8px; left: 50%; z-index: 1; transform: translateX(-50%); width: 36cqw; height: 8.5cqw; background: #0b0f17; border-radius: 0 0 14px 14px; }
+.h-mscreen {
+  aspect-ratio: 390 / 720; border-radius: 27px; overflow: hidden; background: var(--gym-soft);
+  display: flex; flex-direction: column; gap: 4.2cqw; padding: 12cqw 5.6cqw 0;
+  text-align: left; color: var(--ink); transition: background-color .25s ease;
+}
+.h-mscreen p { margin: 0; }
+.h-ma-top { display: flex; align-items: center; gap: 2.6cqw; min-width: 0; }
+.h-ma-top .h-bic { --s: 10.4cqw; }
+.h-ma-name { min-width: 0; padding-top: .12em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--f-head); font-weight: 800; font-size: 5cqw; line-height: 1.2; letter-spacing: -.01em; text-transform: uppercase; color: var(--gym-ink); transition: color .25s ease; }
+.h-bld-disc { display: contents; }
+.h-bld-disc[hidden], .h-ma-list[hidden] { display: none; }
+.h-mscreen .h-ma-over { font-size: 3.7cqw; font-weight: 700; color: var(--ink-2); }
+.h-mscreen .h-ma-title { margin-top: -2.6cqw; font-family: var(--f-head); font-weight: 800; font-size: 8.6cqw; line-height: .95; letter-spacing: -.035em; color: var(--ink); }
+.h-ma-days { display: flex; gap: 2cqw; }
+.h-ma-days span { font-size: 3.5cqw; font-weight: 700; padding: 1.8cqw 3.4cqw; border-radius: 99px; background: #fff; border: 1px solid var(--line); color: var(--ink-2); }
+.h-ma-days .on { background: var(--gym); border-color: var(--gym); color: var(--gym-on); }
+.h-ma-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2.6cqw; }
+.h-ma-list li { display: flex; align-items: center; gap: 3cqw; background: #fff; border: 1px solid var(--line); border-radius: 4cqw; padding: 3.4cqw 3.6cqw; }
+.h-ma-t { flex: none; width: 12.5cqw; font-family: var(--f-head); font-weight: 800; font-size: 4.6cqw; letter-spacing: -.02em; color: var(--ink); }
+.h-ma-c { flex: 1; min-width: 0; display: grid; gap: .4cqw; }
+.h-ma-c b { font-size: 4.1cqw; line-height: 1.3; color: var(--ink); }
+.h-ma-c small { font-size: 3.3cqw; line-height: 1.3; color: var(--mute); }
+.h-ma-a { flex: none; font-size: 3.2cqw; font-weight: 700; color: var(--gym-on); background: var(--gym); padding: 1.8cqw 2.8cqw; border-radius: 2.4cqw; }
+.h-ma-a.ghost { background: transparent; color: var(--gym-ink); box-shadow: inset 0 0 0 1px var(--gym-ink); }
+.h-ma-list li.mine { background: var(--gym); border-color: var(--gym); }
+.h-ma-list li.mine b, .h-ma-list li.mine .h-ma-t, .h-ma-list li.mine small { color: var(--gym-on); }
+.h-ma-list li.mine .h-ma-a { background: var(--gym-on); color: var(--gym); }
+.h-ma-prog { height: 2.2cqw; background: #fff; border-radius: 99px; overflow: hidden; }
+.h-ma-prog span { display: block; width: 50%; height: 100%; background: var(--gym); border-radius: 99px; }
+.h-mscreen .h-ma-prog-l { margin-top: -2.2cqw; font-size: 3.3cqw; color: var(--ink-2); }
+.h-ma-ck { flex: none; width: 7cqw; height: 7cqw; border-radius: 50%; box-shadow: inset 0 0 0 .6cqw #c7d0de; display: grid; place-items: center; color: #fff; font-size: 3.6cqw; font-weight: 700; }
+.h-ma-list li.done .h-ma-ck { background: var(--ok); box-shadow: none; }
+.h-ma-list li.done b { text-decoration: line-through; text-decoration-color: rgba(11,18,32,.35); }
+.h-mscreen .h-ma-chip { font-size: 3.4cqw; font-weight: 700; color: var(--gym-ink); background: #fff; border-radius: 3cqw; padding: 2.6cqw 3.4cqw; }
+.h-ma-pay { display: grid; gap: 1.2cqw; padding: 5cqw; border-radius: 5cqw; background: var(--gym); color: var(--gym-on); }
+.h-ma-pay span { font-size: 3.5cqw; }
+.h-ma-pay b { font-family: var(--f-head); font-weight: 800; font-size: 10cqw; line-height: 1; letter-spacing: -.03em; }
+.h-mscreen .h-ma-status { align-self: flex-start; display: inline-flex; align-items: center; gap: 2cqw; padding: 1.8cqw 3.4cqw; border-radius: 99px; font-size: 3.5cqw; font-weight: 700; color: var(--ok); background: var(--ok-soft); }
+.h-ma-status::before { content: ""; width: 2.2cqw; height: 2.2cqw; border-radius: 50%; background: var(--ok); }
+.h-ma-hist { list-style: none; margin: 0; padding: 0; background: #fff; border: 1px solid var(--line); border-radius: 4cqw; }
+.h-ma-hist li { display: grid; grid-template-columns: 1fr auto auto; gap: 3cqw; align-items: center; padding: 3.4cqw 4cqw; border-bottom: 1px solid var(--line); font-size: 3.6cqw; color: var(--ink-2); }
+.h-ma-hist li:last-child { border-bottom: 0; }
+.h-ma-hist .ok { color: var(--ok); font-weight: 700; }
+.h-ma-tab { margin: auto -5.6cqw 0; display: flex; justify-content: space-around; padding: 4cqw 2cqw 6cqw; border-top: 1px solid var(--line); background: #fff; }
+.h-ma-tab span { width: 2.2cqw; height: 2.2cqw; border-radius: 50%; background: #cfd6e2; }
+.h-ma-tab span.on { width: 6cqw; border-radius: 99px; background: var(--gym); }
+</style>
