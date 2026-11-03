@@ -145,6 +145,23 @@ const showTestimonials = false;
       </div>
     </header>
 
+    <!-- video: la película de 30 segundos; el botón de play es el disco que cae como punto final de "Esto es para vos" -->
+    <section class="h-section h-video" id="video" data-cta-bar-hide>
+      <div class="h-wrap">
+        <h2 class="h-h2 h-video-h">Mirá Tutreino en 30 segundos.</h2>
+        <div class="h-video-player" data-video>
+          <video src="/video/esto-es-para-vos.mp4" poster="/video/esto-es-para-vos-poster.webp" width="1920" height="1080" preload="none" playsinline controls aria-label="Tutreino en 30 segundos"></video>
+          <button type="button" class="h-video-play" aria-label="Reproducir el video, 30 segundos con sonido" hidden>
+            <span class="h-video-disc"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.6v14.8a1 1 0 0 0 1.5.86l12.4-7.4a1 1 0 0 0 0-1.72L8.5 3.74A1 1 0 0 0 7 4.6z"/></svg></span>
+          </button>
+        </div>
+        <div class="h-video-cta">
+          <a href={WA.trial} class="h-btn h-btn-light" target="_blank" rel="noopener noreferrer"><WaGlyph />Probar 30 días gratis</a>
+          <p class="h-video-note">Sin tarjeta. Cancelás cuando quieras.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- tu app: el dueño prueba su marca en la app y en las tiendas -->
     <AppPreview />
 
@@ -527,6 +544,38 @@ const showTestimonials = false;
     </section>
 
   <script>
+    import { track } from '@vercel/analytics';
+
+    // sales video: the poster's disc starts it with sound, then the native controls take over.
+    // Without this script the video just keeps its controls
+    const videoBox = document.querySelector<HTMLElement>('[data-video]');
+    const video = videoBox?.querySelector('video');
+    const videoPlay = videoBox?.querySelector('button');
+    if (videoBox && video && videoPlay) {
+      video.controls = false;
+      videoPlay.hidden = false;
+      videoPlay.addEventListener('click', () => {
+        videoPlay.hidden = true;
+        video.controls = true;
+        video.focus({ preventScroll: true });
+        video.play().catch(() => {});
+        track('video_play');
+      });
+      video.addEventListener('ended', () => track('video_ended'), { once: true });
+
+      // like in the film, the period swells into the disc once the player is on screen
+      const disc = videoPlay.querySelector('.h-video-disc');
+      if (disc && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        disc.classList.add('is-period');
+        const io = new IntersectionObserver(([entry]) => {
+          if (!entry.isIntersecting) return;
+          disc.classList.remove('is-period');
+          io.disconnect();
+        }, { threshold: 0.6 });
+        io.observe(videoBox);
+      }
+    }
+
     // billing toggle
     const billOpts = document.querySelectorAll('.h-bill-opt');
     const amounts = document.querySelectorAll('.h-amt[data-mensual]');
@@ -654,6 +703,38 @@ const showTestimonials = false;
 @media(max-width:389px) { .h-wl-grid { zoom: .95; } }
 @media(max-width:374px) { .h-wl-grid { zoom: .91; } }
 @media(max-width:359px) { .h-wl-grid { zoom: .8; } }
+
+/* ── sales video ──────────────────────────────────── */
+/* a dark band, so the film reads as a lit screen. The player follows the screen height too, so a
+   laptop sees the headline and the whole player under the sticky nav */
+.h-video { background: var(--ink); text-align: center; }
+.h-video a:focus-visible { outline-color: #fff; }
+.h-video .h-video-h { color: #fff; max-width: none; text-wrap: balance; }
+.h-video-player { position: relative; width: min(100%, max(640px, calc((100vh - 200px) * 16 / 9))); margin: clamp(28px, 3.4vw, 40px) auto 0; border-radius: clamp(14px, 1.6vw, 22px); overflow: hidden; background: #f7f8fb; }
+.h-video-player video { display: block; width: 100%; height: auto; }
+.h-video-play { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+/* sits on the poster exactly where the film's period lands: same left edge and baseline. The poster
+   has that period painted out, so .is-period (a fifth of the size, the period's) looks like the frame */
+.h-video-disc {
+  position: absolute; left: 86.04%; top: 53.3%; width: 11.51%; aspect-ratio: 1;
+  display: grid; place-items: center; border-radius: 50%;
+  background: var(--brand-ink); color: #fff; transform-origin: 0 100%;
+  transition: transform .9s cubic-bezier(.16,1,.3,1), scale .25s cubic-bezier(.16,1,.3,1), background .18s ease;
+}
+.h-video-disc.is-period { transform: scale(.2); }
+.h-video-disc svg { width: 46%; height: 46%; }
+.h-video-play:hover .h-video-disc { scale: 1.08; background: var(--brand-deep); }
+.h-video .h-video-play:focus-visible { outline: none; }
+.h-video-play:focus-visible .h-video-disc { outline: 3px solid var(--ink); outline-offset: 4px; }
+.h-video-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 22px; margin-top: clamp(24px, 3vw, 36px); }
+.h-video-note { margin: 0; font-size: 15.5px; color: rgba(255,255,255,.78); }
+@media(max-width:760px) {
+  /* left-aligned like the hero, with the player running edge to edge */
+  .h-video { text-align: left; }
+  .h-video-player { width: auto; margin-inline: calc(clamp(20px, 4vw, 48px) * -1); border-radius: 0; }
+  .h-video-cta { justify-content: flex-start; }
+  .h-video-cta .h-btn { flex: 1 1 100%; }
+}
 
 /* ── feature blocks ───────────────────────────────── */
 .h-feat { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
@@ -922,6 +1003,7 @@ const showTestimonials = false;
 
 @media(prefers-reduced-motion: reduce) {
   .h-alert-pulse { animation: none; }
+  .h-video-disc { transition: none; }
 }
 
 /* ── phone polish (≤480px) ────────────────────────── */
