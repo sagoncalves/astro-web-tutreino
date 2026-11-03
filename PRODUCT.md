@@ -27,7 +27,7 @@ Direct, confident, results-oriented. The brand speaks like a reliable partner �
 
 1. **Show the outcome, not the feature** — Every section should answer "what does this get me?" not "what does this do?"
 2. **Confidence over cleverness** — Direct headlines, clear numbers, no metaphors that need decoding
-3. **Built for Latin American business owners** — Language, pricing in UYU, WhatsApp as primary channel — these are not afterthoughts
+3. **Built for Latin American business owners** — Language, pricing in UYU and US$, WhatsApp as primary channel — these are not afterthoughts
 4. **Scale without complexity** — The product serves 1 gym and 100 branches; the design should feel capable without overwhelming
 5. **Earn trust fast** — Social proof, real numbers, and a low-friction trial are the conversion levers; design should not get in the way
 

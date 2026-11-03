@@ -11,6 +11,9 @@ import { createPageMeta, PAGE_META, WA, waLink } from '../utils/meta';
 const metaData = createPageMeta('/', PAGE_META.home);
 const trialStarter = waLink('Hola, quiero probar el plan Starter de Tutreino 30 días gratis.');
 const trialPro = waLink('Hola, quiero probar el plan Pro de Tutreino 30 días gratis.');
+// Visitors who saw US$ say so in the chat, so it's clear which price they were looking at
+const trialStarterUsd = waLink('Hola, quiero probar el plan Starter de Tutreino 30 días gratis. Vi el precio en dólares.');
+const trialProUsd = waLink('Hola, quiero probar el plan Pro de Tutreino 30 días gratis. Vi el precio en dólares.');
 
 // Single source for the visible FAQ and its FAQPage JSON-LD, so they can't drift apart
 const faqs = [
@@ -60,6 +63,20 @@ const showTestimonials = false;
         "name": "Pro",
         "price": "2600",
         "priceCurrency": "UYU",
+        "description": "Socios y sucursales ilimitadas, app con white label, rutinas con IA y periodización automática, predicción de bajas, permisos por rol, seguimiento de lesiones y progreso"
+      },
+      {
+        "@type": "Offer",
+        "name": "Starter",
+        "price": "40",
+        "priceCurrency": "USD",
+        "description": "Hasta 500 socios, una sucursal, reservas de clases, pagos recurrentes y por transferencia, app para socios"
+      },
+      {
+        "@type": "Offer",
+        "name": "Pro",
+        "price": "65",
+        "priceCurrency": "USD",
         "description": "Socios y sucursales ilimitadas, app con white label, rutinas con IA y periodización automática, predicción de bajas, permisos por rol, seguimiento de lesiones y progreso"
       }
     ]
@@ -446,6 +463,7 @@ const showTestimonials = false;
           <button type="button" class="h-bill-opt active" data-bill="mensual" aria-pressed="true">Mensual</button>
           <button type="button" class="h-bill-opt" data-bill="anual" aria-pressed="false">Anual <span class="h-bill-save">1 mes gratis</span></button>
         </div>
+        <p class="h-cur-line" hidden><span>Precios en pesos uruguayos</span> · <button type="button" class="h-cur-switch">Ver en dólares</button></p>
 
         <div class="h-price-grid">
           <article class="h-vprice">
@@ -455,10 +473,10 @@ const showTestimonials = false;
             </div>
             <div class="h-vprice-amount">
               <span class="h-cur">UYU</span>
-              <span class="h-amt" data-mensual="1.600" data-anual="1.467">1.600</span>
+              <span class="h-amt" data-uyu-mensual="1.600" data-uyu-anual="1.467" data-usd-mensual="40" data-usd-anual="37">1.600</span>
               <span class="h-per">/ mes</span>
             </div>
-            <p class="h-vprice-anual" hidden>Facturado anual · UYU 17.600/año</p>
+            <p class="h-vprice-anual" data-uyu="Facturado anual · UYU 17.600/año" data-usd="Facturado anual · US$ 440/año" hidden>Facturado anual · UYU 17.600/año</p>
             <ul>
               <li>Hasta 500 socios</li>
               <li>Una sucursal</li>
@@ -466,7 +484,7 @@ const showTestimonials = false;
               <li>Pagos recurrentes y por transferencia</li>
               <li>App para socios (marca Tutreino)</li>
             </ul>
-            <a href={trialStarter} class="h-vprice-cta" target="_blank" rel="noopener noreferrer"><WaGlyph />Probar 30 días gratis</a>
+            <a href={trialStarter} data-uyu-href={trialStarter} data-usd-href={trialStarterUsd} class="h-vprice-cta" target="_blank" rel="noopener noreferrer"><WaGlyph />Probar 30 días gratis</a>
           </article>
 
           <article class="h-vprice h-vprice-featured">
@@ -476,10 +494,10 @@ const showTestimonials = false;
             </div>
             <div class="h-vprice-amount">
               <span class="h-cur">UYU</span>
-              <span class="h-amt" data-mensual="2.600" data-anual="2.383">2.600</span>
+              <span class="h-amt" data-uyu-mensual="2.600" data-uyu-anual="2.383" data-usd-mensual="65" data-usd-anual="60">2.600</span>
               <span class="h-per">/ mes</span>
             </div>
-            <p class="h-vprice-anual" hidden>Facturado anual · UYU 28.600/año</p>
+            <p class="h-vprice-anual" data-uyu="Facturado anual · UYU 28.600/año" data-usd="Facturado anual · US$ 715/año" hidden>Facturado anual · UYU 28.600/año</p>
             <ul>
               <li>Socios ilimitados</li>
               <li>Varias sucursales</li>
@@ -490,9 +508,64 @@ const showTestimonials = false;
               <li>Seguimiento de lesiones, progreso y formularios</li>
               <li>Soporte prioritario</li>
             </ul>
-            <a href={trialPro} class="h-vprice-cta primary" target="_blank" rel="noopener noreferrer"><WaGlyph />Probar 30 días gratis</a>
+            <a href={trialPro} data-uyu-href={trialPro} data-usd-href={trialProUsd} class="h-vprice-cta primary" target="_blank" rel="noopener noreferrer"><WaGlyph />Probar 30 días gratis</a>
           </article>
         </div>
+
+        <!-- inline and right after the cards, so the currency is set before they paint -->
+        <script is:inline>
+          (() => {
+            const section = document.getElementById('precios');
+            const billOpts = section.querySelectorAll('.h-bill-opt');
+            const curLine = section.querySelector('.h-cur-line');
+            const curLabel = curLine.querySelector('span');
+            const curSwitch = curLine.querySelector('button');
+            let bill = 'mensual';
+
+            // Uruguay keeps the UYU the HTML ships with, any other timezone gets US$, and a manual choice wins
+            let currency = 'uyu';
+            try {
+              const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+              if (tz && tz !== 'America/Montevideo') currency = 'usd';
+              const saved = localStorage.getItem('tutreino-currency');
+              if (saved === 'uyu' || saved === 'usd') currency = saved;
+            } catch {}
+
+            const render = () => {
+              const usd = currency === 'usd';
+              section.querySelectorAll('.h-cur').forEach((el) => { el.textContent = usd ? 'US$' : 'UYU'; });
+              section.querySelectorAll('.h-amt').forEach((el) => { el.textContent = el.getAttribute(`data-${currency}-${bill}`); });
+              section.querySelectorAll('.h-vprice-anual').forEach((el) => {
+                el.textContent = el.getAttribute(`data-${currency}`);
+                el.hidden = bill !== 'anual';
+              });
+              section.querySelectorAll('.h-vprice-cta').forEach((el) => { el.href = el.getAttribute(`data-${currency}-href`); });
+              curLabel.textContent = usd ? 'Precios en dólares' : 'Precios en pesos uruguayos';
+              curSwitch.textContent = usd ? 'Ver en pesos uruguayos' : 'Ver en dólares';
+            };
+
+            billOpts.forEach((btn) => {
+              btn.addEventListener('click', () => {
+                bill = btn.getAttribute('data-bill');
+                billOpts.forEach((b) => {
+                  const on = b === btn;
+                  b.classList.toggle('active', on);
+                  b.setAttribute('aria-pressed', String(on));
+                });
+                render();
+              });
+            });
+            curSwitch.addEventListener('click', () => {
+              currency = currency === 'usd' ? 'uyu' : 'usd';
+              try { localStorage.setItem('tutreino-currency', currency); } catch {}
+              render();
+            });
+
+            // Without JavaScript the line stays hidden, since its button couldn't do anything
+            curLine.hidden = false;
+            render();
+          })();
+        </script>
 
         <!-- enterprise / multi-sucursal -->
         <div class="h-enterprise">
@@ -576,25 +649,6 @@ const showTestimonials = false;
       }
     }
 
-    // billing toggle
-    const billOpts = document.querySelectorAll('.h-bill-opt');
-    const amounts = document.querySelectorAll('.h-amt[data-mensual]');
-    const anualNotes = document.querySelectorAll<HTMLElement>('.h-vprice-anual');
-    billOpts.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const mode = btn.getAttribute('data-bill');
-        billOpts.forEach((b) => {
-          const on = b === btn;
-          b.classList.toggle('active', on);
-          b.setAttribute('aria-pressed', String(on));
-        });
-        amounts.forEach((a) => {
-          const v = a.getAttribute(`data-${mode}`);
-          if (v) a.textContent = v;
-        });
-        anualNotes.forEach((n) => { n.hidden = mode !== 'anual'; });
-      });
-    });
   </script>
 </SiteLayout>
 
@@ -943,6 +997,8 @@ const showTestimonials = false;
 .h-bill-opt.active { background: var(--brand-ink); color: #fff; }
 .h-bill-save { font-size: 12.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--ok-soft); color: var(--ok); }
 .h-bill-opt.active .h-bill-save { background: rgba(255,255,255,.2); color: #fff; }
+.h-cur-line { margin: -18px auto 30px; text-align: center; font-size: 15px; color: var(--ink-2); }
+.h-cur-switch { padding: 6px 2px; margin-block: -6px; border: none; background: none; color: var(--brand-ink); font-family: inherit; font-size: 15px; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .h-price-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 920px; margin: 0 auto; }
 @media(max-width:720px) { .h-price-grid { grid-template-columns: 1fr; } }
 .h-vprice { display: flex; flex-direction: column; gap: 20px; padding: 32px; background: #fff; border: 1px solid var(--line); border-radius: 22px; }
