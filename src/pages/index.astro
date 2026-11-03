@@ -148,7 +148,7 @@ const showTestimonials = false;
     <!-- video: la película de 30 segundos; el botón de play es el disco que cae como punto final de "Esto es para vos" -->
     <section class="h-section h-video" id="video" data-cta-bar-hide>
       <div class="h-wrap">
-        <h2 class="h-h2 h-video-h">Mirá Tutreino en 30 segundos.</h2>
+        <h2 class="h-h2 h-video-h">Mirá <span>tutreino</span> en 30 segundos.</h2>
         <div class="h-video-player" data-video>
           <video src="/video/esto-es-para-vos.mp4" poster="/video/esto-es-para-vos-poster.webp" width="1920" height="1080" preload="none" playsinline controls aria-label="Tutreino en 30 segundos"></video>
           <button type="button" class="h-video-play" aria-label="Reproducir el video, 30 segundos con sonido" hidden>
@@ -710,7 +710,8 @@ const showTestimonials = false;
 .h-video { background: var(--ink); text-align: center; }
 .h-video a:focus-visible { outline-color: #fff; }
 .h-video .h-video-h { color: #fff; max-width: none; text-wrap: balance; }
-.h-video-player { position: relative; width: min(100%, max(640px, calc((100vh - 200px) * 16 / 9))); margin: clamp(28px, 3.4vw, 40px) auto 0; border-radius: clamp(14px, 1.6vw, 22px); overflow: hidden; background: #f7f8fb; }
+.h-video-h span { color: var(--brand); }
+.h-video-player { position: relative; width: min(100%, 880px, max(640px, calc((100vh - 200px) * 16 / 9))); margin: clamp(28px, 3.4vw, 40px) auto 0; border-radius: clamp(14px, 1.6vw, 22px); overflow: hidden; background: #f7f8fb; }
 .h-video-player video { display: block; width: 100%; height: auto; }
 .h-video-play { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
 /* sits on the poster exactly where the film's period lands: same left edge and baseline. The poster
