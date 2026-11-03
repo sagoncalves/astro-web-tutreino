@@ -26,14 +26,15 @@ const swatches = [
   { label: 'Violeta', color: '#6d28d9' },
   { label: 'Negro', color: '#111827' },
 ];
+// tag: the phrase on the store listings when there's no field for it (phones)
 // classes: [time, name, detail, open | full | mine]
 const disciplines = [
-  { id: 'funcional', label: 'Funcional', classes: [['07:00', 'Funcional', 'Sala 1 · 4 lugares', 'open'], ['12:30', 'Cross', 'Lleno', 'full'], ['19:00', 'Funcional', 'Tu lugar está reservado', 'mine'], ['20:30', 'Spinning', 'Sala 2 · 9 lugares', 'open']] },
-  { id: 'crossfit', label: 'Crossfit', classes: [['07:00', 'WOD', 'Box 1 · 6 lugares', 'open'], ['12:30', 'Halterofilia', 'Lleno', 'full'], ['18:30', 'WOD', 'Tu lugar está reservado', 'mine'], ['20:00', 'Open box', 'Box 2 · 8 lugares', 'open']] },
-  { id: 'musculacion', label: 'Musculación', classes: [['07:00', 'Sala de pesas', '12 lugares', 'open'], ['12:30', 'Funcional', 'Lleno', 'full'], ['20:00', 'Sala de pesas', 'Tu lugar está reservado', 'mine'], ['21:00', 'Tren superior', 'Sala 2 · 5 lugares', 'open']] },
-  { id: 'spinning', label: 'Spinning', classes: [['07:00', 'Spinning', 'Sala 2 · 9 lugares', 'open'], ['12:30', 'Cycle power', 'Lleno', 'full'], ['20:30', 'Spinning', 'Tu lugar está reservado', 'mine'], ['21:30', 'Spinning suave', 'Sala 2 · 6 lugares', 'open']] },
-  { id: 'yoga', label: 'Yoga', classes: [['07:00', 'Hatha', 'Sala 1 · 5 lugares', 'open'], ['08:00', 'Yoga Flow', 'Tu lugar está reservado', 'mine'], ['12:30', 'Vinyasa', 'Lleno', 'full'], ['19:00', 'Meditación', 'Sala 2 · 8 lugares', 'open']] },
-  { id: 'pilates', label: 'Pilates', classes: [['08:00', 'Mat', 'Sala 1 · 3 lugares', 'open'], ['10:00', 'Reformer', 'Tu lugar está reservado', 'mine'], ['12:30', 'Reformer', 'Lleno', 'full'], ['19:00', 'Mat', 'Sala 1 · 6 lugares', 'open']] },
+  { id: 'funcional', label: 'Funcional', tag: 'Fuerza y funcional', classes: [['07:00', 'Funcional', 'Sala 1 · 4 lugares', 'open'], ['12:30', 'Cross', 'Lleno', 'full'], ['19:00', 'Funcional', 'Tu lugar está reservado', 'mine'], ['20:30', 'Spinning', 'Sala 2 · 9 lugares', 'open']] },
+  { id: 'crossfit', label: 'Crossfit', tag: 'Crossfit todos los días', classes: [['07:00', 'WOD', 'Box 1 · 6 lugares', 'open'], ['12:30', 'Halterofilia', 'Lleno', 'full'], ['18:30', 'WOD', 'Tu lugar está reservado', 'mine'], ['20:00', 'Open box', 'Box 2 · 8 lugares', 'open']] },
+  { id: 'musculacion', label: 'Musculación', tag: 'Musculación y fuerza', classes: [['07:00', 'Sala de pesas', '12 lugares', 'open'], ['12:30', 'Funcional', 'Lleno', 'full'], ['20:00', 'Sala de pesas', 'Tu lugar está reservado', 'mine'], ['21:00', 'Tren superior', 'Sala 2 · 5 lugares', 'open']] },
+  { id: 'spinning', label: 'Spinning', tag: 'Spinning todos los días', classes: [['07:00', 'Spinning', 'Sala 2 · 9 lugares', 'open'], ['12:30', 'Cycle power', 'Lleno', 'full'], ['20:30', 'Spinning', 'Tu lugar está reservado', 'mine'], ['21:30', 'Spinning suave', 'Sala 2 · 6 lugares', 'open']] },
+  { id: 'yoga', label: 'Yoga', tag: 'Yoga y movimiento', classes: [['07:00', 'Hatha', 'Sala 1 · 5 lugares', 'open'], ['08:00', 'Yoga Flow', 'Tu lugar está reservado', 'mine'], ['12:30', 'Vinyasa', 'Lleno', 'full'], ['19:00', 'Meditación', 'Sala 2 · 8 lugares', 'open']] },
+  { id: 'pilates', label: 'Pilates', tag: 'Pilates y movimiento', classes: [['08:00', 'Mat', 'Sala 1 · 3 lugares', 'open'], ['10:00', 'Reformer', 'Tu lugar está reservado', 'mine'], ['12:30', 'Reformer', 'Lleno', 'full'], ['19:00', 'Mat', 'Sala 1 · 6 lugares', 'open']] },
 ];
 const [firstExample] = examples;
 const views = [{ view: 'app', tab: 'Tu app' }, { view: 'appstore', tab: 'App Store' }, { view: 'play', tab: 'Google Play' }];
@@ -65,14 +66,14 @@ const shots = [{ caption: 'Reservá tu clase', on: 0 }, { caption: 'Pagá en seg
           <p class="h-bf-status" role="status"></p>
         </div>
 
-        <div class="h-bf-row">
+        <div class="h-bf-row h-bf-row-name">
           <label class="h-bf-lab" for="h-bf-name">Nombre de tu gimnasio <span class="h-bf-count" id="h-bf-name-count" aria-hidden="true">{firstExample.name.length}/30</span></label>
-          <input class="h-bf-input" id="h-bf-name" type="text" maxlength="30" autocomplete="organization" placeholder="Ej: Iron House" value={firstExample.name} />
+          <input class="h-bf-input" id="h-bf-name" type="text" maxlength="30" autocomplete="organization" autocapitalize="words" autocorrect="off" spellcheck="false" enterkeyhint="next" placeholder="Ej: Iron House" value={firstExample.name} />
         </div>
 
-        <div class="h-bf-row">
+        <div class="h-bf-row h-bf-row-tag">
           <label class="h-bf-lab" for="h-bf-tag">Frase corta <span class="h-bf-count" id="h-bf-tag-count" aria-hidden="true">{firstExample.tag.length}/30</span></label>
-          <input class="h-bf-input" id="h-bf-tag" type="text" maxlength="30" autocomplete="off" placeholder="Ej: Fuerza y funcional" value={firstExample.tag} />
+          <input class="h-bf-input" id="h-bf-tag" type="text" maxlength="30" autocomplete="off" enterkeyhint="done" placeholder="Ej: Fuerza y funcional" value={firstExample.tag} />
           <p class="h-bf-hint">Va debajo del nombre en las tiendas.</p>
         </div>
 
@@ -89,7 +90,7 @@ const shots = [{ caption: 'Reservá tu clase', on: 0 }, { caption: 'Pagá en seg
         <fieldset class="h-bf-row">
           <legend class="h-bf-lab">¿Qué entrenan?</legend>
           <div class="h-bf-chips">
-            {disciplines.map((d, i) => <button type="button" data-disc-btn={d.id} aria-pressed={i === 0 ? 'true' : 'false'}>{d.label}</button>)}
+            {disciplines.map((d, i) => <button type="button" data-disc-btn={d.id} data-tag={d.tag} aria-pressed={i === 0 ? 'true' : 'false'}>{d.label}</button>)}
           </div>
         </fieldset>
 
@@ -210,6 +211,7 @@ const shots = [{ caption: 'Reservá tu clase', on: 0 }, { caption: 'Pagá en seg
     const cta = q<HTMLAnchorElement>('.h-bf-cta a');
     const logoSwatches = q<HTMLElement>('.h-sws-logo');
     const exampleBtns = qa<HTMLButtonElement>('.h-bf-ex button');
+    const phone = matchMedia('(max-width: 760px)');
 
     const firstBtn = exampleBtns[0];
     let name = firstBtn.dataset.name || '';
@@ -292,6 +294,7 @@ const shots = [{ caption: 'Reservá tu clase', on: 0 }, { caption: 'Pagá en seg
       qa<HTMLElement>('[data-disc]').forEach((el) => { el.hidden = el.dataset.disc !== id; });
       qa<HTMLElement>('[data-disc-btn]').forEach((b) => press(b, b.dataset.discBtn === id));
     };
+    const discTag = () => q<HTMLElement>('[data-disc-btn][aria-pressed="true"]').dataset.tag || '';
 
     const setView = (view: string) => {
       q<HTMLElement>('.h-bld-stage').dataset.view = view;
@@ -377,11 +380,13 @@ const shots = [{ caption: 'Reservá tu clase', on: 0 }, { caption: 'Pagá en seg
       if (colors.length) setColor(colors[0]);
       else setColor(colorIn.value);
       paintIcons(true);
-      const wasExample = !!example;
+      if (example) { name = ''; nameIn.value = ''; tag = tagIn.value = phone.matches ? discTag() : ''; }
       example = null;
-      if (wasExample) { name = ''; tag = ''; nameIn.value = ''; tagIn.value = ''; nameIn.classList.add('nudge'); }
+      /* phones ask for the name first, so it can already be there */
+      const needsName = !name.trim();
+      nameIn.classList.toggle('nudge', needsName);
       paintText();
-      say((colors.length ? 'Tomamos el color de tu logo.' : 'Tu logo no tiene un color marcado: elegí uno abajo.') + (wasExample ? ' Ahora escribí el nombre.' : ''));
+      say((colors.length ? 'Tomamos el color de tu logo.' : 'Tu logo no tiene un color marcado: elegí uno abajo.') + (needsName ? ' Ahora escribí el nombre.' : ''));
       track('app_preview_logo');
     };
 
@@ -433,6 +438,14 @@ const shots = [{ caption: 'Reservá tu clase', on: 0 }, { caption: 'Pagá en seg
     tagIn.addEventListener('input', () => { tag = tagIn.value; paintText(); });
     /* one phone at a time: show the listing while editing the phrase that only appears there */
     tagIn.addEventListener('focus', () => setView('appstore'));
+    /* Return moves on: the form has no submit button, so it would otherwise do nothing */
+    nameIn.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      if (phone.matches) { nameIn.blur(); drop.parentElement?.scrollIntoView({ block: 'nearest' }); }
+      else tagIn.focus();
+    });
+    tagIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); tagIn.blur(); } });
 
     q('.h-sws').addEventListener('click', (e) => {
       const b = (e.target as Element).closest<HTMLElement>('.h-sw');
@@ -441,7 +454,11 @@ const shots = [{ caption: 'Reservá tu clase', on: 0 }, { caption: 'Pagá en seg
     colorIn.addEventListener('input', () => setColor(colorIn.value));
     q('.h-bf-chips').addEventListener('click', (e) => {
       const b = (e.target as Element).closest<HTMLElement>('[data-disc-btn]');
-      if (b?.dataset.discBtn) { setDisc(b.dataset.discBtn); setView('app'); }
+      if (b?.dataset.discBtn) {
+        setDisc(b.dataset.discBtn);
+        setView('app');
+        if (phone.matches) { tag = tagIn.value = discTag(); paintText(); }
+      }
     });
     q('.h-bld-tabs').addEventListener('click', (e) => {
       const b = (e.target as Element).closest<HTMLElement>('[data-view-btn]');
@@ -449,6 +466,9 @@ const shots = [{ caption: 'Reservá tu clase', on: 0 }, { caption: 'Pagá en seg
     });
     q('.h-bf').addEventListener('submit', (e) => e.preventDefault());
     cta.addEventListener('click', () => track('app_preview_cta', { logo: logo?.kind === 'upload', named: !example && !!name.trim() }));
+
+    /* phones start empty: deleting a sample name is a slow first step, and the preview says "Tu gimnasio" until they type */
+    if (phone.matches) { name = ''; example = null; nameIn.value = ''; paintText(); }
   }
 </script>
 
@@ -584,6 +604,9 @@ legend.h-bf-lab { margin-bottom: 7px; }
 @media(max-width:760px) {
   /* the hero is chalk here too, with no strip between them */
   .h-bld-sec { border-top: 1px solid var(--line); }
+  /* the controls already say what the sub-headline says */
+  .h-bld-sec .h-sub { display: none; }
+  .h-bld-sec .h-head { margin-bottom: 20px; }
   .h-bld { grid-template-columns: minmax(0, 1fr); }
   .h-bld-stage {
     order: -1; top: 57px; z-index: 6;
@@ -591,7 +614,27 @@ legend.h-bf-lab { margin-bottom: 7px; }
     background: var(--bg-2); border-bottom: 1px solid var(--line);
   }
   .h-bld-tabs { margin-bottom: 10px; }
-  .h-bld-crop { height: 300px; overflow: hidden; }
+  .h-bld-tabs button { min-height: 44px; }
+  .h-bld-crop { height: 200px; height: clamp(200px, 30svh, 300px); overflow: hidden; }
   .h-bld:has(.h-bf-input:focus) .h-bld-crop { height: 166px; }
+  /* a cropped phone has no room for a notch, and clipping its shadow draws a hard-edged box */
+  .h-bpv-main .h-mphone { box-shadow: none; }
+  .h-bpv .h-mphone::before { display: none; }
+  .h-bpv .h-mscreen { padding-top: 6cqw; }
+  .h-lst { padding-top: 14px; }
+  /* the name is the quickest way to see your own app; the phrase comes from ¿Qué entrenan? */
+  .h-bf-row-name { order: -1; }
+  .h-bf-row-tag { display: none; }
+  .h-bf-status:empty { min-height: 0; }
+  /* 44px touch targets; Otro shrinks to a color wheel so the row still fits */
+  .h-bf-ex { gap: 6px; }
+  .h-bf-ex button { min-height: 44px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 999px; background: #fff; color: var(--ink); font-size: 14px; text-decoration: none; }
+  .h-bf-ex button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .h-sws { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+  .h-sw, .h-sw-other { width: 100%; max-width: 44px; height: auto; aspect-ratio: 1; }
+  .h-sw-sep { grid-column: 1 / -1; width: 100%; height: 1px; margin: 0; }
+  .h-sw-other { position: relative; padding: 0; border: 0; border-radius: 50%; overflow: hidden; font-size: 0; background: conic-gradient(#e5322d, #ffc400, #0b6b35, #0062d6, #6d28d9, #e5322d); }
+  .h-sw-other input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
+  .h-bf-chips button { height: 44px; }
 }
 </style>
